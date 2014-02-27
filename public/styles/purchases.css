@@ -1,0 +1,10 @@
+.productPanel{
+  margin-left: 20px;
+  height:1000px;  
+}
+
+.inpTotal, .inpQty{
+    text-align: right;
+    width: 100px;
+}
+

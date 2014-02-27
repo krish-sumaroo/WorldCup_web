@@ -1,0 +1,24 @@
+.header{
+    background-color: #428bca;
+}
+
+.navbar-default .navbar-text {
+    color: #fff;
+}
+.date{
+    padding-left: 10px;
+}
+
+.list{
+    
+}
+
+.dialogSub{
+    background-color: #EAEAEA;
+    border-radius: 5px;
+    margin-top: 10px;
+}
+
+.textareaSpace{
+    padding: 5px;
+}
