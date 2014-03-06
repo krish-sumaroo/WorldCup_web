@@ -2,6 +2,11 @@
 
 class Resource_model extends CI_Model {
 
+    public function __construct()
+    {
+        parent::__construct();
+    }
+
     public function getTeamDetails()
     {
        $this->db->select('t.id, t.name as teamName, t.coach, p.id as playerId, p.name as playerName, p.position, p.number');
