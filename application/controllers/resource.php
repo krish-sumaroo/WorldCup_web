@@ -4,6 +4,10 @@ class Resource extends CI_Controller {
 
     function  __construct(){
         parent::__construct();
+        
+        //get userId from nonce
+        
+        $this->userId = 1; //test value
 
     }
 
@@ -25,9 +29,9 @@ class Resource extends CI_Controller {
         $country = $this->input->post('country');
         $saveArray = array('name' => $name,
                            'uid'  => $uid,
-                           'country' => $country
+                           'countryId' => $country
                             );
-        $response = $user->addUser($saveArray);
+        $response = $this->user->addUser($saveArray);
     }
 
     /*  activate user
@@ -39,8 +43,24 @@ class Resource extends CI_Controller {
         $uid = $this->input->post('uid');
         $response = $this->user->activate($uid);
     }
-
-
-
-
+    
+    public function createGroup()
+    {
+        $this->load->model('group_model','group');
+        $groupName = $this->input->post('group');
+        
+        //get userId from nonce
+        $saveArray = array('name' => $groupName, 'creatorId' => $userId);
+        $this->group->create($saveArray);
+    }
+    
+    public function joinGroup($grpId)
+    {
+        $this->load->model('group_model','group');
+        
+        $groupId = $this->input->post('grpId');
+        $data = array('userId' => $this->userId, 'groupId' => $groupId);
+        $this->group->join($data);
+    }
+    
 }

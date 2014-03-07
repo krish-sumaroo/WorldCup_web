@@ -10,7 +10,7 @@ class User_model extends CI_Model
 
     public function addUser($data)
     {
-        $this->db->insert($this->_table, $data);
+        $this->db->insert($this->table, $data);
 
         if($this->db->affected_rows())
         {
