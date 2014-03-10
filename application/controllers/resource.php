@@ -7,7 +7,7 @@ class Resource extends CI_Controller {
         
         //get userId from nonce
         
-        $this->userId = 1; //test value
+        $this->userConnected = 1; //test value
 
     }
 
@@ -16,8 +16,16 @@ class Resource extends CI_Controller {
         $this->load->model('resource_model','resource');
         $result = $this->resource->getTeamDetails();
 
-        log_message('error', 'details =>'.print_r($result, true));
-        log_message('error', 'json =>'.  json_encode($result));
+        //log_message('error', 'details =>'.print_r($result, true));
+        //log_message('error', 'json =>'.  json_encode($result));
+        $data['teamDetails'] = $result;
+       
+        //print_r($result, true);
+        $json = json_encode($data);
+        $data['json'] = json_decode($json);
+        echo $json;
+        
+        $this->load->view('generic', $data);
     }
 
 
@@ -32,6 +40,7 @@ class Resource extends CI_Controller {
                            'countryId' => $country
                             );
         $response = $this->user->addUser($saveArray);
+        echo json_encode(array('status' => $response));
     }
 
     /*  activate user
@@ -41,26 +50,37 @@ class Resource extends CI_Controller {
     {
         $this->load->model('user_model', 'user');
         $uid = $this->input->post('uid');
-        $response = $this->user->activate($uid);
+        $response = $this->user->activate('D123');
+        echo json_encode(array('status' => $response));
     }
     
-    public function createGroup()
+    public function join()
     {
-        $this->load->model('group_model','group');
-        $groupName = $this->input->post('group');
+        $this->load->model('connection_model','connection');
+        //get from session -- uid is always the 1 who's logged in 
+        $uid = $this->userConnected; 
+        //$uid2 = 3;
+        $uid2 = $this->input->post('uid');
         
-        //get userId from nonce
-        $saveArray = array('name' => $groupName, 'creatorId' => $userId);
-        $this->group->create($saveArray);
+        //get hash for connection
+        $connect = array('user1' => $uid, 'user2' => $uid2);
+        $result = $this->connection->connect($connect);
+        $this->_testResult($result);
     }
     
-    public function joinGroup($grpId)
+    public function listConnections()
     {
-        $this->load->model('group_model','group');
+        $this->load->model('connection_model','connection');
+        $result = $this->connection->getConnections(array('user1' => $this->userConnected));
         
-        $groupId = $this->input->post('grpId');
-        $data = array('userId' => $this->userId, 'groupId' => $groupId);
-        $this->group->join($data);
+        $jsonResponse = json_encode($result);
+        echo $jsonResponse;
     }
+    
+    private function _testResult($result)
+    {
+        var_dump($result);
+    }
+
     
 }
