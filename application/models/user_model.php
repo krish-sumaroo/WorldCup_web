@@ -40,4 +40,23 @@ class User_model extends CI_Model
             return FALSE;
         }
     }
+    
+    public function findUserByUsername($username)
+    {
+       $this->db->select('id');
+       $this->db->from('users');
+       $this->db->where(array('name' => $username));
+       
+       $query = $this->db->get();
+       if ($query->num_rows() > 0)
+        {
+            $uName = $query->row('id');
+            $this->db->close();
+            return $uName;
+        }
+        else
+        {
+            return FALSE;
+        }
+    }
 }

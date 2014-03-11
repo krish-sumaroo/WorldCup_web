@@ -28,31 +28,9 @@ class Resource extends CI_Controller {
         $this->load->view('generic', $data);
     }
 
-
-    public function crUser()
-    {
-        $this->load->model('user_model','user');
-        $name = $this->input->post('name');
-        $uid = $this->input->post('uid');
-        $country = $this->input->post('country');
-        $saveArray = array('name' => $name,
-                           'uid'  => $uid,
-                           'countryId' => $country
-                            );
-        $response = $this->user->addUser($saveArray);
-        echo json_encode(array('status' => $response));
-    }
-
     /*  activate user
      *  - no ads
-     */
-    public function userAc()
-    {
-        $this->load->model('user_model', 'user');
-        $uid = $this->input->post('uid');
-        $response = $this->user->activate('D123');
-        echo json_encode(array('status' => $response));
-    }
+     */    
 
     public function join()
     {
@@ -66,7 +44,8 @@ class Resource extends CI_Controller {
         $connect = array('user1' => $uid, 'user2' => $uid2);
         $result = $this->connection->connect($connect);
         $this->_testResult($result);
-    }
+    }  
+    
 
     public function listConnections()
     {
@@ -76,7 +55,11 @@ class Resource extends CI_Controller {
         $jsonResponse = json_encode($result);
         echo $jsonResponse;
     }
+    
 
+
+    
+    
     public function getMatches()
     {
         

@@ -10,7 +10,8 @@ class connection_model extends CI_Model {
     
     public function connect($data)
     {
-        $this->db->insert($this->table, $data);
+        $this->db->where($data);
+        $this->db->update($this->table, array('status' => '1'));
         
         if($this->db->affected_rows())
         {
@@ -47,5 +48,4 @@ class connection_model extends CI_Model {
             return FALSE;
         }
     }
-    
 }
