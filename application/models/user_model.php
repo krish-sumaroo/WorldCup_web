@@ -24,6 +24,20 @@ class User_model extends CI_Model
         }
     }
 
+    public function checkAvailability($uName)
+    {
+        $this->db->where('name', $uName);
+        $this->db->from($this->table);
+        if($this->db->count_all_results() > 0)
+        {
+            return TRUE;
+        }
+        else
+        {
+            return FALSE;
+        }
+    }
+
     public function activate($uid)
     {
         $this->db->where('uid', $uid);
@@ -40,13 +54,13 @@ class User_model extends CI_Model
             return FALSE;
         }
     }
-    
+
     public function findUserByUsername($username)
     {
        $this->db->select('id');
        $this->db->from('users');
        $this->db->where(array('name' => $username));
-       
+
        $query = $this->db->get();
        if ($query->num_rows() > 0)
         {
