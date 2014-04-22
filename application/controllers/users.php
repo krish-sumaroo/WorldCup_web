@@ -13,23 +13,44 @@ class Connections extends CI_Controller {
     public function checkName()
     {
         $uName = $this->input->post('nickname');
-        $result = $this->user->checkAvailability($uName);
+        $result = $this->user->checkAvailability('name',$uName);
         echo json_encode(['status' => $result]);
+    }
+    
+    public function checkEmail()
+    {
+        $email = $this->input->post('email');
+        $result = $this->user->checkAvailability('email',$email);
+        echo json_encode(['status' => $result]);       
     }
 
     public function join()
     {
-
         $name = $this->input->post('name');
         $uid = $this->input->post('uid');
+        $email = $this->input->post('email');
         $country = $this->input->post('country');
-        $saveArray = array('name' => $name,
+        
+        if($this->user->checkAvailability('email',$email) && $this->user->checkAvailability('name',$uName))
+        {
+            $saveArray = array('name' => $name,
                            'uid'  => $uid,
-                           'countryId' => $country
+                           'countryId' => $country,
+                           'email' => $email,
+                           'name' => $name
                             );
-        $result = $this->user->addUser($saveArray);
-        $response = $this->dbHelper->buildResponse($result);
-        echo $response;
+            $result = $this->user->addUser($saveArray);
+            $response = $this->dbHelper->buildResponse($result);
+            echo $response;
+        }
+        else
+        {
+            $response['status'] = 'V_F';
+            $response['msg'] = "Email or Username already exists";
+            echo json_encode($response);
+        }
+        
+        
      }
 
     public function userAc()

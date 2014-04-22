@@ -24,9 +24,9 @@ class User_model extends CI_Model
         }
     }
 
-    public function checkAvailability($uName)
+    public function checkAvailability($field, $uName)
     {
-        $this->db->where('name', $uName);
+        $this->db->where($field, $uName);
         $this->db->from($this->table);
         if($this->db->count_all_results() > 0)
         {

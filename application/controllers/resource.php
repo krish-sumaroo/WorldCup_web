@@ -10,6 +10,11 @@ class Resource extends CI_Controller {
         $this->userConnected = 1; //test value
 
     }
+public function test()
+{
+echo "fuck you";
+}
+
 
     public function initialise()
     {
