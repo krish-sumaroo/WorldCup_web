@@ -52,7 +52,7 @@ $autoload['packages'] = array();
 |	$autoload['libraries'] = array('database', 'session', 'xmlrpc');
 */
 
-$autoload['libraries'] = array('database','session','dbhelper');
+$autoload['libraries'] = array('database','dbhelper','session');
 
 
 /*
@@ -80,7 +80,7 @@ $autoload['helper'] = array('url');
 |
 */
 
-$autoload['config'] = array('mamouConfig');
+$autoload['config'] = array();
 
 
 /*
