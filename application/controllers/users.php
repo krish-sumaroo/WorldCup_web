@@ -64,6 +64,13 @@ class Users extends CI_Controller {
                          'password' => md5($password) );
          
          $result = $this->user->login($params);
+         if($result)
+         {
+             $response['status'] = true;            
+         }
+         else {
+             $response['status'] = false;
+         }
      }
 
     public function userAc()
