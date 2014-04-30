@@ -1,6 +1,6 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-class Connections extends CI_Controller {
+class Users extends CI_Controller {
 
     function  __construct(){
         parent::__construct();
@@ -10,47 +10,60 @@ class Connections extends CI_Controller {
         $this->load->model('user_model','user');
     }
 
-    public function checkName()
+    public function checkNick()
     {
         $uName = $this->input->post('nickname');
-        $result = $this->user->checkAvailability('name',$uName);
+        $result = $this->user->checkAvailability('nickname',$uName);
         echo json_encode(['status' => $result]);
     }
     
-    public function checkEmail()
+    public function checkUsername()
     {
-        $email = $this->input->post('email');
-        $result = $this->user->checkAvailability('email',$email);
+        $email = $this->input->post('username');
+        $result = $this->user->checkAvailability('username',$email);
         echo json_encode(['status' => $result]);       
     }
 
     public function join()
     {
-        $name = $this->input->post('name');
+        $username = $this->input->post('username');
+        $password = $this->input->post('password');        
+        $nickname = $this->input->post('nickname');
+        $favTeam = $this->input->post('favTeam');
         $uid = $this->input->post('uid');
-        $email = $this->input->post('email');
         $country = $this->input->post('country');
-        
-        if($this->user->checkAvailability('email',$email) && $this->user->checkAvailability('name',$uName))
+     
+        if($this->user->checkAvailability('username',$username) && $this->user->checkAvailability('nickname',$nickname))
         {
-            $saveArray = array('name' => $name,
+            $saveArray = array('username' => $username,
+                           'password' => md5($password), 
                            'uid'  => $uid,
-                           'countryId' => $country,
-                           'email' => $email,
-                           'name' => $name
+                           'country' => $country,
+                           'nickname' => $nickname,
+                           'teamId' => $favTeam
                             );
+            
             $result = $this->user->addUser($saveArray);
-            $response = $this->dbHelper->buildResponse($result);
+            $response = $this->dbhelper->buildResponse($result);
             echo $response;
         }
         else
         {
-            $response['status'] = 'V_F';
-            $response['msg'] = "Email or Username already exists";
+            $response['status'] = false;
+            $response['msg'] = "Username or Nickname already exists";
             echo json_encode($response);
-        }
-        
-        
+        }       
+     }
+     
+     public function login()
+     {
+         $username = $this->input->post('username');
+         $password = $this->input->post('password');
+         
+         $params = array('username' => $username,
+                         'password' => md5($password) );
+         
+         $result = $this->user->login($params);
      }
 
     public function userAc()

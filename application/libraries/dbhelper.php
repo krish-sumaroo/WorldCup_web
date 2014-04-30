@@ -1,6 +1,6 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-class DbHelper
+class Dbhelper
 {
 	function __construct()
 	{
@@ -12,12 +12,12 @@ class DbHelper
             $response = array();
             if($result)
             {
-                $response['status'] = 'S';
+                $response['status'] = true;
                 $response['msg'] = "Success";
             }
             else
             {
-               $response['status'] = 'S_F';
+               $response['status'] = false;
                $response['msg'] = "Error saving"; 
             }
             
