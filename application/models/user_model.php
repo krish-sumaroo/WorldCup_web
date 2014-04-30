@@ -23,11 +23,12 @@ class User_model extends CI_Model
             return FALSE;
         }
     }
-
-    public function checkAvailability($field, $uName)
+    
+    public function login($data)
     {
-        $this->db->where($field, $uName);
+        $this->db->where($data);
         $this->db->from($this->table);
+        
         if($this->db->count_all_results() > 0)
         {
             return TRUE;
@@ -35,6 +36,20 @@ class User_model extends CI_Model
         else
         {
             return FALSE;
+        }
+    }
+
+    public function checkAvailability($field, $uName)
+    {
+        $this->db->where($field, $uName);
+        $this->db->from($this->table);
+        if($this->db->count_all_results() > 0)
+        {
+            return FALSE;
+        }
+        else
+        {
+            return TRUE;
         }
     }
 
