@@ -71,6 +71,8 @@ class Users extends CI_Controller {
          else {
              $response['status'] = false;
          }
+         
+         echo json_encode($response);
      }
 
     public function userAc()
