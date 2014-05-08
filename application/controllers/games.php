@@ -24,5 +24,28 @@ class Games extends CI_Controller {
 
         echo json_encode($response);
     }
+    
+    public function getGame()
+    {
+        
+    }
+    
+    public function getTeams()
+    {
+        $result = $this->game->getTeams();
+        if(count($result) > 0)
+        {
+            $response['status'] = 'SUCCESS';
+            $response['data'] = $result;
+        }
+        else
+        {
+            $response['status'] = 'ERROR';
+        }
+        
+        echo json_encode($response);
+    }
+    
+    
 
 }

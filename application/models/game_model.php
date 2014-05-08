@@ -15,7 +15,7 @@ class game_model extends CI_Model {
                 (
                         SELECT gameDate from gamesdates g
                         where gamedate >= NOW()
-                        limit 2
+                        limit 1
                 ) as g1
 
                 ON m.matchDate = g1.`gameDate`
@@ -44,6 +44,13 @@ class game_model extends CI_Model {
             return FALSE;
         }
 
+    }
+    
+    public function getTeams()
+    {
+        $sql = "SELECT * FROM teams";
+        $query = $this->db->query($sql);
+        return $query->result_array();
     }
 
 }
