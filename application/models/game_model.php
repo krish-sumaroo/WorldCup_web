@@ -52,5 +52,45 @@ class game_model extends CI_Model {
         $query = $this->db->query($sql);
         return $query->result_array();
     }
+    
+    public function activeGame()
+    {
+        $sql = "SELECT team1, team2, matchDate FROM games 
+                WHERE startedF = 0
+                ORDER BY matchDate LIMIT 1";
+        $query = $this->db->query($sql);
+        $result = $query->row();
+        
+        $gameInfo = array();
+        $datetime = new DateTime($result->matchDate);
+        $gameInfo['time'] = $datetime->format(DateTime::ISO8601);
+        
+        $sqlTm1 = "SELECT id, flag FROM teams WHERE id = ".$result->team1;
+        $queryTm1 = $this->db->query($sqlTm1);
+        $rstTm1 = $queryTm1->row();
+  
+        $gameInfo['team1'] = array('id' => $rstTm1->id, 'flag' => $rstTm1->flag);
+        
+        $teamSql = "SELECT id, name, position from players 
+                    WHERE teamId = ".$result->team1;
+        $query = $this->db->query($teamSql);
+        $gameInfo['team1']['players'] = $query->result_array();
+        
+        $sqlTm2 = "SELECT id, flag FROM teams WHERE id = ".$result->team2;
+        $queryTm2 = $this->db->query($sqlTm2);
+        $rstTm2 = $queryTm2->row();
+        $gameInfo['team2'] = array('id' => $rstTm1->id, 'flag' => $rstTm1->flag);
+        
+        $teamSql = "SELECT id, name, position from players 
+                    WHERE teamId = ".$result->team2;
+        $query = $this->db->query($teamSql);
+        $gameInfo['team2']['players'] = $query->result_array();
+        
+//        echo "<pre>";
+//        print_r($gameInfo);
+//        echo "</pre>";
+        
+        return $gameInfo;
+    }
 
 }
