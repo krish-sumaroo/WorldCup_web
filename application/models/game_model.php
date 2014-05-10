@@ -85,7 +85,7 @@ class game_model extends CI_Model {
                         FROM gameplayers g
                         JOIN players p ON p.id = g.playerId 
                         WHERE g.gameId = ".$result->id." AND g.teamId = ".$result->team1;
-            echo $teamSql;
+
             $query = $this->db->query($teamSql);
             $gameInfo['team1']['players'] = $query->result_array();
             
