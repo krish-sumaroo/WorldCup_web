@@ -48,9 +48,27 @@ class game_model extends CI_Model {
     
     public function getTeams()
     {
-        $sql = "SELECT * FROM teams";
+        $sql = "SELECT id, team1, team2, matchDate, playerInfo FROM games 
+                WHERE startedF = 0
+                ORDER BY matchDate LIMIT 1";
         $query = $this->db->query($sql);
-        return $query->result_array();
+        $result = $query->row();
+        
+        $gameInfo = array();
+        $teamSql = "SELECT g.playerId, p.name, p.position, p.number 
+                        FROM gameplayers g
+                        JOIN players p ON p.id = g.playerId 
+                        WHERE g.gameId = ".$result->id." AND g.teamId = ".$result->team1;
+
+        $query = $this->db->query($teamSql);
+        $gameInfo['team1']['players'] = $query->result_array();
+
+        $teamSql = "SELECT g.playerId, p.name, p.position, p.number FROM gameplayers g
+                    JOIN players p ON p.id = g.playerId 
+                    WHERE g.gameId = ".$result->id." AND g.teamId = ".$result->team2;
+        $query = $this->db->query($teamSql);
+        $gameInfo['team2']['players'] = $query->result_array();
+        return $gameInfo;
     }
     
     public function activeGame()
