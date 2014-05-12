@@ -46,7 +46,27 @@ class game_model extends CI_Model {
 
     }
     
+    
     public function getTeams()
+    {
+       $sql = "SELECT * FROM teams";
+       $query = $this->db->query($sql);
+       return $query->result_array();
+    }
+    
+    private function _getActivePlayersForTeam($gameId, $teamId)
+    {
+        $teamSql = "SELECT g.playerId, p.name, p.position, p.number 
+                        FROM gameplayers g
+                        JOIN players p ON p.id = g.playerId 
+                        WHERE g.gameId = ".$gameId." AND g.teamId = ".$teamId;
+
+        $query = $this->db->query($teamSql);
+        return $query->result_array();
+    }
+
+
+    public function getActivePlayers()
     {
         $sql = "SELECT id, team1, team2, matchDate, playerInfo FROM games 
                 WHERE startedF = 0
@@ -55,19 +75,8 @@ class game_model extends CI_Model {
         $result = $query->row();
         
         $gameInfo = array();
-        $teamSql = "SELECT g.playerId, p.name, p.position, p.number 
-                        FROM gameplayers g
-                        JOIN players p ON p.id = g.playerId 
-                        WHERE g.gameId = ".$result->id." AND g.teamId = ".$result->team1;
-
-        $query = $this->db->query($teamSql);
-        $gameInfo['team1']['players'] = $query->result_array();
-
-        $teamSql = "SELECT g.playerId, p.name, p.position, p.number FROM gameplayers g
-                    JOIN players p ON p.id = g.playerId 
-                    WHERE g.gameId = ".$result->id." AND g.teamId = ".$result->team2;
-        $query = $this->db->query($teamSql);
-        $gameInfo['team2']['players'] = $query->result_array();
+        $gameInfo['team1']['players'] = $this->_getActivePlayersForTeam($result->id, $result->team1);
+        $gameInfo['team2']['players'] = $this->_getActivePlayersForTeam($result->id, $result->team2);
         return $gameInfo;
     }
     
@@ -99,19 +108,8 @@ class game_model extends CI_Model {
             //get playersInfo
             $gameInfo['playersInfoStatus'] = true;
             
-            $teamSql = "SELECT g.playerId, p.name, p.position, p.number 
-                        FROM gameplayers g
-                        JOIN players p ON p.id = g.playerId 
-                        WHERE g.gameId = ".$result->id." AND g.teamId = ".$result->team1;
-
-            $query = $this->db->query($teamSql);
-            $gameInfo['team1']['players'] = $query->result_array();
-            
-            $teamSql = "SELECT g.playerId, p.name, p.position, p.number FROM gameplayers g
-                        JOIN players p ON p.id = g.playerId 
-                        WHERE g.gameId = ".$result->id." AND g.teamId = ".$result->team2;
-            $query = $this->db->query($teamSql);
-            $gameInfo['team2']['players'] = $query->result_array();
+            $gameInfo['team1']['players'] = $this->_getActivePlayersForTeam($result->id, $result->team1);
+            $gameInfo['team2']['players'] = $this->_getActivePlayersForTeam($result->id, $result->team2);
         }
         else
         {
