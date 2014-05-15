@@ -80,34 +80,60 @@ class game_model extends CI_Model {
         return $gameInfo;
     }
     
-    public function activeGame()
+    public function getNextGameWithDetails()
+    {
+       $sql = "SELECT g.id, g.team1, g.team2, g.matchDate, g.playerInfo FROM games g
+                JOIN teams t ON t.id = g
+                WHERE startedF = 0
+                ORDER BY matchDate LIMIT 1";
+        $query = $this->db->query($sql);
+        return $query->row(); 
+    }
+
+
+    public function getNextGame()
     {
         $sql = "SELECT id, team1, team2, matchDate, playerInfo FROM games 
                 WHERE startedF = 0
                 ORDER BY matchDate LIMIT 1";
         $query = $this->db->query($sql);
-        $result = $query->row();
+        return $query->row();
+    }
+    
+    public function getFullPlayers($teamId)
+    {
+        $sql = "SELECT * FROM players WHERE teamId = ".$teamId;
+        $query = $this->db->query($sql);
+        return $query->result();
+    }
+    
+    public function getTeamInfo($teamId)
+    {
+        $sqlTm1 = "SELECT id, name, flag FROM teams WHERE id = ".$teamId;
+        $queryTm1 = $this->db->query($sqlTm1);
+        return $queryTm1->row();  
+    }
+
+
+    public function activeGame()
+    {
+        $result = $this->getNextGame();
         
         $gameInfo = array();
         $datetime = new DateTime($result->matchDate);
         $gameInfo['time'] = $datetime->format(DateTime::ISO8601);
         $gameInfo['BOid'] = $result->id;
         
-        $sqlTm1 = "SELECT id, flag FROM teams WHERE id = ".$result->team1;
-        $queryTm1 = $this->db->query($sqlTm1);
-        $rstTm1 = $queryTm1->row();
+        $rstTm1 = $this->getTeamInfo($result->team1);
         $gameInfo['team1'] = array('id' => $rstTm1->id, 'flag' => $rstTm1->flag);
         
-        $sqlTm2 = "SELECT id, flag FROM teams WHERE id = ".$result->team2;
-        $queryTm2 = $this->db->query($sqlTm2);
-        $rstTm2 = $queryTm2->row();
+        $rstTm2 = $this->getTeamInfo($result->team2);
         $gameInfo['team2'] = array('id' => $rstTm1->id, 'flag' => $rstTm1->flag);
         
         if($result->playerInfo)
         {
             //get playersInfo
-            $gameInfo['playersInfoStatus'] = true;
-            
+            $gameInfo['playersInfoStatus'] = true;            
             $gameInfo['team1']['players'] = $this->_getActivePlayersForTeam($result->id, $result->team1);
             $gameInfo['team2']['players'] = $this->_getActivePlayersForTeam($result->id, $result->team2);
         }
