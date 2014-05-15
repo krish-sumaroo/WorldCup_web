@@ -52,6 +52,16 @@ class User_model extends CI_Model
             return TRUE;
         }
     }
+    
+    public function getRegisId($uid)
+    {
+        $this->db->select('regisId');
+        $this->db->where('uid', $uid);
+        $this->db->from($this->table);
+        
+        $data =  $this->db->get()->row();
+        return $data;
+    }
 
     public function activate($uid)
     {
