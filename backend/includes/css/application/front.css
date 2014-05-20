@@ -1,0 +1,30 @@
+/*product*/
+.pd1
+{
+    height: 200px;
+}
+
+.pd2
+{
+    cursor: pointer;
+}
+
+/*cart*/
+.car1
+{
+    text-align: right;
+}
+
+.car2
+{
+    text-align: right;
+    font-weight: bold;
+    font-size: 1.5em;
+}
+
+.car3
+{
+    text-align: left;
+    font-weight: bold;
+    font-size: 1.5em;
+}
