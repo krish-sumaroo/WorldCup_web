@@ -6,10 +6,11 @@ $compressor = new compressor(array('page, javascript, css'));
 
 session_start();
 
-$templateGuiUtility = new BootstrapTemplateGuiUtility();
+$backendTemplateGuiUtility = new BackendTemplateGuiUtility("Games List");
 
-$mainContent = GamesGuiUtility::getDisplay();
-echo $templateGuiUtility->getNormalDisplay(PageTitle::$GAMES, $mainContent);
+$mainContent = GamesGuiUtility::getGamesListDisplay();
+echo $backendTemplateGuiUtility->getNormalDisplay(PageTitle::$GAMES_LIST, $mainContent,
+	BackendNavigation::$GAME_SELECTED);
 
 $compressor->finish();
 

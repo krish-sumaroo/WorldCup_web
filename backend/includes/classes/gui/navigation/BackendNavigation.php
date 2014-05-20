@@ -6,13 +6,6 @@ class BackendNavigation
 {
 
     public static $GAME_SELECTED = "game";
-    public static $CATEGORY_SELECTED = "category";
-    public static $CUSTOMER_SELECTED = "customer";
-    public static $ORDER_SELECTED = "order";
-    public static $BANNER_SELECTED = "banner";
-    public static $NOTIFIER_SELECTED = "notifier";
-    public static $DROPPOINT_SELECTED = "droppoint";
-    public static $WEBSITE_INFORMATION_SELECTED = "website_information";
 
     public static function getDisplay()
     {
@@ -182,7 +175,7 @@ class BackendNavigation
     {
 	$output = "";
 
-	$gameListUrl = UrlConfiguration::getUrl("games", "gameList");
+	$gameListUrl = UrlConfiguration::getUrl("games", "gamesList");
 
 	$productMainNavigationEntity = new BackendNavigationMainEntity("Games");
 	$productMainNavigationEntity->determineSelected($selectedNav, BackendNavigation::$GAME_SELECTED);

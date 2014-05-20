@@ -167,6 +167,16 @@ class BaseGamesEntity
     {
 	$this->matchDate = $matchDate;
     }
+
+    public function getTeam1Entity()
+    {
+	return BaseTeamsLogicUtility::getTeamsDetails($this->getTeam1());
+    }
+
+    public function getTeam2Entity()
+    {
+	return BaseTeamsLogicUtility::getTeamsDetails($this->getTeam2());
+    }
 }
 
 ?>

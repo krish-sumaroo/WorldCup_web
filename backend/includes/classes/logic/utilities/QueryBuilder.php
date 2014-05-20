@@ -60,6 +60,7 @@ class QueryBuilder
 
     public function addFields($field, $table = "", $distinct = false, $alias = "")
     {
+	$field = "`$field`";
 	$aliasQuery = "";
 
 	if($alias != "")

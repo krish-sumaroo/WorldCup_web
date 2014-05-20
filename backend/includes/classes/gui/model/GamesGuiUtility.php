@@ -15,7 +15,32 @@ class GamesGuiUtility extends BaseGamesGuiUtility
 
 	if(count($gamesEntityList) > 0)
 	{
+	    $output .= "<table class='table'>";
 
+	    $output .= "<thead>";
+	    $output .= "<tr>";
+	    $output .= "<th>Match Date</th>";
+	    $output .= "<th>Match</th>";
+	    $output .= "<th>Action</th>";
+	    $output .= "</tr>";
+	    $output .= "</thead>";
+
+	    $output .= "<tbody>";
+
+	    for($i = 0; $i < count($gamesEntityList); $i++)
+	    {
+		$output .= "<tr>";
+		$output .= "<td>".$gamesEntityList[$i]->getMatchDate()."</td>";
+		$output .= "<td>".$gamesEntityList[$i]->getVsDisplay()."</td>";
+		$output .= "<td>";
+		$output .= "<a class='btn btn-primary' href=''>Engage</a>";
+		$output .= "</td>";
+		$output .= "</tr>";
+	    }
+
+	    $output .= "</tbody>";
+
+	    $output .= "</table>";
 	}
 	else
 	{
