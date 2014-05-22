@@ -6,6 +6,13 @@ class Admin extends CI_Controller {
         $this->load->model('game_model','game');
     }
     
+
+    public function gamesDetails()
+    {
+        
+        $gameData = $this->game->getNextGame();
+    }
+
     public function chooseTeam()
     {     
         $gameData = $this->game->getNextGame();
@@ -17,6 +24,7 @@ class Admin extends CI_Controller {
         $master['view'] = $this->load->view('chooseTeam', $data, true);
         $master['js'] = array('chooseTeam');
         $this->load->view('main',$master);
+
     }
 
 }

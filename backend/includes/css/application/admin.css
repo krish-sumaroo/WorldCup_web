@@ -1,0 +1,33 @@
+/*header*/
+.hea1
+{
+    font-size: 0.7em;
+}
+
+/**/
+.ad1
+{
+    width: 100%;
+    text-align: center;
+    padding: 10px 0px;
+}
+
+/*cart*/
+.ord1
+{
+    text-align: right;
+}
+
+.ord2
+{
+    text-align: right;
+    font-weight: bold;
+    font-size: 1.5em;
+}
+
+.ord3
+{
+    text-align: left;
+    font-weight: bold;
+    font-size: 1.5em;
+}
