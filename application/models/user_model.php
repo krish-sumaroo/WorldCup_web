@@ -26,21 +26,32 @@ class User_model extends CI_Model
     
     public function login($data)
     {
+        $this->db->select(array('uid', 'id'));
         $this->db->where($data);
         $this->db->from($this->table);
         
-        if($this->db->count_all_results() > 0)
+        $results = $this->db->get()->row(); 
+        //echo $this->db->last_query();
+        //print_r($results);
+
+        if(count($results) > 0)
         {
-            return TRUE;
+            return $results;
         }
         else
         {
             return FALSE;
         }
     }
+    
+    public function saveRegis($regisId, $uid)
+    {
+        $this->db->where('uid', $uid);
+        $this->db->update($this->table, array('regisId' => $regisId));
+    }
 
     public function checkAvailability($field, $uName)
-    {
+    {        
         $this->db->where($field, $uName);
         $this->db->from($this->table);
         if($this->db->count_all_results() > 0)
@@ -53,6 +64,13 @@ class User_model extends CI_Model
         }
     }
     
+    public function update($saveArray, $userId)
+    {
+        $this->db->where('id', $userId);
+        $this->db->update($this->table, $saveArray);
+    }
+
+
     public function getRegisId($uid)
     {
         $this->db->select('regisId');
