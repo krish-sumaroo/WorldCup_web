@@ -23,6 +23,13 @@ class Users extends CI_Controller {
         $result = $this->user->checkAvailability('username',$email);
         echo json_encode(['status' => $result]);       
     }
+    
+    public function regisGCM()
+    {
+        $registrationId = $this->input->post('regisId');
+        $uid = $this->input->post('uid');
+        $this->user->saveRegis($registrationId, $uid);        
+    }
 
     public function join()
     {
@@ -32,7 +39,6 @@ class Users extends CI_Controller {
         $favTeam = $this->input->post('favTeam');
         $uid = $this->input->post('uid');
         $country = $this->input->post('country');
-        $registrationId = $this->input->post('regisId');
      
         if($this->user->checkAvailability('username',$username) && $this->user->checkAvailability('nickname',$nickname))
         {
@@ -41,8 +47,7 @@ class Users extends CI_Controller {
                            'uid'  => $uid,
                            'country' => $country,
                            'nickname' => $nickname,
-                           'teamId' => $favTeam,
-                           'regisId'=>   $registrationId  
+                           'teamId' => $favTeam
                             );
             
             $result = $this->user->addUser($saveArray);
@@ -72,20 +77,28 @@ class Users extends CI_Controller {
          $this->pushlib->sendMessage($regisId, $message);
      }
 
-
      public function login()
      {
          $username = $this->input->post('username');
          $password = $this->input->post('password');
-         $registrationId = $this->input->post('regisId');
          $uid = $this->input->post('uid');
          
+         //$username = 'a@a.com';
+         //$password = 'pwd';
+         //$uid = 'b26cee37382e797ertyreergggrgrg';
+         
+         log_message('error', 'uid =>'.print_r($this->input->post(), true));
+         
          $params = array('username' => $username,
-                         'password' => md5($password) );
+                         'password' => md5($password));
          
          $result = $this->user->login($params);
          if($result)
          {
+             if($uid != $result->uid)
+             {
+                 $this->user->update(['uid' => $uid], $result->id);
+             }
              $response['status'] = true;            
          }
          else {

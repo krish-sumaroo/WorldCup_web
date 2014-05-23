@@ -44,8 +44,7 @@ class game_model extends CI_Model {
             return FALSE;
         }
 
-    }
-    
+    }    
     
     public function getTeams()
     {
@@ -75,9 +74,18 @@ class game_model extends CI_Model {
         $result = $query->row();
         
         $gameInfo = array();
-        $gameInfo['team1']['players'] = $this->_getActivePlayersForTeam($result->id, $result->team1);
-        $gameInfo['team2']['players'] = $this->_getActivePlayersForTeam($result->id, $result->team2);
+        
+        if($result->playerInfo) // list of players is final
+        {
+            $gameInfo['team1']['players'] = $this->_getActivePlayersForTeam($result->id, $result->team1);
+            $gameInfo['team2']['players'] = $this->_getActivePlayersForTeam($result->id, $result->team2);
         return $gameInfo;
+        }
+        else //return full list
+        {
+            $gameInfo['team1']['players'] = $this->getFullPlayers($result->team1);
+            $gameInfo['team2']['players'] = $this->getFullPlayers($result->team2);
+        }
     }
     
     public function getNextGameWithDetails()
