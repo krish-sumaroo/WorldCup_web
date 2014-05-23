@@ -207,6 +207,11 @@ class QueryBuilder
 	$this->queryJoinArray[count($this->queryJoinArray)] = $queryJoin;
     }
 
+    public function getAndConditionArray()
+    {
+	return $this->andConditions;
+    }
+
     public function setLimit($limit)
     {
 	if($limit != "")

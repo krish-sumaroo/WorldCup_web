@@ -1,38 +1,53 @@
 <?php
 
+
 class RedCardActionManager
 {
-    public static function addRedCardAction($fkGameActionId, $fkPlayerId)
+
+    public static function addRedCardAction($gameId, $actionDate, $playerId, $adminId = "", $userId = "")
     {
-        $redCardActionValidator = new BaseRedCardActionValidator();
+	$error = new Error();
 
-        $error = $redCardActionValidator->validateAddRedCardAction($fkGameActionId, $fkPlayerId);
+	$dateUtility = DateUtilityHelper::getDateUtility();
 
-        if(!$error->errorExists())
-        {
-            RedCardActionLogicUtility::addRedCardAction($fkGameActionId, $fkPlayerId);
-        }
+	$actionAutomaticDate = $dateUtility->getCurrentGMTMysqlDateTime();
+	$formattedActionDate = "$actionDate:00";
+	$adjustedActionDate = $dateUtility->getGmtAdjustedTime($formattedActionDate, SessionHelper::getTimeOffset() * 60);
+	$actionType = GameActionLogicUtility::$ACTION_TYPE_RED_CARD;
 
-        return $error;
+	$gameActionId = GameActionLogicUtility::addGameAction($gameId, "", $adjustedActionDate, $actionAutomaticDate,
+			$actionType);
+	RedCardActionLogicUtility::addRedCardAction($gameActionId, $playerId);
+
+	if($adminId != "")
+	{
+	    AdminGameActionLogicUtility::addAdminGameAction($gameActionId, $adminId);
+	}
+	elseif($userId != "")
+	{
+	    UserGameActionLogicUtility::addUserGameAction($gameActionId, $userId);
+	}
+
+	return $error;
     }
 
     public static function editRedCardAction($fkGameActionId, $fkPlayerId)
     {
-        $redCardActionValidator = new BaseRedCardActionValidator();
+	$redCardActionValidator = new BaseRedCardActionValidator();
 
-        $error = $redCardActionValidator->validateEditRedCardAction($fkGameActionId, $fkPlayerId);
+	$error = $redCardActionValidator->validateEditRedCardAction($fkGameActionId, $fkPlayerId);
 
-        if(!$error->errorExists())
-        {
-            RedCardActionLogicUtility::updateRedCardAction($fkGameActionId, $fkPlayerId);
-        }
+	if(!$error->errorExists())
+	{
+	    RedCardActionLogicUtility::updateRedCardAction($fkGameActionId, $fkPlayerId);
+	}
 
-        return $error;
+	return $error;
     }
 
     public static function deleteRedCardAction($fkGameActionId)
     {
-        RedCardActionLogicUtility::deleteRedCardAction($fkGameActionId);
+	RedCardActionLogicUtility::deleteRedCardAction($fkGameActionId);
     }
 }
 

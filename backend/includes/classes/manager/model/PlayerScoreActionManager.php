@@ -1,38 +1,53 @@
 <?php
 
+
 class PlayerScoreActionManager
 {
-    public static function addPlayerScoreAction($fkGameActionId, $fkPlayerId)
+
+    public static function addPlayerScoreAction($gameId, $actionDate, $playerId, $adminId = "", $userId = "")
     {
-        $playerScoreActionValidator = new BasePlayerScoreActionValidator();
+	$error = new Error();
 
-        $error = $playerScoreActionValidator->validateAddPlayerScoreAction($fkGameActionId, $fkPlayerId);
+	$dateUtility = DateUtilityHelper::getDateUtility();
 
-        if(!$error->errorExists())
-        {
-            PlayerScoreActionLogicUtility::addPlayerScoreAction($fkGameActionId, $fkPlayerId);
-        }
+	$actionAutomaticDate = $dateUtility->getCurrentGMTMysqlDateTime();
+	$formattedActionDate = "$actionDate:00";
+	$adjustedActionDate = $dateUtility->getGmtAdjustedTime($formattedActionDate, SessionHelper::getTimeOffset() * 60);
+	$actionType = GameActionLogicUtility::$ACTION_TYPE_PLAYER_SCORE;
 
-        return $error;
+	$gameActionId = GameActionLogicUtility::addGameAction($gameId, "", $adjustedActionDate, $actionAutomaticDate,
+			$actionType);
+	PlayerScoreActionLogicUtility::addPlayerScoreAction($gameActionId, $playerId);
+
+	if($adminId != "")
+	{
+	    AdminGameActionLogicUtility::addAdminGameAction($gameActionId, $adminId);
+	}
+	elseif($userId != "")
+	{
+	    UserGameActionLogicUtility::addUserGameAction($gameActionId, $userId);
+	}
+
+	return $error;
     }
 
     public static function editPlayerScoreAction($fkGameActionId, $fkPlayerId)
     {
-        $playerScoreActionValidator = new BasePlayerScoreActionValidator();
+	$playerScoreActionValidator = new BasePlayerScoreActionValidator();
 
-        $error = $playerScoreActionValidator->validateEditPlayerScoreAction($fkGameActionId, $fkPlayerId);
+	$error = $playerScoreActionValidator->validateEditPlayerScoreAction($fkGameActionId, $fkPlayerId);
 
-        if(!$error->errorExists())
-        {
-            PlayerScoreActionLogicUtility::updatePlayerScoreAction($fkGameActionId, $fkPlayerId);
-        }
+	if(!$error->errorExists())
+	{
+	    PlayerScoreActionLogicUtility::updatePlayerScoreAction($fkGameActionId, $fkPlayerId);
+	}
 
-        return $error;
+	return $error;
     }
 
     public static function deletePlayerScoreAction($fkGameActionId)
     {
-        PlayerScoreActionLogicUtility::deletePlayerScoreAction($fkGameActionId);
+	PlayerScoreActionLogicUtility::deletePlayerScoreAction($fkGameActionId);
     }
 }
 
