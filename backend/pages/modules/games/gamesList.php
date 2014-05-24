@@ -6,11 +6,20 @@ $compressor = new compressor(array('page, javascript, css'));
 
 session_start();
 
-$backendTemplateGuiUtility = new BackendTemplateGuiUtility("Games List");
+if(SessionHelper::isLoggedIn())
+{
+    $backendTemplateGuiUtility = new BackendTemplateGuiUtility("Games List");
 
-$mainContent = GamesGuiUtility::getGamesListDisplay();
-echo $backendTemplateGuiUtility->getNormalDisplay(PageTitle::$GAMES_LIST, $mainContent,
-	BackendNavigation::$GAME_SELECTED);
+    $mainContent = GamesGuiUtility::getGamesListDisplay();
+    echo $backendTemplateGuiUtility->getNormalDisplay(PageTitle::$GAMES_LIST, $mainContent,
+	    BackendNavigation::$GAME_SELECTED);
+}
+else
+{
+    $urlLogin = UrlConfiguration::getUrl("admin", "login");
+
+    UrlConfiguration::redirect($urlLogin);
+}
 
 $compressor->finish();
 

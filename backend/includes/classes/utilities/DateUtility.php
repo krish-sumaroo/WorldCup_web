@@ -1,5 +1,6 @@
 <?php
 
+
 /**
  * Description of DateUtility
  *
@@ -14,103 +15,103 @@ class DateUtility
 
     public function __construct()
     {
-        $this->initialiseComponents();
+	$this->initialiseComponents();
     }
 
     private function initialiseComponents()
     {
-        $this->initialiseShortMonthArray();
-        $this->initialiseShortDayArray();
-        $this->initialiseLongMonthArray();
+	$this->initialiseShortMonthArray();
+	$this->initialiseShortDayArray();
+	$this->initialiseLongMonthArray();
     }
 
     private function initialiseShortMonthArray()
     {
-        $this->shortMonthArray[1] = "Jan";
-        $this->shortMonthArray[2] = "Feb";
-        $this->shortMonthArray[3] = "Mar";
-        $this->shortMonthArray[4] = "Apr";
-        $this->shortMonthArray[5] = "May";
-        $this->shortMonthArray[6] = "Jun";
-        $this->shortMonthArray[7] = "Jul";
-        $this->shortMonthArray[8] = "Aug";
-        $this->shortMonthArray[9] = "Sep";
-        $this->shortMonthArray[10] = "Oct";
-        $this->shortMonthArray[11] = "Nov";
-        $this->shortMonthArray[12] = "Dec";
+	$this->shortMonthArray[1] = "Jan";
+	$this->shortMonthArray[2] = "Feb";
+	$this->shortMonthArray[3] = "Mar";
+	$this->shortMonthArray[4] = "Apr";
+	$this->shortMonthArray[5] = "May";
+	$this->shortMonthArray[6] = "Jun";
+	$this->shortMonthArray[7] = "Jul";
+	$this->shortMonthArray[8] = "Aug";
+	$this->shortMonthArray[9] = "Sep";
+	$this->shortMonthArray[10] = "Oct";
+	$this->shortMonthArray[11] = "Nov";
+	$this->shortMonthArray[12] = "Dec";
     }
 
     private function initialiseShortDayArray()
     {
-        $this->shortDayArray[0] = "Sun";
-        $this->shortDayArray[1] = "Mon";
-        $this->shortDayArray[2] = "Tue";
-        $this->shortDayArray[3] = "Wed";
-        $this->shortDayArray[4] = "Thu";
-        $this->shortDayArray[5] = "Fri";
-        $this->shortDayArray[6] = "Sat";
+	$this->shortDayArray[0] = "Sun";
+	$this->shortDayArray[1] = "Mon";
+	$this->shortDayArray[2] = "Tue";
+	$this->shortDayArray[3] = "Wed";
+	$this->shortDayArray[4] = "Thu";
+	$this->shortDayArray[5] = "Fri";
+	$this->shortDayArray[6] = "Sat";
     }
 
     private function initialiseLongMonthArray()
     {
-        $this->longMonthArray[1] = "January";
-        $this->longMonthArray[2] = "February";
-        $this->longMonthArray[3] = "March";
-        $this->longMonthArray[4] = "April";
-        $this->longMonthArray[5] = "May";
-        $this->longMonthArray[6] = "June";
-        $this->longMonthArray[7] = "July";
-        $this->longMonthArray[8] = "August";
-        $this->longMonthArray[9] = "September";
-        $this->longMonthArray[10] = "October";
-        $this->longMonthArray[11] = "November";
-        $this->longMonthArray[12] = "December";
+	$this->longMonthArray[1] = "January";
+	$this->longMonthArray[2] = "February";
+	$this->longMonthArray[3] = "March";
+	$this->longMonthArray[4] = "April";
+	$this->longMonthArray[5] = "May";
+	$this->longMonthArray[6] = "June";
+	$this->longMonthArray[7] = "July";
+	$this->longMonthArray[8] = "August";
+	$this->longMonthArray[9] = "September";
+	$this->longMonthArray[10] = "October";
+	$this->longMonthArray[11] = "November";
+	$this->longMonthArray[12] = "December";
     }
 
     public function getShortMonthString($index)
     {
-        return $this->shortMonthArray[$index];
+	return $this->shortMonthArray[$index];
     }
 
     public function getShortDayString($index)
     {
-        return $this->shortDayArray[$index];
+	return $this->shortDayArray[$index];
     }
 
     public function getShortMonthIndex($monthString)
     {
-        $array = array_keys($this->shortMonthArray, $monthString);
+	$array = array_keys($this->shortMonthArray, $monthString);
 
-        return $array[0];
+	return $array[0];
     }
 
     public function getShortDayIndex($dayString)
     {
-        $array = array_keys($this->shortDayArray, $dayString);
+	$array = array_keys($this->shortDayArray, $dayString);
 
-        return $array[0];
+	return $array[0];
     }
 
     public function getShortMonthArray()
     {
-        return $this->shortMonthArray;
+	return $this->shortMonthArray;
     }
 
     public function getLongMonthArray()
     {
-        return $this->longMonthArray;
+	return $this->longMonthArray;
     }
 
     public function getLongMonth($monthIndex)
     {
-        return $this->longMonthArray[$monthIndex];
+	return $this->longMonthArray[$monthIndex];
     }
 
     public function getLongMonthIndex($monthString)
     {
-        $array = array_keys($this->longMonthArray, $monthString);
+	$array = array_keys($this->longMonthArray, $monthString);
 
-        return $array[0];
+	return $array[0];
     }
 
     /**
@@ -121,64 +122,65 @@ class DateUtility
      */
     public function convertJavascriptDateTimeToPhpDate($strDate)
     {
-        $error = new Error();
+	$error = new Error();
 
-        try
-        {
-            $splitText = explode(", ", $strDate);
-            $firstPart = $splitText[0];
-            $splitFirstPart = explode(" ", $firstPart);
+	try
+	{
+	    $splitText = explode(", ", $strDate);
+	    $firstPart = $splitText[0];
+	    $splitFirstPart = explode(" ", $firstPart);
 //			$dayString = $this->getShortDayIndex($splitFirstPart[0]);
-            $dateString = $splitFirstPart[1];
-            $monthString = $this->getShortMonthIndex($splitFirstPart[2]);
+	    $dateString = $splitFirstPart[1];
+	    $monthString = $this->getShortMonthIndex($splitFirstPart[2]);
 
-            $secondPart = $splitText[1];
-            $splitSecondPart = explode(" ", $secondPart);
-            $yearString = $splitSecondPart[0];
-            $hourMinuteString = $splitSecondPart[1];
+	    $secondPart = $splitText[1];
+	    $splitSecondPart = explode(" ", $secondPart);
+	    $yearString = $splitSecondPart[0];
+	    $hourMinuteString = $splitSecondPart[1];
 
-            $splitHourMinute = explode(":", $hourMinuteString);
-            $hourString = $splitHourMinute[0];
-            $minuteString = $splitHourMinute[1];
+	    $splitHourMinute = explode(":", $hourMinuteString);
+	    $hourString = $splitHourMinute[0];
+	    $minuteString = $splitHourMinute[1];
 
-            $returnDate = mktime(intval($hourString), intval($minuteString), 0, intval($monthString), intval($dateString), intval($yearString));
-            $error->setObject($returnDate);
-        }
-        catch(Exception $e)
-        {
-            $error->setErrorExist(true);
-            $error->addError("invalid date format");
-        }
+	    $returnDate = mktime(intval($hourString), intval($minuteString), 0, intval($monthString), intval($dateString),
+		    intval($yearString));
+	    $error->setObject($returnDate);
+	}
+	catch(Exception $e)
+	{
+	    $error->setErrorExist(true);
+	    $error->addError("invalid date format");
+	}
 
-        return $error;
+	return $error;
     }
 
     public function convertJavascriptDateToPhpDate($strDate)
     {
-        $error = new Error();
+	$error = new Error();
 
-        try
-        {
-            $splitText = explode(", ", $strDate);
-            $firstPart = $splitText[0];
-            $splitFirstPart = explode(" ", $firstPart);
-            $dateString = $splitFirstPart[1];
-            $monthString = $this->getShortMonthIndex($splitFirstPart[2]);
+	try
+	{
+	    $splitText = explode(", ", $strDate);
+	    $firstPart = $splitText[0];
+	    $splitFirstPart = explode(" ", $firstPart);
+	    $dateString = $splitFirstPart[1];
+	    $monthString = $this->getShortMonthIndex($splitFirstPart[2]);
 
-            $secondPart = $splitText[1];
-            $splitSecondPart = explode(" ", $secondPart);
-            $yearString = $splitSecondPart[0];
+	    $secondPart = $splitText[1];
+	    $splitSecondPart = explode(" ", $secondPart);
+	    $yearString = $splitSecondPart[0];
 
-            $returnDate = mktime(0, 0, 0, intval($monthString), intval($dateString), intval($yearString));
-            $error->setObject($returnDate);
-        }
-        catch(Exception $e)
-        {
-            $error->setErrorExist(true);
-            $error->addError("invalid date format");
-        }
+	    $returnDate = mktime(0, 0, 0, intval($monthString), intval($dateString), intval($yearString));
+	    $error->setObject($returnDate);
+	}
+	catch(Exception $e)
+	{
+	    $error->setErrorExist(true);
+	    $error->addError("invalid date format");
+	}
 
-        return $error;
+	return $error;
     }
 
     /**
@@ -189,26 +191,26 @@ class DateUtility
      */
     public function convertMySqlDateTimeToJavascriptDateTime($strDate)
     {
-        $partArray = explode(" ", $strDate);
-        $datePart = $partArray[0];
-        $timePart = $partArray[1];
+	$partArray = explode(" ", $strDate);
+	$datePart = $partArray[0];
+	$timePart = $partArray[1];
 
-        $datePartArray = explode("-", $datePart);
-        $year = $datePartArray[0];
-        $month = trim(intval($datePartArray[1])); //strip of leading zeros
-        $date = $datePartArray[2];
+	$datePartArray = explode("-", $datePart);
+	$year = $datePartArray[0];
+	$month = trim(intval($datePartArray[1])); //strip of leading zeros
+	$date = $datePartArray[2];
 
-        $timePartArray = explode(":", $timePart);
-        $hour = $timePartArray[0];
-        $minute = $timePartArray[1];
-        $second = $timePartArray[2];
+	$timePartArray = explode(":", $timePart);
+	$hour = $timePartArray[0];
+	$minute = $timePartArray[1];
+	$second = $timePartArray[2];
 
-        $phpDate = mktime($hour, $minute, $second, $month, $date, $year);
+	$phpDate = mktime($hour, $minute, $second, $month, $date, $year);
 
-        $shortMonth = $this->getShortMonthString($month);
-        $shortDay = $this->getShortDayString(date("w", $phpDate));
+	$shortMonth = $this->getShortMonthString($month);
+	$shortDay = $this->getShortDayString(date("w", $phpDate));
 
-        return $shortDay." ".$date." ".$shortMonth.", ".$year." ".$hour.":".$minute;
+	return $shortDay." ".$date." ".$shortMonth.", ".$year." ".$hour.":".$minute;
     }
 
     /**
@@ -219,26 +221,26 @@ class DateUtility
      */
     public function convertMySqlDateTimeToJavascriptDateOnly($strDate)
     {
-        $partArray = explode(" ", $strDate);
-        $datePart = $partArray[0];
-        $timePart = $partArray[1];
+	$partArray = explode(" ", $strDate);
+	$datePart = $partArray[0];
+	$timePart = $partArray[1];
 
-        $datePartArray = explode("-", $datePart);
-        $year = $datePartArray[0];
-        $month = trim(intval($datePartArray[1])); //strip of leading zeros
-        $date = $datePartArray[2];
+	$datePartArray = explode("-", $datePart);
+	$year = $datePartArray[0];
+	$month = trim(intval($datePartArray[1])); //strip of leading zeros
+	$date = $datePartArray[2];
 
-        $timePartArray = explode(":", $timePart);
-        $hour = $timePartArray[0];
-        $minute = $timePartArray[1];
-        $second = $timePartArray[2];
+	$timePartArray = explode(":", $timePart);
+	$hour = $timePartArray[0];
+	$minute = $timePartArray[1];
+	$second = $timePartArray[2];
 
-        $phpDate = mktime($hour, $minute, $second, $month, $date, $year);
+	$phpDate = mktime($hour, $minute, $second, $month, $date, $year);
 
-        $shortMonth = $this->getShortMonthString($month);
-        $shortDay = $this->getShortDayString(date("w", $phpDate));
+	$shortMonth = $this->getShortMonthString($month);
+	$shortDay = $this->getShortDayString(date("w", $phpDate));
 
-        return $shortDay." ".$date." ".$shortMonth.", ".$year;
+	return $shortDay." ".$date." ".$shortMonth.", ".$year;
     }
 
     /**
@@ -249,17 +251,17 @@ class DateUtility
      */
     public function convertMySqlTimeToJavascriptTime($strTime)
     {
-        $timePartArray = explode(":", $strTime);
-        $hour = $timePartArray[0];
-        $minute = $timePartArray[1];
-        $second = $timePartArray[2];
+	$timePartArray = explode(":", $strTime);
+	$hour = $timePartArray[0];
+	$minute = $timePartArray[1];
+	$second = $timePartArray[2];
 
-        $phpDate = mktime($hour, $minute, $second, 1, 1, 2010);
+	$phpDate = mktime($hour, $minute, $second, 1, 1, 2010);
 
-        $shortMonth = $this->getShortMonthString($month);
-        $shortDay = $this->getShortDayString(date("w", $phpDate));
+	$shortMonth = $this->getShortMonthString($month);
+	$shortDay = $this->getShortDayString(date("w", $phpDate));
 
-        return $hour.":".$minute;
+	return $hour.":".$minute;
     }
 
     /**
@@ -270,50 +272,50 @@ class DateUtility
      */
     public function convertJavascriptTimeToMysqlTime($strTime)
     {
-        $timePartArray = explode(":", $strTime);
-        $hour = $timePartArray[0];
-        $minute = $timePartArray[1];
+	$timePartArray = explode(":", $strTime);
+	$hour = $timePartArray[0];
+	$minute = $timePartArray[1];
 
-        return $hour.":".$minute.":00";
+	return $hour.":".$minute.":00";
     }
 
     public function convertPhpDateToJavascriptDate($phpDate)
     {
-        $month = date("n", $phpDate);
-        $date = date("j", $phpDate);
-        $year = date("Y", $phpDate);
+	$month = date("n", $phpDate);
+	$date = date("j", $phpDate);
+	$year = date("Y", $phpDate);
 
-        $shortMonth = $this->getShortMonthString($month);
-        $shortDay = $this->getShortDayString(date("w", $phpDate));
+	$shortMonth = $this->getShortMonthString($month);
+	$shortDay = $this->getShortDayString(date("w", $phpDate));
 
-        return $shortDay." ".$date." ".$shortMonth.", ".$year;
+	return $shortDay." ".$date." ".$shortMonth.", ".$year;
     }
 
     public function convertPhpDateToJavascriptDateTime($phpDate)
     {
-        $month = date("n", $phpDate);
-        $date = date("j", $phpDate);
-        $year = date("Y", $phpDate);
-        $hour = date("H", $phpDate);
-        $minute = date("i", $phpDate);
+	$month = date("n", $phpDate);
+	$date = date("j", $phpDate);
+	$year = date("Y", $phpDate);
+	$hour = date("H", $phpDate);
+	$minute = date("i", $phpDate);
 
-        $shortMonth = $this->getShortMonthString($month);
-        $shortDay = $this->getShortDayString(date("w", $phpDate));
-        $formattedDate = $this->formatWithLeadingZero($date);
+	$shortMonth = $this->getShortMonthString($month);
+	$shortDay = $this->getShortDayString(date("w", $phpDate));
+	$formattedDate = $this->formatWithLeadingZero($date);
 
-        return $shortDay." ".$formattedDate." ".$shortMonth.", ".$year." ".$hour.":".$minute;
+	return $shortDay." ".$formattedDate." ".$shortMonth.", ".$year." ".$hour.":".$minute;
     }
 
     public function formatWithLeadingZero($number)
     {
-        if(intval($number) < 10)
-        {
-            return "0".intval($number);
-        }
-        else
-        {
-            return intval($number);
-        }
+	if(intval($number) < 10)
+	{
+	    return "0".intval($number);
+	}
+	else
+	{
+	    return intval($number);
+	}
     }
 
     /**
@@ -324,164 +326,170 @@ class DateUtility
      */
     public function convertToMysqlDateTime($strDate)
     {
-        $splitText = explode(", ", $strDate);
-        $firstPart = $splitText[0];
-        $splitFirstPart = explode(" ", $firstPart);
+	$splitText = explode(", ", $strDate);
+	$firstPart = $splitText[0];
+	$splitFirstPart = explode(" ", $firstPart);
 //		$dayString = $this->getShortDayIndex($splitFirstPart[0]);
-        $dateString = $splitFirstPart[1];
-        $monthString = $this->getShortMonthIndex($splitFirstPart[2]);
+	$dateString = $splitFirstPart[1];
+	$monthString = $this->getShortMonthIndex($splitFirstPart[2]);
 
-        $secondPart = $splitText[1];
-        $splitSecondPart = explode(" ", $secondPart);
-        $yearString = $splitSecondPart[0];
-        $hourMinuteString = $splitSecondPart[1];
+	$secondPart = $splitText[1];
+	$splitSecondPart = explode(" ", $secondPart);
+	$yearString = $splitSecondPart[0];
+	$hourMinuteString = $splitSecondPart[1];
 
-        $splitHourMinute = explode(":", $hourMinuteString);
-        $hourString = $splitHourMinute[0];
-        $minuteString = $splitHourMinute[1];
+	$splitHourMinute = explode(":", $hourMinuteString);
+	$hourString = $splitHourMinute[0];
+	$minuteString = $splitHourMinute[1];
 
-        $phpDate = mktime(intval($hourString), intval($minuteString), 0, intval($monthString), intval($dateString), intval($yearString));
+	$phpDate = mktime(intval($hourString), intval($minuteString), 0, intval($monthString), intval($dateString),
+		intval($yearString));
 
-        return date("Y-m-d H:i:s", $phpDate);
+	return date("Y-m-d H:i:s", $phpDate);
     }
 
     public function convertPhpDateToMysqlDate($phpDate)
     {
-        return date("Y-m-d H:i:s", $phpDate);
+	return date("Y-m-d H:i:s", $phpDate);
+    }
+
+    public function convertPhpDateToMysqlDateExcludingSeconds($phpDate)
+    {
+	return date("Y-m-d H:i", $phpDate);
     }
 
     public function convertPhpDateToMysqlDateOnly($phpDate)
     {
-        return date("Y-m-d", $phpDate);
+	return date("Y-m-d", $phpDate);
     }
 
     public function convertPhpDateToMysqlTimeOnly($phpDate)
     {
-        return date("H:i:s", $phpDate);
+	return date("H:i:s", $phpDate);
     }
 
     public function convertMySqlDateTimeToPhpTimestamp($strDate)
     {
-        $partArray = explode(" ", $strDate);
-        $datePart = $partArray[0];
-        $timePart = $partArray[1];
+	$partArray = explode(" ", $strDate);
+	$datePart = $partArray[0];
+	$timePart = $partArray[1];
 
-        $datePartArray = explode("-", $datePart);
-        $year = $datePartArray[0];
-        $month = $datePartArray[1];
-        $date = $datePartArray[2];
+	$datePartArray = explode("-", $datePart);
+	$year = $datePartArray[0];
+	$month = $datePartArray[1];
+	$date = $datePartArray[2];
 
-        $timePartArray = explode(":", $timePart);
-        $hour = $timePartArray[0];
-        $minute = $timePartArray[1];
-        $second = $timePartArray[2];
+	$timePartArray = explode(":", $timePart);
+	$hour = $timePartArray[0];
+	$minute = $timePartArray[1];
+	$second = $timePartArray[2];
 
-        $phpDate = mktime($hour, $minute, $second, $month, $date, $year);
+	$phpDate = mktime($hour, $minute, $second, $month, $date, $year);
 
-        return $phpDate;
+	return $phpDate;
     }
 
     public function convertMySqlDateOnlyToPhpTimestamp($strDate)
     {
-        $datePartArray = explode("-", $strDate);
-        $year = $datePartArray[0];
-        $month = $datePartArray[1];
-        $date = $datePartArray[2];
+	$datePartArray = explode("-", $strDate);
+	$year = $datePartArray[0];
+	$month = $datePartArray[1];
+	$date = $datePartArray[2];
 
-        $phpDate = mktime(1, 1, 1, $month, $date, $year);
+	$phpDate = mktime(1, 1, 1, $month, $date, $year);
 
-        return $phpDate;
+	return $phpDate;
     }
 
     public function convertMysqlDateToJavascriptDate($strDate)
     {
-        $dateArray = explode("-", $strDate);
-        $year = $dateArray[0];
-        $month = $dateArray[1];
-        $date = $dateArray[2];
+	$dateArray = explode("-", $strDate);
+	$year = $dateArray[0];
+	$month = $dateArray[1];
+	$date = $dateArray[2];
 
-        $phpDate = mktime(0, 0, 1, $month, $date, $year);
-        return $this->convertPhpDateToJavascriptDate($phpDate);
+	$phpDate = mktime(0, 0, 1, $month, $date, $year);
+	return $this->convertPhpDateToJavascriptDate($phpDate);
     }
 
     public function convertJavascriptDateToMysqlDate($strDate)
     {
-        $phpDate = $this->convertJavascriptDateToPhpDate($strDate);
+	$phpDate = $this->convertJavascriptDateToPhpDate($strDate);
 
-        return $this->convertPhpDateToMysqlDateOnly($phpDate->getObject());
+	return $this->convertPhpDateToMysqlDateOnly($phpDate->getObject());
     }
 
     public function formatMysqlDateTimeToHourMinute($strDate)
     {
-        $splitText = explode(" ", $strDate);
-        $timePart = $splitText[1];
-        $splitTime = explode(":", $timePart);
+	$splitText = explode(" ", $strDate);
+	$timePart = $splitText[1];
+	$splitTime = explode(":", $timePart);
 
-        return $splitTime[0].":".$splitTime[1];
+	return $splitTime[0].":".$splitTime[1];
     }
 
     public function rollHourForward($date)
     {
-        $dateArray = getdate($date);
+	$dateArray = getdate($date);
 
-        $year = $dateArray['year'];
-        $month = $dateArray['mon'];
-        $day = $dateArray['mday'];
-        $hour = $dateArray['hours'];
-        $minute = $dateArray['minutes'];
-        $second = $dateArray['seconds'];
+	$year = $dateArray['year'];
+	$month = $dateArray['mon'];
+	$day = $dateArray['mday'];
+	$hour = $dateArray['hours'];
+	$minute = $dateArray['minutes'];
+	$second = $dateArray['seconds'];
 
-        $newDate = mktime(($hour + 1), $minute, $second, $month, $day, $year);
+	$newDate = mktime(($hour + 1), $minute, $second, $month, $day, $year);
 
-        return $newDate;
+	return $newDate;
     }
 
     public function rollMinutesForward($date, $minuteInterval)
     {
-        $dateArray = getdate($date);
+	$dateArray = getdate($date);
 
-        $year = $dateArray['year'];
-        $month = $dateArray['mon'];
-        $day = $dateArray['mday'];
-        $hour = $dateArray['hours'];
-        $minute = $dateArray['minutes'];
-        $second = $dateArray['seconds'];
+	$year = $dateArray['year'];
+	$month = $dateArray['mon'];
+	$day = $dateArray['mday'];
+	$hour = $dateArray['hours'];
+	$minute = $dateArray['minutes'];
+	$second = $dateArray['seconds'];
 
-        $newDate = mktime($hour, $minute + $minuteInterval, $second, $month, $day, $year);
+	$newDate = mktime($hour, $minute + $minuteInterval, $second, $month, $day, $year);
 
-        return $newDate;
+	return $newDate;
     }
 
     public function rollMinutesBackward($date, $minuteInterval)
     {
-        $dateArray = getdate($date);
+	$dateArray = getdate($date);
 
-        $year = $dateArray['year'];
-        $month = $dateArray['mon'];
-        $day = $dateArray['mday'];
-        $hour = $dateArray['hours'];
-        $minute = $dateArray['minutes'];
-        $second = $dateArray['seconds'];
+	$year = $dateArray['year'];
+	$month = $dateArray['mon'];
+	$day = $dateArray['mday'];
+	$hour = $dateArray['hours'];
+	$minute = $dateArray['minutes'];
+	$second = $dateArray['seconds'];
 
-        $newDate = mktime($hour, $minute - $minuteInterval, $second, $month, $day, $year);
+	$newDate = mktime($hour, $minute - $minuteInterval, $second, $month, $day, $year);
 
-        return $newDate;
+	return $newDate;
     }
 
     public function rollHourBackward($date)
     {
-        $dateArray = getdate($date);
+	$dateArray = getdate($date);
 
-        $year = $dateArray['year'];
-        $month = $dateArray['mon'];
-        $day = $dateArray['mday'];
-        $hour = $dateArray['hours'];
-        $minute = $dateArray['minutes'];
-        $second = $dateArray['seconds'];
+	$year = $dateArray['year'];
+	$month = $dateArray['mon'];
+	$day = $dateArray['mday'];
+	$hour = $dateArray['hours'];
+	$minute = $dateArray['minutes'];
+	$second = $dateArray['seconds'];
 
-        $newDate = mktime(($hour - 1), $minute, $second, $month, $day, $year);
+	$newDate = mktime(($hour - 1), $minute, $second, $month, $day, $year);
 
-        return $newDate;
+	return $newDate;
     }
 
     /**
@@ -491,18 +499,18 @@ class DateUtility
      */
     public function rollDayForward($date)
     {
-        $dateArray = getdate($date);
+	$dateArray = getdate($date);
 
-        $year = $dateArray['year'];
-        $month = $dateArray['mon'];
-        $day = $dateArray['mday'];
-        $hour = $dateArray['hours'];
-        $minute = $dateArray['minutes'];
-        $second = $dateArray['seconds'];
+	$year = $dateArray['year'];
+	$month = $dateArray['mon'];
+	$day = $dateArray['mday'];
+	$hour = $dateArray['hours'];
+	$minute = $dateArray['minutes'];
+	$second = $dateArray['seconds'];
 
-        $newDate = mktime($hour, $minute, $second, $month, ($day + 1), $year);
+	$newDate = mktime($hour, $minute, $second, $month, ($day + 1), $year);
 
-        return $newDate;
+	return $newDate;
     }
 
     /**
@@ -512,524 +520,524 @@ class DateUtility
      */
     public function rollDayBackward($date)
     {
-        $newDate = $date - (24 * 60 * 60);
+	$newDate = $date - (24 * 60 * 60);
 
-        return $newDate;
+	return $newDate;
     }
 
     public function rollWeekBackward($date)
     {
-        $dateArray = getdate($date);
+	$dateArray = getdate($date);
 
-        $year = $dateArray['year'];
-        $month = $dateArray['mon'];
-        $day = $dateArray['mday'];
-        $hour = $dateArray['hours'];
-        $minute = $dateArray['minutes'];
-        $second = $dateArray['seconds'];
+	$year = $dateArray['year'];
+	$month = $dateArray['mon'];
+	$day = $dateArray['mday'];
+	$hour = $dateArray['hours'];
+	$minute = $dateArray['minutes'];
+	$second = $dateArray['seconds'];
 
-        $currentDate = mktime($hour, $minute, $second, $month, $day, $year);
-        $newDate = $currentDate - (7 * 24 * 60 * 60);
+	$currentDate = mktime($hour, $minute, $second, $month, $day, $year);
+	$newDate = $currentDate - (7 * 24 * 60 * 60);
 
-        return $newDate;
+	return $newDate;
     }
 
     public function rollWeekForward($date)
     {
-        $dateArray = getdate($date);
+	$dateArray = getdate($date);
 
-        $year = $dateArray['year'];
-        $month = $dateArray['mon'];
-        $day = $dateArray['mday'];
-        $hour = $dateArray['hours'];
-        $minute = $dateArray['minutes'];
-        $second = $dateArray['seconds'];
+	$year = $dateArray['year'];
+	$month = $dateArray['mon'];
+	$day = $dateArray['mday'];
+	$hour = $dateArray['hours'];
+	$minute = $dateArray['minutes'];
+	$second = $dateArray['seconds'];
 
-        $currentDate = mktime($hour, $minute, $second, $month, $day, $year);
-        $newDate = $currentDate + (7 * 24 * 60 * 60);
+	$currentDate = mktime($hour, $minute, $second, $month, $day, $year);
+	$newDate = $currentDate + (7 * 24 * 60 * 60);
 
-        return $newDate;
+	return $newDate;
     }
 
     public function rollMonthBackward($date)
     {
-        $dateArray = getdate($date);
+	$dateArray = getdate($date);
 
-        $year = $dateArray['year'];
-        $month = $dateArray['mon'];
-        $day = $dateArray['mday'];
-        $hour = $dateArray['hours'];
-        $minute = $dateArray['minutes'];
-        $second = $dateArray['seconds'];
+	$year = $dateArray['year'];
+	$month = $dateArray['mon'];
+	$day = $dateArray['mday'];
+	$hour = $dateArray['hours'];
+	$minute = $dateArray['minutes'];
+	$second = $dateArray['seconds'];
 
-        $newDate = mktime($hour, $minute, $second, ($month - 1), $day, $year);
+	$newDate = mktime($hour, $minute, $second, ($month - 1), $day, $year);
 
-        return $newDate;
+	return $newDate;
     }
 
     public function rollMonthBackwardByInterval($date, $interval)
     {
-        $dateArray = getdate($date);
+	$dateArray = getdate($date);
 
-        $year = $dateArray['year'];
-        $month = $dateArray['mon'];
-        $day = $dateArray['mday'];
-        $hour = $dateArray['hours'];
-        $minute = $dateArray['minutes'];
-        $second = $dateArray['seconds'];
+	$year = $dateArray['year'];
+	$month = $dateArray['mon'];
+	$day = $dateArray['mday'];
+	$hour = $dateArray['hours'];
+	$minute = $dateArray['minutes'];
+	$second = $dateArray['seconds'];
 
-        $newDate = mktime($hour, $minute, $second, ($month - intval($interval)), $day, $year);
+	$newDate = mktime($hour, $minute, $second, ($month - intval($interval)), $day, $year);
 
-        return $newDate;
+	return $newDate;
     }
 
     public function rollMonthForward($date)
     {
-        $dateArray = getdate($date);
+	$dateArray = getdate($date);
 
-        $year = $dateArray['year'];
-        $month = $dateArray['mon'];
-        $day = $dateArray['mday'];
-        $hour = $dateArray['hours'];
-        $minute = $dateArray['minutes'];
-        $second = $dateArray['seconds'];
+	$year = $dateArray['year'];
+	$month = $dateArray['mon'];
+	$day = $dateArray['mday'];
+	$hour = $dateArray['hours'];
+	$minute = $dateArray['minutes'];
+	$second = $dateArray['seconds'];
 
-        $newDate = mktime($hour, $minute, $second, ($month + 1), $day, $year);
+	$newDate = mktime($hour, $minute, $second, ($month + 1), $day, $year);
 
-        return $newDate;
+	return $newDate;
     }
 
     public function rollHourForwardByInterval($date, $duration)
     {
-        if(is_numeric($duration))
-        {
-            $dateArray = getdate($date);
+	if(is_numeric($duration))
+	{
+	    $dateArray = getdate($date);
 
-            $year = $dateArray['year'];
-            $month = $dateArray['mon'];
-            $day = $dateArray['mday'];
-            $hour = $dateArray['hours'];
-            $minute = $dateArray['minutes'];
-            $second = $dateArray['seconds'];
+	    $year = $dateArray['year'];
+	    $month = $dateArray['mon'];
+	    $day = $dateArray['mday'];
+	    $hour = $dateArray['hours'];
+	    $minute = $dateArray['minutes'];
+	    $second = $dateArray['seconds'];
 
-            $newDate = mktime(($hour + $duration), $minute, $second, $month, $day, $year);
+	    $newDate = mktime(($hour + $duration), $minute, $second, $month, $day, $year);
 
-            return $newDate;
-        }
-        else
-        {
-            return $date;
-        }
+	    return $newDate;
+	}
+	else
+	{
+	    return $date;
+	}
     }
 
     public function rollDayForwardByInterval($date, $duration)
     {
-        if(is_numeric($duration))
-        {
-            $dateArray = getdate($date);
+	if(is_numeric($duration))
+	{
+	    $dateArray = getdate($date);
 
-            $year = $dateArray['year'];
-            $month = $dateArray['mon'];
-            $day = $dateArray['mday'];
-            $hour = $dateArray['hours'];
-            $minute = $dateArray['minutes'];
-            $second = $dateArray['seconds'];
+	    $year = $dateArray['year'];
+	    $month = $dateArray['mon'];
+	    $day = $dateArray['mday'];
+	    $hour = $dateArray['hours'];
+	    $minute = $dateArray['minutes'];
+	    $second = $dateArray['seconds'];
 
-            $newDate = mktime($hour, $minute, $second, $month, ($day + $duration), $year);
+	    $newDate = mktime($hour, $minute, $second, $month, ($day + $duration), $year);
 
-            return $newDate;
-        }
-        else
-        {
-            return $date;
-        }
+	    return $newDate;
+	}
+	else
+	{
+	    return $date;
+	}
     }
 
     public function rollDayBackwardByInterval($date, $duration)
     {
-        if(is_numeric($duration))
-        {
-            $dateArray = getdate($date);
+	if(is_numeric($duration))
+	{
+	    $dateArray = getdate($date);
 
-            $year = $dateArray['year'];
-            $month = $dateArray['mon'];
-            $day = $dateArray['mday'];
-            $hour = $dateArray['hours'];
-            $minute = $dateArray['minutes'];
-            $second = $dateArray['seconds'];
+	    $year = $dateArray['year'];
+	    $month = $dateArray['mon'];
+	    $day = $dateArray['mday'];
+	    $hour = $dateArray['hours'];
+	    $minute = $dateArray['minutes'];
+	    $second = $dateArray['seconds'];
 
-            $newDate = mktime($hour, $minute, $second, $month, ($day - $duration), $year);
+	    $newDate = mktime($hour, $minute, $second, $month, ($day - $duration), $year);
 
-            return $newDate;
-        }
-        else
-        {
-            return $date;
-        }
+	    return $newDate;
+	}
+	else
+	{
+	    return $date;
+	}
     }
 
     public function rollWeekForwardByInterval($date, $duration)
     {
-        if(is_numeric($duration))
-        {
-            $dateArray = getdate($date);
+	if(is_numeric($duration))
+	{
+	    $dateArray = getdate($date);
 
-            $year = $dateArray['year'];
-            $month = $dateArray['mon'];
-            $day = $dateArray['mday'];
-            $hour = $dateArray['hours'];
-            $minute = $dateArray['minutes'];
-            $second = $dateArray['seconds'];
+	    $year = $dateArray['year'];
+	    $month = $dateArray['mon'];
+	    $day = $dateArray['mday'];
+	    $hour = $dateArray['hours'];
+	    $minute = $dateArray['minutes'];
+	    $second = $dateArray['seconds'];
 
-            $currentDate = mktime($hour, $minute, $second, $month, $day, $year);
-            $newDate = $currentDate + (intval($duration) * 7 * 24 * 60 * 60);
+	    $currentDate = mktime($hour, $minute, $second, $month, $day, $year);
+	    $newDate = $currentDate + (intval($duration) * 7 * 24 * 60 * 60);
 
-            return $newDate;
-        }
-        else
-        {
-            return $date;
-        }
+	    return $newDate;
+	}
+	else
+	{
+	    return $date;
+	}
     }
 
     public function rollMonthForwardByInterval($date, $duration)
     {
-        if(is_numeric($duration))
-        {
-            $dateArray = getdate($date);
+	if(is_numeric($duration))
+	{
+	    $dateArray = getdate($date);
 
-            $year = $dateArray['year'];
-            $month = $dateArray['mon'];
-            $day = $dateArray['mday'];
-            $hour = $dateArray['hours'];
-            $minute = $dateArray['minutes'];
-            $second = $dateArray['seconds'];
+	    $year = $dateArray['year'];
+	    $month = $dateArray['mon'];
+	    $day = $dateArray['mday'];
+	    $hour = $dateArray['hours'];
+	    $minute = $dateArray['minutes'];
+	    $second = $dateArray['seconds'];
 
-            $newDate = mktime($hour, $minute, $second, ($month + $duration), $day, $year);
+	    $newDate = mktime($hour, $minute, $second, ($month + $duration), $day, $year);
 
-            return $newDate;
-        }
-        else
-        {
-            return $date;
-        }
+	    return $newDate;
+	}
+	else
+	{
+	    return $date;
+	}
     }
 
     public function rollYearForwardByInterval($date, $duration)
     {
-        if(is_numeric($duration))
-        {
-            $dateArray = getdate($date);
+	if(is_numeric($duration))
+	{
+	    $dateArray = getdate($date);
 
-            $year = $dateArray['year'];
-            $month = $dateArray['mon'];
-            $day = $dateArray['mday'];
-            $hour = $dateArray['hours'];
-            $minute = $dateArray['minutes'];
-            $second = $dateArray['seconds'];
+	    $year = $dateArray['year'];
+	    $month = $dateArray['mon'];
+	    $day = $dateArray['mday'];
+	    $hour = $dateArray['hours'];
+	    $minute = $dateArray['minutes'];
+	    $second = $dateArray['seconds'];
 
-            $newDate = mktime($hour, $minute, $second, $month, $day, ($year + $duration));
+	    $newDate = mktime($hour, $minute, $second, $month, $day, ($year + $duration));
 
-            return $newDate;
-        }
-        else
-        {
-            return $date;
-        }
+	    return $newDate;
+	}
+	else
+	{
+	    return $date;
+	}
     }
 
     public function formatFullMySqlDateTime($mysqlDateTime)
     {
 //	$partArray = explode(" ", $mysqlDateTime);
-        $partArray = explode(" ", $mysqlDateTime);
-        $datePart = $partArray[0];
-        $timePart = $partArray[1];
+	$partArray = explode(" ", $mysqlDateTime);
+	$datePart = $partArray[0];
+	$timePart = $partArray[1];
 
 //	$datePartArray = explode("-", $datePart);
-        $datePartArray = explode("-", $datePart);
-        $year = $datePartArray[0];
-        $month = $datePartArray[1];
-        $day = $datePartArray[2];
+	$datePartArray = explode("-", $datePart);
+	$year = $datePartArray[0];
+	$month = $datePartArray[1];
+	$day = $datePartArray[2];
 
 //	$timePartArray = explode(":", $timePart);
-        $timePartArray = explode(":", $timePart);
-        $hour = $timePartArray[0];
-        $minute = $timePartArray[1];
-        $second = $timePartArray[2];
+	$timePartArray = explode(":", $timePart);
+	$hour = $timePartArray[0];
+	$minute = $timePartArray[1];
+	$second = $timePartArray[2];
 
-        $phpDate = mktime($hour, $minute, $second, $month, $day, $year);
-        $strPhpDate = $this->formatFullDateTime($phpDate);
+	$phpDate = mktime($hour, $minute, $second, $month, $day, $year);
+	$strPhpDate = $this->formatFullDateTime($phpDate);
 
-        return $strPhpDate;
+	return $strPhpDate;
     }
 
     public function formatMySqlDate($mysqlDateTime)
     {
 //	$dateArray = explode(" ", $mysqlDateTime);
-        $dateArray = explode(" ", $mysqlDateTime);
-        $datePart = $dateArray[0];
+	$dateArray = explode(" ", $mysqlDateTime);
+	$datePart = $dateArray[0];
 //	$datePartArray = explode("-", $datePart);
-        $datePartArray = explode("-", $datePart);
-        $year = $datePartArray[0];
-        $month = $datePartArray[1];
-        $day = $datePartArray[2];
+	$datePartArray = explode("-", $datePart);
+	$year = $datePartArray[0];
+	$month = $datePartArray[1];
+	$day = $datePartArray[2];
 
-        $phpDate = mktime(1, 1, 1, $month, $day, $year);
-        $strPhpDate = $this->formatDate($phpDate);
+	$phpDate = mktime(1, 1, 1, $month, $day, $year);
+	$strPhpDate = $this->formatDate($phpDate);
 
-        return $strPhpDate;
+	return $strPhpDate;
     }
 
     public function formatStartEndCompressed($mysqlStartDateTime, $mysqlEndDateTime)
     {
-        $phpStartDate = $this->convertMySqlDateTimeToPhpTimestamp($mysqlStartDateTime);
-        $phpEndDate = $this->convertMySqlDateTimeToPhpTimestamp($mysqlEndDateTime);
+	$phpStartDate = $this->convertMySqlDateTimeToPhpTimestamp($mysqlStartDateTime);
+	$phpEndDate = $this->convertMySqlDateTimeToPhpTimestamp($mysqlEndDateTime);
 
-        $startDateArray = getdate($phpStartDate);
-        $startYear = $startDateArray['year'];
-        $startMonth = $startDateArray['mon'];
-        $startDay = $startDateArray['mday'];
+	$startDateArray = getdate($phpStartDate);
+	$startYear = $startDateArray['year'];
+	$startMonth = $startDateArray['mon'];
+	$startDay = $startDateArray['mday'];
 
-        $endDateArray = getdate($phpEndDate);
-        $endYear = $endDateArray['year'];
-        $endMonth = $endDateArray['mon'];
-        $endDay = $endDateArray['mday'];
+	$endDateArray = getdate($phpEndDate);
+	$endYear = $endDateArray['year'];
+	$endMonth = $endDateArray['mon'];
+	$endDay = $endDateArray['mday'];
 
-        $conditionYear = ($startYear == $endYear);
-        $conditionMonth = ($startMonth == $endMonth);
-        $conditionDay = ($startDay == $endDay);
+	$conditionYear = ($startYear == $endYear);
+	$conditionMonth = ($startMonth == $endMonth);
+	$conditionDay = ($startDay == $endDay);
 
-        $formattedStartDate = "";
-        $formattedEndDate = "";
+	$formattedStartDate = "";
+	$formattedEndDate = "";
 
-        if($conditionYear and $conditionMonth and $conditionDay)
-        {
-            $formattedStartDate = $this->formatHourMinute($phpStartDate);
-            $formattedEndDate = $this->formatFullMySqlDateTime($mysqlEndDateTime);
-        }
-        else
-        {
-            $formattedStartDate = $this->formatFullMySqlDateTime($mysqlStartDateTime);
-            $formattedEndDate = $this->formatFullMySqlDateTime($mysqlEndDateTime);
-        }
+	if($conditionYear and $conditionMonth and $conditionDay)
+	{
+	    $formattedStartDate = $this->formatHourMinute($phpStartDate);
+	    $formattedEndDate = $this->formatFullMySqlDateTime($mysqlEndDateTime);
+	}
+	else
+	{
+	    $formattedStartDate = $this->formatFullMySqlDateTime($mysqlStartDateTime);
+	    $formattedEndDate = $this->formatFullMySqlDateTime($mysqlEndDateTime);
+	}
 
-        return $formattedStartDate." to ".$formattedEndDate;
+	return $formattedStartDate." to ".$formattedEndDate;
     }
 
     public function formatHourMinute($phpDate)
     {
-        return date("H:i", $phpDate);
+	return date("H:i", $phpDate);
     }
 
     public function formatFullDateTime($phpDate)
     {
-        return date("H:i D, j M, Y", $phpDate);
+	return date("H:i D, j M, Y", $phpDate);
     }
 
     public function formatDate($phpDate)
     {
-        return date("D, j M, Y", $phpDate);
+	return date("D, j M, Y", $phpDate);
     }
 
     public function checkSameMonth($phpStartDate, $phpEndDate)
     {
-        $startDateArray = getdate($phpStartDate);
-        $startMonth = $startDateArray['mon'];
+	$startDateArray = getdate($phpStartDate);
+	$startMonth = $startDateArray['mon'];
 
-        $endDateArray = getdate($phpEndDate);
-        $endMonth = $endDateArray['mon'];
+	$endDateArray = getdate($phpEndDate);
+	$endMonth = $endDateArray['mon'];
 
-        if($startMonth == $endMonth)
-        {
-            return true;
-        }
-        else
-        {
-            return false;
-        }
+	if($startMonth == $endMonth)
+	{
+	    return true;
+	}
+	else
+	{
+	    return false;
+	}
     }
 
     public function checkSameDateUptoDay($phpStartDate, $phpEndDate)
     {
-        $startDateArray = getdate($phpStartDate);
-        $startYear = $startDateArray['year'];
-        $startMonth = $startDateArray['mon'];
-        $startDay = $startDateArray['mday'];
+	$startDateArray = getdate($phpStartDate);
+	$startYear = $startDateArray['year'];
+	$startMonth = $startDateArray['mon'];
+	$startDay = $startDateArray['mday'];
 
-        $endDateArray = getdate($phpEndDate);
-        $endYear = $endDateArray['year'];
-        $endMonth = $endDateArray['mon'];
-        $endDay = $endDateArray['mday'];
+	$endDateArray = getdate($phpEndDate);
+	$endYear = $endDateArray['year'];
+	$endMonth = $endDateArray['mon'];
+	$endDay = $endDateArray['mday'];
 
-        if(($startYear == $endYear) and ($startMonth == $endMonth) and ($startDay == $endDay))
-        {
-            return true;
-        }
-        else
-        {
-            return false;
-        }
+	if(($startYear == $endYear) and ($startMonth == $endMonth) and ($startDay == $endDay))
+	{
+	    return true;
+	}
+	else
+	{
+	    return false;
+	}
     }
 
     public function getMinutesBetweenMysqlDates($startDate, $endDate)
     {
-        $convertedStartDate = $this->convertMySqlDateTimeToPhpTimestamp($startDate);
-        $convertedEndDate = $this->convertMySqlDateTimeToPhpTimestamp($endDate);
+	$convertedStartDate = $this->convertMySqlDateTimeToPhpTimestamp($startDate);
+	$convertedEndDate = $this->convertMySqlDateTimeToPhpTimestamp($endDate);
 
-        $difference = $convertedEndDate - $convertedStartDate;
+	$difference = $convertedEndDate - $convertedStartDate;
 
-        $differenceInMinutes = ($difference / 60);
+	$differenceInMinutes = ($difference / 60);
 
-        return $differenceInMinutes;
+	return $differenceInMinutes;
     }
 
     public function convertToHourMinute($timestamp)
     {
-        $convertedNumber = intval($timestamp);
+	$convertedNumber = intval($timestamp);
 
-        $hours = intval($convertedNumber / 3600);
-        $minutes = intval(($convertedNumber % 3600) / 60);
+	$hours = intval($convertedNumber / 3600);
+	$minutes = intval(($convertedNumber % 3600) / 60);
 
-        $hours = number_format($hours, 0);
-        $minutes = number_format($minutes, 0);
+	$hours = number_format($hours, 0);
+	$minutes = number_format($minutes, 0);
 
-        if($hours < 10)
-        {
-            if($hours > 0)
-            {
-                $hours = "0".$hours;
-            }
-            elseif(($hours < 0) and ($hours > -10))
-            {
-                $negativeSign = substr($hours, 0, 1);
-                $negativeNumber = substr($hours, 1, strlen($hours));
-                $hours = $negativeSign."0".$negativeNumber;
-            }
-        }
+	if($hours < 10)
+	{
+	    if($hours > 0)
+	    {
+		$hours = "0".$hours;
+	    }
+	    elseif(($hours < 0) and ($hours > -10))
+	    {
+		$negativeSign = substr($hours, 0, 1);
+		$negativeNumber = substr($hours, 1, strlen($hours));
+		$hours = $negativeSign."0".$negativeNumber;
+	    }
+	}
 
-        $minutes = intval($minutes);
+	$minutes = intval($minutes);
 
-        if($minutes < 0)
-        {
-            $minutes = "00";
-        }
-        elseif($minutes < 10)
-        {
-            $minutes = "0".$minutes;
-        }
+	if($minutes < 0)
+	{
+	    $minutes = "00";
+	}
+	elseif($minutes < 10)
+	{
+	    $minutes = "0".$minutes;
+	}
 
-        return $hours.":".$minutes;
+	return $hours.":".$minutes;
     }
 
     public function convertToHourMinuteSecond($strMinutes)
     {
-        $convertedMinutes = intval($strMinutes);
-        $hours = $convertedMinutes / 60;
-        $minutes = $convertedMinutes % 60;
+	$convertedMinutes = intval($strMinutes);
+	$hours = $convertedMinutes / 60;
+	$minutes = $convertedMinutes % 60;
 
-        $hours = number_format($hours, 0);
-        $minutes = number_format($minutes, 0);
+	$hours = number_format($hours, 0);
+	$minutes = number_format($minutes, 0);
 
-        if($hours < 10)
-        {
-            if($hours > 0)
-            {
-                $hours = "0".$hours;
-            }
-            elseif(($hours < 0) and ($hours > -10))
-            {
-                $negativeSign = substr($hours, 0, 1);
-                $negativeNumber = substr($hours, 1, strlen($hours));
-                $hours = $negativeSign."0".$negativeNumber;
-            }
-        }
+	if($hours < 10)
+	{
+	    if($hours > 0)
+	    {
+		$hours = "0".$hours;
+	    }
+	    elseif(($hours < 0) and ($hours > -10))
+	    {
+		$negativeSign = substr($hours, 0, 1);
+		$negativeNumber = substr($hours, 1, strlen($hours));
+		$hours = $negativeSign."0".$negativeNumber;
+	    }
+	}
 
-        if($minutes < 10)
-        {
-            $minutes = "0".$minutes;
-        }
+	if($minutes < 10)
+	{
+	    $minutes = "0".$minutes;
+	}
 
-        return $hours.":".$minutes.":00";
+	return $hours.":".$minutes.":00";
     }
 
     public function convertMinutesToHourMinute($strMinutes)
     {
-        $convertedMinutes = intval($strMinutes);
-        $hours = intval($convertedMinutes / 60);
-        $minutes = intval($convertedMinutes % 60);
+	$convertedMinutes = intval($strMinutes);
+	$hours = intval($convertedMinutes / 60);
+	$minutes = intval($convertedMinutes % 60);
 
-        $hours = number_format($hours, 0);
-        $minutes = number_format($minutes, 0);
+	$hours = number_format($hours, 0);
+	$minutes = number_format($minutes, 0);
 
-        if($hours < 10)
-        {
-            if($hours > 0)
-            {
-                $hours = "0".$hours;
-            }
-            elseif(($hours < 0) and ($hours > -10))
-            {
-                $negativeSign = substr($hours, 0, 1);
-                $negativeNumber = substr($hours, 1, strlen($hours));
-                $hours = $negativeSign."0".$negativeNumber;
-            }
-        }
+	if($hours < 10)
+	{
+	    if($hours > 0)
+	    {
+		$hours = "0".$hours;
+	    }
+	    elseif(($hours < 0) and ($hours > -10))
+	    {
+		$negativeSign = substr($hours, 0, 1);
+		$negativeNumber = substr($hours, 1, strlen($hours));
+		$hours = $negativeSign."0".$negativeNumber;
+	    }
+	}
 
-        if($minutes < 10)
-        {
-            $minutes = "0".$minutes;
-        }
+	if($minutes < 10)
+	{
+	    $minutes = "0".$minutes;
+	}
 
-        return $hours." hrs ".$minutes." mins";
+	return $hours." hrs ".$minutes." mins";
     }
 
     public function getDifferenceInMinutesFromGMT($timezone)
     {
-        if($timezone == "")
-        {
-            return 0;
-        }
-        else
-        {
-            $dateTimeZone = new DateTimeZone($timezone);
-            $datetime = new DateTime("now", $dateTimeZone);
-            $timeOffset = $dateTimeZone->getOffset($datetime);
+	if($timezone == "")
+	{
+	    return 0;
+	}
+	else
+	{
+	    $dateTimeZone = new DateTimeZone($timezone);
+	    $datetime = new DateTime("now", $dateTimeZone);
+	    $timeOffset = $dateTimeZone->getOffset($datetime);
 
-            return ($timeOffset / 60);
-        }
+	    return ($timeOffset / 60);
+	}
     }
 
     public function adjustTimezoneOffset($phpDate, $offset)
     {
-        $result = $phpDate - ($offset * 60);
+	$result = $phpDate - ($offset * 60);
 
-        return $result;
+	return $result;
     }
 
     public function getCurrentJavascriptDateTime($timezone)
     {
-        $currentDate = time();
+	$currentDate = time();
 
-        $dateObject = getdate($currentDate);
+	$dateObject = getdate($currentDate);
 
-        $date = $dateObject['mday'];
-        $month = $dateObject['mon'];
-        $year = $dateObject['year'];
-        $hour = $dateObject['hours'];
-        $minute = $dateObject['minutes'];
+	$date = $dateObject['mday'];
+	$month = $dateObject['mon'];
+	$year = $dateObject['year'];
+	$hour = $dateObject['hours'];
+	$minute = $dateObject['minutes'];
 
-        $formattedMinute = $this->formatWithLeadingZero($minute);
-        $formattedHour = $this->formatWithLeadingZero($hour);
+	$formattedMinute = $this->formatWithLeadingZero($minute);
+	$formattedHour = $this->formatWithLeadingZero($hour);
 
-        $monthString = $this->getShortMonthString($month);
-        $dayString = $this->getShortDayString($dateObject['wday']);
+	$monthString = $this->getShortMonthString($month);
+	$dayString = $this->getShortDayString($dateObject['wday']);
 
-        return "$dayString $date $monthString, $year $formattedHour:$formattedMinute";
+	return "$dayString $date $monthString, $year $formattedHour:$formattedMinute";
     }
 
     public function formatMinuteToFives($minute)
     {
-        return (intval($minute / 5)) * 5;
+	return (intval($minute / 5)) * 5;
     }
 
     /**
@@ -1039,11 +1047,11 @@ class DateUtility
      */
     public function formatTimeToHourMinute($time)
     {
-        $timeArray = explode(":", $time);
+	$timeArray = explode(":", $time);
 
-        $retTime = $timeArray[0].":".$timeArray[1];
+	$retTime = $timeArray[0].":".$timeArray[1];
 
-        return $retTime;
+	return $retTime;
     }
 
     /**
@@ -1054,11 +1062,11 @@ class DateUtility
      */
     public function convertHourMinuteStringToTime($time)
     {
-        $timeArray = explode(":", $time);
+	$timeArray = explode(":", $time);
 
-        $retTime = mktime($timeArray[0], $timeArray[1], 0);
+	$retTime = mktime($timeArray[0], $timeArray[1], 0);
 
-        return $retTime;
+	return $retTime;
     }
 
     /**
@@ -1070,10 +1078,10 @@ class DateUtility
      */
     public function getNumberOfSecondsFromStartOfDay($time)
     {
-        $hour = date("G", $time);
-        $minute = date("i", $time);
+	$hour = date("G", $time);
+	$minute = date("i", $time);
 
-        return (($minute * 60) + ($hour * 60 * 60));
+	return (($minute * 60) + ($hour * 60 * 60));
     }
 
     /**
@@ -1085,171 +1093,191 @@ class DateUtility
      */
     public function getNumberOfMinutesFromStartOfDay($time)
     {
-        $hour = date("G", $time);
-        $minute = date("i", $time);
+	$hour = date("G", $time);
+	$minute = date("i", $time);
 
-        return (($minute) + ($hour * 60));
+	return (($minute) + ($hour * 60));
     }
 
     public function getCurrentGMTMysqlDateTime()
     {
-        $phpStartDate = time();
-        $offset = (intval(date("Z")) / 60);
+	$phpStartDate = time();
+	$offset = (intval(date("Z")) / 60);
 
-        $phpAdjustedStartDate = $this->adjustTimezoneOffset($phpStartDate, $offset);
-        $convertedStartDate = $this->convertPhpDateToMysqlDate($phpAdjustedStartDate);
+	$phpAdjustedStartDate = $this->adjustTimezoneOffset($phpStartDate, $offset);
+	$convertedStartDate = $this->convertPhpDateToMysqlDate($phpAdjustedStartDate);
 
-        return $convertedStartDate;
+	return $convertedStartDate;
+    }
+
+    public function getCurrentUserMysqlDateTime()
+    {
+	$phpStartDate = $this->getCurrentGMTPhpTimestamp();
+	$offset = SessionHelper::getTimeOffset() * -1;
+
+	$phpAdjustedStartDate = $this->adjustTimezoneOffset($phpStartDate, $offset * 60);
+	$convertedStartDate = $this->convertPhpDateToMysqlDateExcludingSeconds($phpAdjustedStartDate);
+
+	return $convertedStartDate;
+    }
+
+    /**
+     *
+     * @param type $mysqlDateTime
+     * @param type $offset - offset is in minutes
+     */
+    public function getFormattedOffsetAdjustedDate($mysqlDateTime, $offset)
+    {
+	$phpDate = $this->convertMySqlDateTimeToPhpTimestamp($mysqlDateTime);
+	$adjustedPhpDate = $this->adjustTimezoneOffset($phpDate, $offset);
+
+	return $this->convertPhpDateToMysqlDateExcludingSeconds($adjustedPhpDate);
     }
 
     public function getCurrentGMTMysqlDate()
     {
-        $phpDate = time();
-        $offset = (intval(date("Z")) / 60);
+	$phpDate = time();
+	$offset = (intval(date("Z")) / 60);
 
-        $phpAdjustedDate = $this->adjustTimezoneOffset($phpDate, $offset);
-        $convertedDate = $this->convertPhpDateToMysqlDateOnly($phpAdjustedDate);
+	$phpAdjustedDate = $this->adjustTimezoneOffset($phpDate, $offset);
+	$convertedDate = $this->convertPhpDateToMysqlDateOnly($phpAdjustedDate);
 
-        return $convertedDate;
+	return $convertedDate;
     }
 
     public function getCurrentGMTPhpTimestamp()
     {
-        return $this->convertMySqlDateTimeToPhpTimestamp($this->getCurrentGMTMysqlDateTime());
+	return $this->convertMySqlDateTimeToPhpTimestamp($this->getCurrentGMTMysqlDateTime());
     }
 
     public function changeTime($phpDate, $phpDateReference)
     {
-        $phpDateArray = getdate($phpDate);
+	$phpDateArray = getdate($phpDate);
 
-        $year = $phpDateArray['year'];
-        $month = $phpDateArray['mon'];
-        $day = $phpDateArray['mday'];
+	$year = $phpDateArray['year'];
+	$month = $phpDateArray['mon'];
+	$day = $phpDateArray['mday'];
 
-        $phpDateReferenceArray = getdate($phpDateReference);
-        $hour = $phpDateReferenceArray['hours'];
-        $minute = $phpDateReferenceArray['minutes'];
-        $second = $phpDateReferenceArray['seconds'];
+	$phpDateReferenceArray = getdate($phpDateReference);
+	$hour = $phpDateReferenceArray['hours'];
+	$minute = $phpDateReferenceArray['minutes'];
+	$second = $phpDateReferenceArray['seconds'];
 
-        $newDate = mktime($hour, $minute, $second, $month, $day, $year);
+	$newDate = mktime($hour, $minute, $second, $month, $day, $year);
 
-        return $newDate;
+	return $newDate;
     }
 
     public function getNextHalfHourTime($time = "")
     {
-        $current = time();
+	$current = time();
 
-        if($time != "")
-        {
-            $current = $time;
-        }
+	if($time != "")
+	{
+	    $current = $time;
+	}
 
-        $currentArray = getdate($current);
-        $year = $currentArray['year'];
-        $month = $currentArray['mon'];
-        $day = $currentArray['mday'];
-        $hour = $currentArray['hours'];
-        $minute = $currentArray['minutes'];
-        $second = $currentArray['seconds'];
+	$currentArray = getdate($current);
+	$year = $currentArray['year'];
+	$month = $currentArray['mon'];
+	$day = $currentArray['mday'];
+	$hour = $currentArray['hours'];
+	$minute = $currentArray['minutes'];
+	$second = $currentArray['seconds'];
 
-        if(intval($minute) < 30)
-        {
-            $minute = 30;
-        }
-        else
-        {
-            $hour = intval($currentArray['hours']) + 1;
-            $minute = 0;
-        }
+	if(intval($minute) < 30)
+	{
+	    $minute = 30;
+	}
+	else
+	{
+	    $hour = intval($currentArray['hours']) + 1;
+	    $minute = 0;
+	}
 
-        $retTime = mktime($hour, $minute, $second, $month, $day, $year);
+	$retTime = mktime($hour, $minute, $second, $month, $day, $year);
 
-        return $retTime;
+	return $retTime;
     }
-
     /*
      * Returns the start date of a specific week - the start day is assumed to be monday
      */
 
     public function getWeekStartDate($date)
     {
-        $condition = true;
-        $tempDate = $date;
-        $tempDay = "";
+	$condition = true;
+	$tempDate = $date;
+	$tempDay = "";
 
-        while($condition)
-        {
-            $tempDay = date("N", $tempDate);
+	while($condition)
+	{
+	    $tempDay = date("N", $tempDate);
 
-            if($tempDay == "1")
-            {
-                $condition = false;
-                break;
-            }
-            else
-            {
-                $tempDate = $this->rollDayBackward($tempDate);
-            }
-        }
+	    if($tempDay == "1")
+	    {
+		$condition = false;
+		break;
+	    }
+	    else
+	    {
+		$tempDate = $this->rollDayBackward($tempDate);
+	    }
+	}
 
-        return $tempDate;
+	return $tempDate;
     }
-
     /*
      * Returns the end date of a specific week - the end day is assumed to be sunday
      */
 
     public function getWeekEndDate($date)
     {
-        $condition = true;
-        $tempDate = $date;
-        $tempDay = "";
+	$condition = true;
+	$tempDate = $date;
+	$tempDay = "";
 
-        while($condition)
-        {
-            $tempDay = date("N", $tempDate);
+	while($condition)
+	{
+	    $tempDay = date("N", $tempDate);
 
-            if($tempDay == "7")
-            {
-                $condition = false;
-                break;
-            }
-            else
-            {
-                $tempDate = $this->rollDayForward($tempDate);
-            }
-        }
+	    if($tempDay == "7")
+	    {
+		$condition = false;
+		break;
+	    }
+	    else
+	    {
+		$tempDate = $this->rollDayForward($tempDate);
+	    }
+	}
 
-        return $tempDate;
+	return $tempDate;
     }
-
     /*
      * Sets a timestamp to the start of the day, that is, 00:00:00
      */
 
     public function getTimeStart($date)
     {
-        $dateArray = getdate($date);
-        $dateYear = $dateArray['year'];
-        $dateMonth = $dateArray['mon'];
-        $dateDay = $dateArray['mday'];
+	$dateArray = getdate($date);
+	$dateYear = $dateArray['year'];
+	$dateMonth = $dateArray['mon'];
+	$dateDay = $dateArray['mday'];
 
-        return mktime(0, 0, 0, $dateMonth, $dateDay, $dateYear);
+	return mktime(0, 0, 0, $dateMonth, $dateDay, $dateYear);
     }
-
     /*
      * Sets a timestamp to the start of the day, that is, 23:59:59
      */
 
     public function getTimeEnd($date)
     {
-        $dateArray = getdate($date);
-        $dateYear = $dateArray['year'];
-        $dateMonth = $dateArray['mon'];
-        $dateDay = $dateArray['mday'];
+	$dateArray = getdate($date);
+	$dateYear = $dateArray['year'];
+	$dateMonth = $dateArray['mon'];
+	$dateDay = $dateArray['mday'];
 
-        return mktime(23, 59, 59, $dateMonth, $dateDay, $dateYear);
+	return mktime(23, 59, 59, $dateMonth, $dateDay, $dateYear);
     }
 
     /**
@@ -1259,17 +1287,17 @@ class DateUtility
      */
     public function replateDatePart($date, $replaceDate)
     {
-        $dateArray = getdate($date);
-        $hour = $dateArray['hours'];
-        $minute = $dateArray['minutes'];
-        $second = $dateArray['seconds'];
+	$dateArray = getdate($date);
+	$hour = $dateArray['hours'];
+	$minute = $dateArray['minutes'];
+	$second = $dateArray['seconds'];
 
-        $replaceDateArray = getdate($replaceDate);
-        $year = $replaceDateArray['year'];
-        $month = $replaceDateArray['mon'];
-        $day = $replaceDateArray['mday'];
+	$replaceDateArray = getdate($replaceDate);
+	$year = $replaceDateArray['year'];
+	$month = $replaceDateArray['mon'];
+	$day = $replaceDateArray['mday'];
 
-        return mktime($hour, $minute, $second, $month, $day, $year);
+	return mktime($hour, $minute, $second, $month, $day, $year);
     }
 
 //    public function getFormattedOffset($userId, $db)
@@ -1285,14 +1313,14 @@ class DateUtility
 
     public function getFormattedOffset($userId)
     {
-        $db = DBQuery::getInstance();
-        $userLogicUtility = new UserLogicUtility();
+	$db = DBQuery::getInstance();
+	$userLogicUtility = new UserLogicUtility();
 
-        $timezone = $userLogicUtility->getTimezone($userId, $db);
-        $offset = $this->getDifferenceInMinutesFromGMT($timezone);
-        $formattedOffset = $this->convertToHourMinuteSecond($offset);
+	$timezone = $userLogicUtility->getTimezone($userId, $db);
+	$offset = $this->getDifferenceInMinutesFromGMT($timezone);
+	$formattedOffset = $this->convertToHourMinuteSecond($offset);
 
-        return $formattedOffset;
+	return $formattedOffset;
     }
 
     /**
@@ -1301,69 +1329,84 @@ class DateUtility
      */
     public static function getDayDifferenceFormat($phpDateFirst, $phpDateSecond)
     {
-        $phpDateSecondArray = getdate($phpDateSecond);
-        $day = $phpDateSecondArray['mday'];
-        $month = $phpDateSecondArray['mon'];
-        $year = $phpDateSecondArray['year'];
+	$phpDateSecondArray = getdate($phpDateSecond);
+	$day = $phpDateSecondArray['mday'];
+	$month = $phpDateSecondArray['mon'];
+	$year = $phpDateSecondArray['year'];
 
-        $phpDateSecondTemp = mktime(0, 0, 0, $month, $day, $year);
+	$phpDateSecondTemp = mktime(0, 0, 0, $month, $day, $year);
 
-        $differenceDays = ($phpDateFirst - $phpDateSecondTemp) / (60 * 60 * 24);
+	$differenceDays = ($phpDateFirst - $phpDateSecondTemp) / (60 * 60 * 24);
 
-        if($differenceDays < 1)
-        {
-            return "today";
-        }
-        else
-        {
-            if(intval($differenceDays) == 1)
-            {
-                return "yesterday";
-            }
-            else
-            {
-                return intval($differenceDays)." days ago";
-            }
-        }
+	if($differenceDays < 1)
+	{
+	    return "today";
+	}
+	else
+	{
+	    if(intval($differenceDays) == 1)
+	    {
+		return "yesterday";
+	    }
+	    else
+	    {
+		return intval($differenceDays)." days ago";
+	    }
+	}
     }
 
     public static function getCurrentUserTime($userId)
     {
-        $dateUtility = new DateUtility();
-        $db = DBQuery::getInstance();
-        $userLogicUtility = new UserLogicUtility();
+	$dateUtility = new DateUtility();
+	$db = DBQuery::getInstance();
+	$userLogicUtility = new UserLogicUtility();
 
-        $timezone = $userLogicUtility->getTimezone($userId, $db);
-        $offset = $dateUtility->getDifferenceInMinutesFromGMT($timezone);
-        $currentTime = $dateUtility->getCurrentGMTPhpTimestamp();
+	$timezone = $userLogicUtility->getTimezone($userId, $db);
+	$offset = $dateUtility->getDifferenceInMinutesFromGMT($timezone);
+	$currentTime = $dateUtility->getCurrentGMTPhpTimestamp();
 
-        if($offset < 0)
-        {
-            return $dateUtility->rollMinutesBackward($currentTime, $offset);
-        }
-        else
-        {
-            return $dateUtility->rollMinutesForward($currentTime, $offset);
-        }
+	if($offset < 0)
+	{
+	    return $dateUtility->rollMinutesBackward($currentTime, $offset);
+	}
+	else
+	{
+	    return $dateUtility->rollMinutesForward($currentTime, $offset);
+	}
     }
 
     public static function getAdjustedUserTime($userId, $date)
     {
-        $dateUtility = DateUtilityHelper::getDateUtility();
-        $db = DBQuery::getInstance();
-        $userLogicUtility = new UserLogicUtility();
+	$dateUtility = DateUtilityHelper::getDateUtility();
+	$db = DBQuery::getInstance();
+	$userLogicUtility = new UserLogicUtility();
 
-        $timezone = $userLogicUtility->getTimezone($userId, $db);
-        $offset = $dateUtility->getDifferenceInMinutesFromGMT($timezone);
+	$timezone = $userLogicUtility->getTimezone($userId, $db);
+	$offset = $dateUtility->getDifferenceInMinutesFromGMT($timezone);
 
-        if($offset < 0)
-        {
-            return $dateUtility->rollMinutesBackward($date, $offset);
-        }
-        else
-        {
-            return $dateUtility->rollMinutesForward($date, $offset);
-        }
+	if($offset < 0)
+	{
+	    return $dateUtility->rollMinutesBackward($date, $offset);
+	}
+	else
+	{
+	    return $dateUtility->rollMinutesForward($date, $offset);
+	}
+    }
+
+    /**
+     * Takes the mysql datetime and converts it to its gmt equivalent
+     * @param type $mysqlDateTime
+     * @param type $offset
+     */
+    public static function getGmtAdjustedTime($mysqlDateTime, $offset)
+    {
+	$dateUtility = DateUtilityHelper::getDateUtility();
+
+	$phpDate = $dateUtility->convertMySqlDateTimeToPhpTimestamp($mysqlDateTime);
+	$adjustedPhpDate = $dateUtility->adjustTimezoneOffset($phpDate, $offset);
+
+	return $dateUtility->convertPhpDateToMysqlDate($adjustedPhpDate);
     }
 
     /**
@@ -1373,15 +1416,14 @@ class DateUtility
      */
     public static function convertJavascriptDateWithStringTimeToPhpTimestamp($javascriptDate, $stringTime)
     {
-        $dateUtility = DateUtilityHelper::getDateUtility();
+	$dateUtility = DateUtilityHelper::getDateUtility();
 
-        $phpTime = $dateUtility->convertHourMinuteStringToTime($stringTime);
-        $phpDate = $dateUtility->convertJavascriptDateToPhpDate($javascriptDate);
-        $adjustedDate = $dateUtility->changeTime($phpDate->getObject(), $phpTime);
+	$phpTime = $dateUtility->convertHourMinuteStringToTime($stringTime);
+	$phpDate = $dateUtility->convertJavascriptDateToPhpDate($javascriptDate);
+	$adjustedDate = $dateUtility->changeTime($phpDate->getObject(), $phpTime);
 
-        return $adjustedDate;
+	return $adjustedDate;
     }
-
 }
 
 ?>

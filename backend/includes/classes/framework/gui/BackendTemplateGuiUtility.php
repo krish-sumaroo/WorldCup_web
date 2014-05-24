@@ -52,6 +52,7 @@ class BackendTemplateGuiUtility extends TemplateGuiUtility
 	$this->defaultJsFiles = array();
 	$this->defaultJsFiles[count($this->defaultJsFiles)] = array("file" => "admin", "folder" => "application");
 	$this->defaultJsFiles[count($this->defaultJsFiles)] = array("file" => "ajax", "folder" => "");
+	$this->defaultJsFiles[count($this->defaultJsFiles)] = array("file" => "utilities", "folder" => "");
 	$this->defaultJsFiles[count($this->defaultJsFiles)] = array("file" => "jquery", "folder" => "");
 	$this->defaultJsFiles[count($this->defaultJsFiles)] = array("file" => "jquery-ui-1.9.2.custom.min", "folder" => "");
 

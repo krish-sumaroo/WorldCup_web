@@ -48,3 +48,22 @@ CREATE TABLE `team_action` (
 
 ALTER TABLE `games`
 ADD COLUMN `match_status` ENUM('not_started','started','finished','cancelled') NULL DEFAULT 'not_started' AFTER `matchDate`;
+
+
+CREATE TABLE `admin_game_action` (
+  `fk_game_action_id` INT(11) NOT NULL,
+  `fk_admin_id` INT(11) NOT NULL,
+  PRIMARY KEY (`fk_game_action_id`, `fk_admin_id`));
+
+CREATE TABLE `user_game_action` (
+  `fk_game_action_id` INT(11) NOT NULL,
+  `fk_user_id` INT(11) NOT NULL,
+  PRIMARY KEY (`fk_game_action_id`, `fk_user_id`));
+
+
+ALTER TABLE `admin`
+ADD COLUMN `time_offset` DOUBLE NULL DEFAULT 0 AFTER `password`;
+
+
+ALTER TABLE `wc_2014`.`game_action`
+DROP COLUMN `fk_user_id`;

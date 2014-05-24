@@ -1,38 +1,53 @@
 <?php
 
+
 class YellowCardActionManager
 {
-    public static function addYellowCardAction($fkGameActionId, $fkPlayerId)
+
+    public static function addYellowCardAction($gameId, $actionDate, $playerId, $adminId = "", $userId = "")
     {
-        $yellowCardActionValidator = new BaseYellowCardActionValidator();
+	$error = new Error();
 
-        $error = $yellowCardActionValidator->validateAddYellowCardAction($fkGameActionId, $fkPlayerId);
+	$dateUtility = DateUtilityHelper::getDateUtility();
 
-        if(!$error->errorExists())
-        {
-            YellowCardActionLogicUtility::addYellowCardAction($fkGameActionId, $fkPlayerId);
-        }
+	$actionAutomaticDate = $dateUtility->getCurrentGMTMysqlDateTime();
+	$formattedActionDate = "$actionDate:00";
+	$adjustedActionDate = $dateUtility->getGmtAdjustedTime($formattedActionDate, SessionHelper::getTimeOffset() * 60);
+	$actionType = GameActionLogicUtility::$ACTION_TYPE_YELLOW_CARD;
 
-        return $error;
+	$gameActionId = GameActionLogicUtility::addGameAction($gameId, "", $adjustedActionDate, $actionAutomaticDate,
+			$actionType);
+	YellowCardActionLogicUtility::addYellowCardAction($gameActionId, $playerId);
+
+	if($adminId != "")
+	{
+	    AdminGameActionLogicUtility::addAdminGameAction($gameActionId, $adminId);
+	}
+	elseif($userId != "")
+	{
+	    UserGameActionLogicUtility::addUserGameAction($gameActionId, $userId);
+	}
+
+	return $error;
     }
 
     public static function editYellowCardAction($fkGameActionId, $fkPlayerId)
     {
-        $yellowCardActionValidator = new BaseYellowCardActionValidator();
+	$yellowCardActionValidator = new BaseYellowCardActionValidator();
 
-        $error = $yellowCardActionValidator->validateEditYellowCardAction($fkGameActionId, $fkPlayerId);
+	$error = $yellowCardActionValidator->validateEditYellowCardAction($fkGameActionId, $fkPlayerId);
 
-        if(!$error->errorExists())
-        {
-            YellowCardActionLogicUtility::updateYellowCardAction($fkGameActionId, $fkPlayerId);
-        }
+	if(!$error->errorExists())
+	{
+	    YellowCardActionLogicUtility::updateYellowCardAction($fkGameActionId, $fkPlayerId);
+	}
 
-        return $error;
+	return $error;
     }
 
     public static function deleteYellowCardAction($fkGameActionId)
     {
-        YellowCardActionLogicUtility::deleteYellowCardAction($fkGameActionId);
+	YellowCardActionLogicUtility::deleteYellowCardAction($fkGameActionId);
     }
 }
 

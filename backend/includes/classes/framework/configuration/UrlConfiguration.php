@@ -92,6 +92,11 @@ class UrlConfiguration
 	}
     }
 
+    public static function getParameterId()
+    {
+	return RequestHelper::getRequestValue("id");
+    }
+
     public static function getCodeIgniterUrl($module, $action, $folder = "", $params = "", $paramType = "")
     {
 	$url = "";
