@@ -26,13 +26,11 @@ class User_model extends CI_Model
     
     public function login($data)
     {
-        $this->db->select(array('uid', 'id'));
+        $this->db->select(array('uid', 'id','status','teamId','score'));
         $this->db->where($data);
         $this->db->from($this->table);
         
         $results = $this->db->get()->row(); 
-        //echo $this->db->last_query();
-        //print_r($results);
 
         if(count($results) > 0)
         {

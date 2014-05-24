@@ -8,6 +8,7 @@ class Games extends CI_Controller {
         //get userId from nonce
     }
 
+    /*
     public function getGames()
     {
         $result = $this->game->getNext2Days();
@@ -24,11 +25,13 @@ class Games extends CI_Controller {
 
         echo json_encode($response);
     }
-    
+    */
     public function getGame()
     {
-        $result = $this->game->activeGame();        
-
+        
+        $userId = $this->input->post('userId');
+        //$userId = 2;
+        $result = $this->game->activeGame($userId);   
         if(count($result) > 0)
         {
             $response['status'] = 'SUCCESS';

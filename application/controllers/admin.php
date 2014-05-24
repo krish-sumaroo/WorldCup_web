@@ -4,6 +4,7 @@ class Admin extends CI_Controller {
     function  __construct(){
         parent::__construct();
         $this->load->model('game_model','game');
+        $this->load->model('user_model','user');
     }
     
 
@@ -25,6 +26,19 @@ class Admin extends CI_Controller {
         $master['js'] = array('chooseTeam');
         $this->load->view('main',$master);
 
+    }
+    
+    /**** function to give all users new moves for new game ******/
+    public function initialisePoints()
+    {
+        $gameId = $this->input->post('gameId');
+        // make sure no actions have been recorded to prevent any errors
+        $check = $this->user->allClear($gameId);
+        
+        if($check)
+        {
+            $this->user->initialisePointsForUsers($gameId);
+        }
     }
 
 }
