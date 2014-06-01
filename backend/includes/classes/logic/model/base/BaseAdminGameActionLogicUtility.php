@@ -9,7 +9,11 @@ class BaseAdminGameActionLogicUtility
     //fields list
     public static $FK_GAME_ACTION_ID_FIELD = "fk_game_action_id";
     public static $FK_ADMIN_ID_FIELD = "fk_admin_id";
+    public static $ACTION_STATUS_FIELD = "action_status";
     //fields values
+    //action status values
+    public static $STATUS_VALIDATED = "validated";
+    public static $STATUS_NOT_VALIDATED = "not_validated";
     //fields limits
     public static $FK_GAME_ACTION_ID_LIMIT = 11;
     public static $FK_ADMIN_ID_LIMIT = 11;
@@ -151,8 +155,9 @@ class BaseAdminGameActionLogicUtility
     {
 	$fkGameActionId = QueryBuilder::getQueryValue($resultDetails, BaseAdminGameActionLogicUtility::$FK_GAME_ACTION_ID_FIELD);
 	$fkAdminId = QueryBuilder::getQueryValue($resultDetails, BaseAdminGameActionLogicUtility::$FK_ADMIN_ID_FIELD);
+	$actionStatus = QueryBuilder::getQueryValue($resultDetails, BaseAdminGameActionLogicUtility::$ACTION_STATUS_FIELD);
 
-	return new AdminGameActionEntity($fkGameActionId, $fkAdminId, $resultDetails);
+	return new AdminGameActionEntity($fkGameActionId, $fkAdminId, $actionStatus, $resultDetails);
     }
 }
 

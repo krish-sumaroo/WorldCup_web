@@ -11,7 +11,11 @@ class BaseAdminLogicUtility
     public static $USERNAME_FIELD = "username";
     public static $PASSWORD_FIELD = "password";
     public static $TIME_OFFSET_FIELD = "time_offset";
+    public static $ADMIN_ROLE_FIELD = "admin_role";
     //fields values
+    //admin roles
+    public static $ADMIN_ROLE_CREATOR = "creator";
+    public static $ADMIN_ROLE_VALIDATOR = "validator";
     //fields limits
     public static $ADMIN_ID_LIMIT = 20;
     public static $USERNAME_LIMIT = 250;
@@ -142,6 +146,7 @@ class BaseAdminLogicUtility
 	$queryBuilder->addFields(BaseAdminLogicUtility::$USERNAME_FIELD);
 	$queryBuilder->addFields(BaseAdminLogicUtility::$PASSWORD_FIELD);
 	$queryBuilder->addFields(BaseAdminLogicUtility::$TIME_OFFSET_FIELD);
+	$queryBuilder->addFields(BaseAdminLogicUtility::$ADMIN_ROLE_FIELD);
 
 	return $queryBuilder;
     }
@@ -164,8 +169,9 @@ class BaseAdminLogicUtility
 	$username = QueryBuilder::getQueryValue($resultDetails, BaseAdminLogicUtility::$USERNAME_FIELD);
 	$password = QueryBuilder::getQueryValue($resultDetails, BaseAdminLogicUtility::$PASSWORD_FIELD);
 	$timeOffset = QueryBuilder::getQueryValue($resultDetails, BaseAdminLogicUtility::$TIME_OFFSET_FIELD);
+	$adminRole = QueryBuilder::getQueryValue($resultDetails, BaseAdminLogicUtility::$ADMIN_ROLE_FIELD);
 
-	return new AdminEntity($adminId, $username, $password, $timeOffset, $resultDetails);
+	return new AdminEntity($adminId, $username, $password, $timeOffset, $adminRole, $resultDetails);
     }
 }
 

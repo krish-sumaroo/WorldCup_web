@@ -12,11 +12,13 @@ class SessionHelper
     private static $USER_SESSION_VARIABLE = "id";
     private static $USER_NAME_VARIABLE = "name";
     private static $TIME_OFFSET = "offset";
+    private static $ADMIN_ROLE = "admin_role";
 
-    public static function setUserSessionVariable($userId, $timeOffset)
+    public static function setUserSessionVariable($userId, $timeOffset, $adminRole)
     {
 	$_SESSION[SessionHelper::$USER_SESSION_VARIABLE] = $userId;
 	$_SESSION[SessionHelper::$TIME_OFFSET] = $timeOffset;
+	$_SESSION[SessionHelper::$ADMIN_ROLE] = $adminRole;
     }
 
     public static function setUserDetails($name)
@@ -63,6 +65,21 @@ class SessionHelper
     public static function getTimeOffset()
     {
 	return $_SESSION[SessionHelper::$TIME_OFFSET];
+    }
+
+    public static function getAdminRole()
+    {
+	return $_SESSION[SessionHelper::$ADMIN_ROLE];
+    }
+
+    public static function isAdminCreator()
+    {
+	return (SessionHelper::getAdminRole() == AdminLogicUtility::$ADMIN_ROLE_CREATOR);
+    }
+
+    public static function isAdminValidator()
+    {
+	return (SessionHelper::getAdminRole() == AdminLogicUtility::$ADMIN_ROLE_VALIDATOR);
     }
 }
 

@@ -392,6 +392,14 @@ if(isset($_REQUEST['action']))
 	case "reloadMatchEngageDisplay":
 	    echo GamesGuiUtility::reloadMatchActionListDisplay(RequestHelper::getRequestValue("game_id"));
 	    break;
+
+	case "validateAdminGameAction":
+	    echo AdminGameActionGuiUtility::validateAdminGameAction(RequestHelper::getRequestValue("id"));
+	    break;
+
+	case "invalidateAdminGameAction":
+	    echo AdminGameActionGuiUtility::invalidateAdminGameAction(RequestHelper::getRequestValue("id"));
+	    break;
 	/////////////////////////end of Engage///////////////////////
 
 

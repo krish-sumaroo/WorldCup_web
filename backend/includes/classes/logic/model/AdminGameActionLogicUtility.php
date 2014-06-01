@@ -4,12 +4,31 @@
 class AdminGameActionLogicUtility extends BaseAdminGameActionLogicUtility
 {
 
+    public static function validateAdminGameAction($adminGameActionId)
+    {
+	AdminGameActionLogicUtility::updateActionStatus($adminGameActionId, AdminGameActionLogicUtility::$STATUS_VALIDATED);
+    }
+
+    public static function invalidateAdminGameAction($adminGameActionId)
+    {
+	AdminGameActionLogicUtility::updateActionStatus($adminGameActionId, AdminGameActionLogicUtility::$STATUS_NOT_VALIDATED);
+    }
+
+    private static function updateActionStatus($adminGameActionId, $actionStatus)
+    {
+	$queryBuilder = new QueryBuilder();
+	$queryBuilder->addTable(AdminGameActionLogicUtility::$TABLE_NAME);
+	$queryBuilder->addUpdateField(AdminGameActionLogicUtility::$ACTION_STATUS_FIELD, $actionStatus);
+	$queryBuilder->addAndConditionWithValue(AdminGameActionLogicUtility::$FK_GAME_ACTION_ID_FIELD, $adminGameActionId,
+		QueryBuilder::$OPERATOR_EQUAL, AdminGameActionLogicUtility::$TABLE_NAME);
+	$queryBuilder->executeUpdateQuery();
+    }
+
     public static function getGameActionList($gameId, SortQuery $sortQuery = null)
     {
 	$queryBuilderAndCondition = new QueryBuilder();
 	$queryBuilderAndCondition->addAndConditionWithValue(GameActionLogicUtility::$FK_GAME_ID_FIELD, $gameId,
 		QueryBuilder::$OPERATOR_EQUAL, GameActionLogicUtility::$TABLE_NAME);
-
 
 	$queryBuilder = new QueryBuilder();
 	$queryBuilder->addTable(AdminGameActionLogicUtility::$TABLE_NAME);
@@ -17,6 +36,7 @@ class AdminGameActionLogicUtility extends BaseAdminGameActionLogicUtility
 	$queryBuilder->addFields(AdminGameActionLogicUtility::$FK_GAME_ACTION_ID_FIELD,
 		AdminGameActionLogicUtility::$TABLE_NAME);
 	$queryBuilder->addFields(AdminGameActionLogicUtility::$FK_ADMIN_ID_FIELD, AdminGameActionLogicUtility::$TABLE_NAME);
+	$queryBuilder->addFields(AdminGameActionLogicUtility::$ACTION_STATUS_FIELD, AdminGameActionLogicUtility::$TABLE_NAME);
 
 	$queryBuilder->addFields(GameActionLogicUtility::$GAME_ACTION_ID_FIELD, GameActionLogicUtility::$TABLE_NAME);
 	$queryBuilder->addFields(GameActionLogicUtility::$FK_GAME_ID_FIELD, GameActionLogicUtility::$TABLE_NAME);
@@ -93,6 +113,7 @@ class AdminGameActionLogicUtility extends BaseAdminGameActionLogicUtility
     {
 	$gameActionId = $resultDetails[AdminGameActionLogicUtility::$FK_GAME_ACTION_ID_FIELD];
 	$adminId = $resultDetails[AdminGameActionLogicUtility::$FK_ADMIN_ID_FIELD];
+	$actionStatus = $resultDetails[AdminGameActionLogicUtility::$ACTION_STATUS_FIELD];
 	$gameId = $resultDetails[GameActionLogicUtility::$GAME_ACTION_ID_FIELD];
 	$actionMinute = $resultDetails[GameActionLogicUtility::$ACTION_MINUTE_FIELD];
 	$actionDate = $resultDetails[GameActionLogicUtility::$ACTION_DATE_FIELD];
@@ -108,7 +129,7 @@ class AdminGameActionLogicUtility extends BaseAdminGameActionLogicUtility
 	$yellowCardPlayerName = $resultDetails['yellow_card_player_name'];
 	$playerScorePlayerName = $resultDetails['player_score_player_name'];
 
-	return new AdminGameActionLineEntity($gameActionId, $adminId, $gameId, $actionMinute, $actionDate,
+	return new AdminGameActionLineEntity($gameActionId, $adminId, $actionStatus, $gameId, $actionMinute, $actionDate,
 		$actionAutomaticDate, $actionType, $redCardGameActionId, $redCardPlayerId, $yellowCardGameActionId,
 		$yellowCardPlayerId, $playerScoreGameActionId, $playerScorePlayerId, $redCardPlayerName, $yellowCardPlayerName,
 		$playerScorePlayerName, $resultDetails);

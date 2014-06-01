@@ -67,3 +67,9 @@ ADD COLUMN `time_offset` DOUBLE NULL DEFAULT 0 AFTER `password`;
 
 ALTER TABLE `wc_2014`.`game_action`
 DROP COLUMN `fk_user_id`;
+
+ALTER TABLE `admin`
+ADD COLUMN `admin_role` ENUM('creator','validator') NULL DEFAULT 'creator' AFTER `time_offset`;
+
+ALTER TABLE `admin_game_action`
+ADD COLUMN `action_status` ENUM('not_validated','validated') NULL DEFAULT 'not_validated' AFTER `fk_admin_id`;

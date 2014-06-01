@@ -42,3 +42,17 @@ function reloadMatchEngageDisplay(id)
     var params = {"game_id": id};
     getSSContent("reloadMatchEngageDisplay", "con_match_actions_list", params);
 }
+
+function validateAdminGameAction(id)
+{
+    var con = "validate_act_con_" + id;
+    var params = {"id": id};
+    getSSContent("validateAdminGameAction", con, params);
+}
+
+function invalidateAdminGameAction(id)
+{
+    var con = "validate_act_con_" + id;
+    var params = {"id": id};
+    getSSContent("invalidateAdminGameAction", con, params);
+}

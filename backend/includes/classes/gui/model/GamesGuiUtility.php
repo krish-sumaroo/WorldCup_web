@@ -61,12 +61,15 @@ class GamesGuiUtility extends BaseGamesGuiUtility
 	$gamePlayersTeam1EntityList = $gamesEntity->getPlayersTeam1EntityList();
 	$gamePlayersTeam2EntityList = $gamesEntity->getPlayersTeam2EntityList();
 
-	$output .= "<div class='row'>";
-	$output .= GamesGuiUtility::getTeamActionDisplay($gamesEntity, $gamesEntity->getTeam1Entity()->getName(),
-			$gamePlayersTeam1EntityList);
-	$output .= GamesGuiUtility::getTeamActionDisplay($gamesEntity, $gamesEntity->getTeam2Entity()->getName(),
-			$gamePlayersTeam2EntityList);
-	$output .= "</div>";
+	if(SessionHelper::isAdminCreator())
+	{
+	    $output .= "<div class='row'>";
+	    $output .= GamesGuiUtility::getTeamActionDisplay($gamesEntity, $gamesEntity->getTeam1Entity()->getName(),
+			    $gamePlayersTeam1EntityList);
+	    $output .= GamesGuiUtility::getTeamActionDisplay($gamesEntity, $gamesEntity->getTeam2Entity()->getName(),
+			    $gamePlayersTeam2EntityList);
+	    $output .= "</div>";
+	}
 
 	$output .= "<div class='row'>";
 	$output .= GamesGuiUtility::getMatchActionsListDisplay($gamesId);
@@ -84,6 +87,8 @@ class GamesGuiUtility extends BaseGamesGuiUtility
 	$output .= "</div>";
 
 	$title = "<span class='glyphicon glyphicon-plus'></span> Game Actions List";
+	$title .= "&nbsp;&nbsp;";
+	$title .= "<a href='javascript:void(0);' onclick=\"reloadMatchEngageDisplay('$gamesId')\" class='btn btn-default'>Reload</a>";
 
 	$backendWidgetDisplayUtility = new BackendWidgetDisplayUtility(12, $title, $output);
 

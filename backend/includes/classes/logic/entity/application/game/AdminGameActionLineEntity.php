@@ -4,31 +4,32 @@
 class AdminGameActionLineEntity extends AdminGameActionEntity
 {
 
-    private $gameActionId;
-    private $adminId;
-    private $gameId;
-    private $actionMinute;
-    private $actionDate;
-    private $actionAutomaticDate;
-    private $actionType;
-    private $redCardGameActionId;
-    private $redCardPlayerId;
-    private $yellowCardGameActionId;
-    private $yellowCardPlayerId;
-    private $playerScoreGameActionId;
-    private $playerScorePlayerId;
-    private $redCardPlayerName;
-    private $yellowCardPlayerName;
-    private $playerScorePlayerName;
-    private $values;
+    protected $gameActionId;
+    protected $adminId;
+    protected $gameId;
+    protected $actionMinute;
+    protected $actionDate;
+    protected $actionAutomaticDate;
+    protected $actionType;
+    protected $redCardGameActionId;
+    protected $redCardPlayerId;
+    protected $yellowCardGameActionId;
+    protected $yellowCardPlayerId;
+    protected $playerScoreGameActionId;
+    protected $playerScorePlayerId;
+    protected $redCardPlayerName;
+    protected $yellowCardPlayerName;
+    protected $playerScorePlayerName;
+    protected $values;
 
-    public function __construct($gameActionId, $adminId, $gameId, $actionMinute, $actionDate, $actionAutomaticDate,
-	    $actionType, $redCardGameActionId, $redCardPlayerId, $yellowCardGameActionId, $yellowCardPlayerId,
-	    $playerScoreGameActionId, $playerScorePlayerId, $redCardPlayerName, $yellowCardPlayerName, $playerScorePlayerName,
-	    $values)
+    public function __construct($gameActionId, $adminId, $actionStatus, $gameId, $actionMinute, $actionDate,
+	    $actionAutomaticDate, $actionType, $redCardGameActionId, $redCardPlayerId, $yellowCardGameActionId,
+	    $yellowCardPlayerId, $playerScoreGameActionId, $playerScorePlayerId, $redCardPlayerName, $yellowCardPlayerName,
+	    $playerScorePlayerName, $values)
     {
 	$this->gameActionId = $gameActionId;
 	$this->adminId = $adminId;
+	$this->actionStatus = $actionStatus;
 	$this->gameId = $gameId;
 	$this->actionMinute = $actionMinute;
 	$this->actionDate = $actionDate;
@@ -153,6 +154,8 @@ class AdminGameActionLineEntity extends AdminGameActionEntity
 	$dateUtility = DateUtilityHelper::getDateUtility();
 	$offset = SessionHelper::getTimeOffset() * -60;
 
+	$validateDisplay = $this->getValidateDisplay();
+
 	if($this->isTypeYellowCard())
 	{
 	    $urlYellowCardImage = UrlConfiguration::getImageSrc("yellow_card.png", "application");
@@ -163,6 +166,7 @@ class AdminGameActionLineEntity extends AdminGameActionEntity
 	    $output .= "<img class='en4' src='$urlYellowCardImage' alt='Yellow Card' title='Yellow Card' />";
 	    $output .= "&nbsp;&nbsp;";
 	    $output .= $this->getYellowCardPlayerName();
+	    $output .= $validateDisplay;
 	    $output .= "</div>";
 	}
 	elseif($this->isTypeRedCard())
@@ -175,6 +179,7 @@ class AdminGameActionLineEntity extends AdminGameActionEntity
 	    $output .= "<img class='en4' src='$urlRedCardImage' alt='Red Card' title='Red Card' />";
 	    $output .= "&nbsp;&nbsp;";
 	    $output .= $this->getRedCardPlayerName();
+	    $output .= $validateDisplay;
 	    $output .= "</div>";
 	}
 	elseif($this->isTypePlayerScore())
@@ -187,8 +192,61 @@ class AdminGameActionLineEntity extends AdminGameActionEntity
 	    $output .= "<img class='en4' src='$urlRedCardImage' alt='Player Scores' title='Player Scores' />";
 	    $output .= "&nbsp;&nbsp;";
 	    $output .= $this->getPlayerScorePlayerName();
+	    $output .= $validateDisplay;
 	    $output .= "</div>";
 	}
+
+	return $output;
+    }
+
+    protected function getValidateDisplay()
+    {
+	$output = "";
+
+	$gameActionId = $this->getGameActionId();
+
+	$validateActionContainer = "validate_act_con_".$gameActionId;
+
+	if($this->isNotValidated())
+	{
+	    if(SessionHelper::isAdminValidator())
+	    {
+		$output .= "&nbsp;&nbsp;&nbsp;";
+		$output .= "<span id='$validateActionContainer'>";
+		$output .= AdminGameActionLineEntity::getValidateActionButton($gameActionId);
+//		$output .= "<button class='btn btn-primary btn-xs' onclick=\"validateAdminGameAction('$gameActionId');\">Validate</button>";
+		$output .= "</span>";
+	    }
+	}
+	elseif($this->isValidated())
+	{
+	    if(SessionHelper::isAdminValidator())
+	    {
+		$output .= "&nbsp;&nbsp;&nbsp;";
+		$output .= "<span id='$validateActionContainer'>";
+		$output .= AdminGameActionLineEntity::getInvalidateActionButton($gameActionId);
+//		$output .= "<button class='btn btn-danger btn-xs' onclick=\"invalidateAdminGameAction('$gameActionId');\">Invalidate</button>";
+		$output .= "</span>";
+	    }
+	}
+
+	return $output;
+    }
+
+    public static function getValidateActionButton($gameActionId)
+    {
+	$output = "";
+
+	$output .= "<button class='btn btn-primary btn-xs' onclick=\"validateAdminGameAction('$gameActionId');\">Validate</button>";
+
+	return $output;
+    }
+
+    public static function getInvalidateActionButton($gameActionId)
+    {
+	$output = "";
+
+	$output .= "<button class='btn btn-danger btn-xs' onclick=\"invalidateAdminGameAction('$gameActionId');\">Invalidate</button>";
 
 	return $output;
     }

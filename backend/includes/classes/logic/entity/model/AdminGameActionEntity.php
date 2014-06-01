@@ -15,6 +15,16 @@ class AdminGameActionEntity extends BaseAdminGameActionEntity
 
 	return $this->gameActionEntity;
     }
+
+    public function isValidated()
+    {
+	return ($this->getActionStatus() == AdminGameActionLogicUtility::$STATUS_VALIDATED);
+    }
+
+    public function isNotValidated()
+    {
+	return ($this->getActionStatus() == AdminGameActionLogicUtility::$STATUS_NOT_VALIDATED);
+    }
 }
 
 ?>
