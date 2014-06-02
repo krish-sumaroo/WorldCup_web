@@ -73,3 +73,11 @@ ADD COLUMN `admin_role` ENUM('creator','validator') NULL DEFAULT 'creator' AFTER
 
 ALTER TABLE `admin_game_action`
 ADD COLUMN `action_status` ENUM('not_validated','validated') NULL DEFAULT 'not_validated' AFTER `fk_admin_id`;
+
+ALTER TABLE `userPlayerAction`
+ADD COLUMN `points` INT(10) NULL AFTER `gameId`,
+ADD COLUMN `status` INT(1) NULL AFTER `points`;
+
+
+ALTER TABLE `admin_game_action`
+ADD COLUMN `process_status` ENUM('not_started','started','finished','error') NULL DEFAULT 'not_started' AFTER `action_status`;

@@ -64,6 +64,20 @@ class ArrayUtility
 
 	return $groupedArray;
     }
+
+    public static function isArrayEmpty($array)
+    {
+	$filteredArray = array_filter($array);
+
+	if(count($filteredArray) > 0)
+	{
+	    return false;
+	}
+	else
+	{
+	    return true;
+	}
+    }
 }
 
 ?>

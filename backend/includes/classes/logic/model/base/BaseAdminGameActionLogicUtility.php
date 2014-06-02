@@ -10,7 +10,13 @@ class BaseAdminGameActionLogicUtility
     public static $FK_GAME_ACTION_ID_FIELD = "fk_game_action_id";
     public static $FK_ADMIN_ID_FIELD = "fk_admin_id";
     public static $ACTION_STATUS_FIELD = "action_status";
+    public static $PROCESS_STATUS_FIELD = "process_status";
     //fields values
+    //process status
+    public static $PROCESS_STATUS_NOT_STARTED = "not_started";
+    public static $PROCESS_STATUS_STARTED = "started";
+    public static $PROCESS_STATUS_FINISHED = "finished";
+    public static $PROCESS_STATUS_ERROR = "error";
     //action status values
     public static $STATUS_VALIDATED = "validated";
     public static $STATUS_NOT_VALIDATED = "not_validated";
@@ -135,6 +141,10 @@ class BaseAdminGameActionLogicUtility
 		BaseAdminGameActionLogicUtility::$TABLE_NAME);
 	$queryBuilder->addFields(BaseAdminGameActionLogicUtility::$FK_ADMIN_ID_FIELD,
 		BaseAdminGameActionLogicUtility::$TABLE_NAME);
+	$queryBuilder->addFields(BaseAdminGameActionLogicUtility::$ACTION_STATUS_FIELD,
+		BaseAdminGameActionLogicUtility::$TABLE_NAME);
+	$queryBuilder->addFields(BaseAdminGameActionLogicUtility::$PROCESS_STATUS_FIELD,
+		BaseAdminGameActionLogicUtility::$TABLE_NAME);
 
 	return $queryBuilder;
     }
@@ -156,8 +166,9 @@ class BaseAdminGameActionLogicUtility
 	$fkGameActionId = QueryBuilder::getQueryValue($resultDetails, BaseAdminGameActionLogicUtility::$FK_GAME_ACTION_ID_FIELD);
 	$fkAdminId = QueryBuilder::getQueryValue($resultDetails, BaseAdminGameActionLogicUtility::$FK_ADMIN_ID_FIELD);
 	$actionStatus = QueryBuilder::getQueryValue($resultDetails, BaseAdminGameActionLogicUtility::$ACTION_STATUS_FIELD);
+	$processStatus = QueryBuilder::getQueryValue($resultDetails, BaseAdminGameActionLogicUtility::$PROCESS_STATUS_FIELD);
 
-	return new AdminGameActionEntity($fkGameActionId, $fkAdminId, $actionStatus, $resultDetails);
+	return new AdminGameActionEntity($fkGameActionId, $fkAdminId, $actionStatus, $processStatus, $resultDetails);
     }
 }
 

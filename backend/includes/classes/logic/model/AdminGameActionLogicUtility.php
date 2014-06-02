@@ -4,6 +4,10 @@
 class AdminGameActionLogicUtility extends BaseAdminGameActionLogicUtility
 {
 
+    public static $PLAYER_ID_RED_CARD_ALIAS = "player_id_red_card";
+    public static $PLAYER_ID_YELLOW_CARD_ALIAS = "player_id_yellow_card";
+    public static $PLAYER_ID_PLAYER_SCORE_ALIAS = "player_id_player_score";
+
     public static function validateAdminGameAction($adminGameActionId)
     {
 	AdminGameActionLogicUtility::updateActionStatus($adminGameActionId, AdminGameActionLogicUtility::$STATUS_VALIDATED);
@@ -95,6 +99,97 @@ class AdminGameActionLogicUtility extends BaseAdminGameActionLogicUtility
 	$result = $queryBuilder->executeQuery();
 
 	return AdminGameActionLogicUtility::convertToAdminGameActionLineEntityArray($result);
+    }
+
+    public static function getValidatedGameAction($dateBefore, $limit = "", $processStatus = "",
+	    SortQuery $sortQuery = null)
+    {
+	$queryBuilder = new QueryBuilder();
+	$queryBuilder->addTable(AdminGameActionLogicUtility::$TABLE_NAME);
+
+	$queryBuilder->addFields(AdminGameActionLogicUtility::$FK_GAME_ACTION_ID_FIELD,
+		AdminGameActionLogicUtility::$TABLE_NAME);
+
+	$queryBuilder->addFields(GameActionLogicUtility::$ACTION_TYPE_FIELD, GameActionLogicUtility::$TABLE_NAME);
+	$queryBuilder->addFields(GameActionLogicUtility::$FK_GAME_ID_FIELD, GameActionLogicUtility::$TABLE_NAME);
+	$queryBuilder->addFields(GameActionLogicUtility::$ACTION_DATE_FIELD, GameActionLogicUtility::$TABLE_NAME);
+
+	$queryBuilder->addFields(RedCardActionLogicUtility::$FK_PLAYER_ID_FIELD, RedCardActionLogicUtility::$TABLE_NAME, false,
+		AdminGameActionLogicUtility::$PLAYER_ID_RED_CARD_ALIAS);
+	$queryBuilder->addFields(RedCardActionLogicUtility::$FK_PLAYER_ID_FIELD, YellowCardActionLogicUtility::$TABLE_NAME,
+		false, AdminGameActionLogicUtility::$PLAYER_ID_YELLOW_CARD_ALIAS);
+	$queryBuilder->addFields(RedCardActionLogicUtility::$FK_PLAYER_ID_FIELD, PlayerScoreActionLogicUtility::$TABLE_NAME,
+		false, AdminGameActionLogicUtility::$PLAYER_ID_PLAYER_SCORE_ALIAS);
+
+	$queryBuilder->addJoin(GameActionLogicUtility::$TABLE_NAME, AdminGameActionLogicUtility::$TABLE_NAME,
+		AdminGameActionLogicUtility::$FK_GAME_ACTION_ID_FIELD, GameActionLogicUtility::$TABLE_NAME,
+		GameActionLogicUtility::$GAME_ACTION_ID_FIELD);
+
+	$queryBuilder->addLeftJoin(RedCardActionLogicUtility::$TABLE_NAME, AdminGameActionLogicUtility::$TABLE_NAME,
+		AdminGameActionLogicUtility::$FK_GAME_ACTION_ID_FIELD, RedCardActionLogicUtility::$TABLE_NAME,
+		RedCardActionLogicUtility::$FK_GAME_ACTION_ID_FIELD);
+
+	$queryBuilder->addLeftJoin(YellowCardActionLogicUtility::$TABLE_NAME, AdminGameActionLogicUtility::$TABLE_NAME,
+		AdminGameActionLogicUtility::$FK_GAME_ACTION_ID_FIELD, YellowCardActionLogicUtility::$TABLE_NAME,
+		YellowCardActionLogicUtility::$FK_GAME_ACTION_ID_FIELD);
+
+	$queryBuilder->addLeftJoin(PlayerScoreActionLogicUtility::$TABLE_NAME, AdminGameActionLogicUtility::$TABLE_NAME,
+		AdminGameActionLogicUtility::$FK_GAME_ACTION_ID_FIELD, PlayerScoreActionLogicUtility::$TABLE_NAME,
+		PlayerScoreActionLogicUtility::$FK_GAME_ACTION_ID_FIELD);
+
+	$queryBuilder->addAndConditionWithValue(AdminGameActionLogicUtility::$ACTION_STATUS_FIELD,
+		AdminGameActionLogicUtility::$STATUS_VALIDATED, QueryBuilder::$OPERATOR_EQUAL,
+		AdminGameActionLogicUtility::$TABLE_NAME);
+
+	$queryBuilder->addAndConditionWithValue(GameActionLogicUtility::$ACTION_DATE_FIELD, $dateBefore,
+		QueryBuilder::$OPERATOR_LESS_THAN, GameActionLogicUtility::$TABLE_NAME);
+
+	if($processStatus != "")
+	{
+	    $queryBuilder->addAndConditionWithValue(AdminGameActionLogicUtility::$PROCESS_STATUS_FIELD, $processStatus,
+		    QueryBuilder::$OPERATOR_EQUAL, AdminGameActionLogicUtility::$TABLE_NAME);
+	}
+
+	if($limit != "")
+	{
+	    $queryBuilder->setLimit($limit);
+	}
+
+	if($sortQuery)
+	{
+	    $queryBuilder->addSortQuery($sortQuery);
+	}
+
+	$result = $queryBuilder->executeQuery();
+
+	return AdminGameActionLogicUtility::convertToObjectArray($result);
+    }
+
+    public static function updateIdArrayToStarted($idArray)
+    {
+	AdminGameActionLogicUtility::updateIdArrayToStatus($idArray, AdminGameActionLogicUtility::$PROCESS_STATUS_STARTED);
+    }
+
+    public static function updateIdArrayToFinished($idArray)
+    {
+	AdminGameActionLogicUtility::updateIdArrayToStatus($idArray, AdminGameActionLogicUtility::$PROCESS_STATUS_FINISHED);
+    }
+
+    private static function updateIdArrayToStatus($idArray, $status)
+    {
+	if(!ArrayUtility::isArrayEmpty($idArray))
+	{
+	    $sqlConcatenator = new SqlConcatenator();
+
+	    $queryBuilder = new QueryBuilder();
+	    $queryBuilder->addTable(AdminGameActionLogicUtility::$TABLE_NAME);
+	    $queryBuilder->addAndCondition($sqlConcatenator->createSelectInQueryPart($idArray, false,
+			    AdminGameActionLogicUtility::$FK_GAME_ACTION_ID_FIELD));
+
+	    $queryBuilder->addUpdateField(AdminGameActionLogicUtility::$PROCESS_STATUS_FIELD, $status);
+
+	    $queryBuilder->executeUpdateQuery();
+	}
     }
 
     private static function convertToAdminGameActionLineEntityArray($result)
