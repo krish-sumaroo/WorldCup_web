@@ -7,6 +7,7 @@ class AdminGameActionLogicUtility extends BaseAdminGameActionLogicUtility
     public static $PLAYER_ID_RED_CARD_ALIAS = "player_id_red_card";
     public static $PLAYER_ID_YELLOW_CARD_ALIAS = "player_id_yellow_card";
     public static $PLAYER_ID_PLAYER_SCORE_ALIAS = "player_id_player_score";
+    public static $PLAYER_ID_PLAYER_SUBSTITUTE_ALIAS = "player_id_player_substitute";
 
     public static function validateAdminGameAction($adminGameActionId)
     {
@@ -64,9 +65,15 @@ class AdminGameActionLogicUtility extends BaseAdminGameActionLogicUtility
 	$queryBuilder->addFields(PlayerScoreActionLogicUtility::$FK_PLAYER_ID_FIELD,
 		PlayerScoreActionLogicUtility::$TABLE_NAME, false, "fk_player_id_player_score");
 
+	$queryBuilder->addFields(PlayerSubstituteActionLogicUtility::$FK_GAME_ACTION_ID_FIELD,
+		PlayerSubstituteActionLogicUtility::$TABLE_NAME, false, "fk_game_action_id_player_substitute");
+	$queryBuilder->addFields(PlayerSubstituteActionLogicUtility::$FK_PLAYER_ID_FIELD,
+		PlayerSubstituteActionLogicUtility::$TABLE_NAME, false, "fk_player_id_player_substitute");
+
 	$queryBuilder->addFields(PlayersLogicUtility::$NAME_FIELD, "red_card_player", false, "red_card_player_name");
 	$queryBuilder->addFields(PlayersLogicUtility::$NAME_FIELD, "yellow_card_player", false, "yellow_card_player_name");
 	$queryBuilder->addFields(PlayersLogicUtility::$NAME_FIELD, "player_score", false, "player_score_player_name");
+	$queryBuilder->addFields(PlayersLogicUtility::$NAME_FIELD, "player_substitute", false, "player_substitute_player_name");
 
 	$queryBuilder->addJoin(GameActionLogicUtility::$TABLE_NAME, AdminGameActionLogicUtility::$TABLE_NAME,
 		AdminGameActionLogicUtility::$FK_GAME_ACTION_ID_FIELD, GameActionLogicUtility::$TABLE_NAME,
@@ -80,6 +87,9 @@ class AdminGameActionLogicUtility extends BaseAdminGameActionLogicUtility
 	$queryBuilder->addLeftJoin(PlayerScoreActionLogicUtility::$TABLE_NAME, AdminGameActionLogicUtility::$TABLE_NAME,
 		AdminGameActionLogicUtility::$FK_GAME_ACTION_ID_FIELD, PlayerScoreActionLogicUtility::$TABLE_NAME,
 		PlayerScoreActionLogicUtility::$FK_GAME_ACTION_ID_FIELD);
+	$queryBuilder->addLeftJoin(PlayerSubstituteActionLogicUtility::$TABLE_NAME, AdminGameActionLogicUtility::$TABLE_NAME,
+		AdminGameActionLogicUtility::$FK_GAME_ACTION_ID_FIELD, PlayerSubstituteActionLogicUtility::$TABLE_NAME,
+		PlayerSubstituteActionLogicUtility::$FK_GAME_ACTION_ID_FIELD);
 
 	$queryBuilder->addLeftJoin(PlayersLogicUtility::$TABLE_NAME, RedCardActionLogicUtility::$TABLE_NAME,
 		RedCardActionLogicUtility::$FK_PLAYER_ID_FIELD, PlayersLogicUtility::$TABLE_NAME, PlayersLogicUtility::$ID_FIELD,
@@ -90,6 +100,9 @@ class AdminGameActionLogicUtility extends BaseAdminGameActionLogicUtility
 	$queryBuilder->addLeftJoin(PlayersLogicUtility::$TABLE_NAME, PlayerScoreActionLogicUtility::$TABLE_NAME,
 		PlayerScoreActionLogicUtility::$FK_PLAYER_ID_FIELD, PlayersLogicUtility::$TABLE_NAME, PlayersLogicUtility::$ID_FIELD,
 		"player_score");
+	$queryBuilder->addLeftJoin(PlayersLogicUtility::$TABLE_NAME, PlayerSubstituteActionLogicUtility::$TABLE_NAME,
+		PlayerSubstituteActionLogicUtility::$FK_PLAYER_ID_FIELD, PlayersLogicUtility::$TABLE_NAME,
+		PlayersLogicUtility::$ID_FIELD, "player_substitute");
 
 	if($sortQuery)
 	{
@@ -116,10 +129,13 @@ class AdminGameActionLogicUtility extends BaseAdminGameActionLogicUtility
 
 	$queryBuilder->addFields(RedCardActionLogicUtility::$FK_PLAYER_ID_FIELD, RedCardActionLogicUtility::$TABLE_NAME, false,
 		AdminGameActionLogicUtility::$PLAYER_ID_RED_CARD_ALIAS);
-	$queryBuilder->addFields(RedCardActionLogicUtility::$FK_PLAYER_ID_FIELD, YellowCardActionLogicUtility::$TABLE_NAME,
+	$queryBuilder->addFields(YellowCardActionLogicUtility::$FK_PLAYER_ID_FIELD, YellowCardActionLogicUtility::$TABLE_NAME,
 		false, AdminGameActionLogicUtility::$PLAYER_ID_YELLOW_CARD_ALIAS);
-	$queryBuilder->addFields(RedCardActionLogicUtility::$FK_PLAYER_ID_FIELD, PlayerScoreActionLogicUtility::$TABLE_NAME,
-		false, AdminGameActionLogicUtility::$PLAYER_ID_PLAYER_SCORE_ALIAS);
+	$queryBuilder->addFields(PlayerScoreActionLogicUtility::$FK_PLAYER_ID_FIELD,
+		PlayerScoreActionLogicUtility::$TABLE_NAME, false, AdminGameActionLogicUtility::$PLAYER_ID_PLAYER_SCORE_ALIAS);
+	$queryBuilder->addFields(PlayerSubstituteActionLogicUtility::$FK_PLAYER_ID_FIELD,
+		PlayerSubstituteActionLogicUtility::$TABLE_NAME, false,
+		AdminGameActionLogicUtility::$PLAYER_ID_PLAYER_SUBSTITUTE_ALIAS);
 
 	$queryBuilder->addJoin(GameActionLogicUtility::$TABLE_NAME, AdminGameActionLogicUtility::$TABLE_NAME,
 		AdminGameActionLogicUtility::$FK_GAME_ACTION_ID_FIELD, GameActionLogicUtility::$TABLE_NAME,
@@ -136,6 +152,10 @@ class AdminGameActionLogicUtility extends BaseAdminGameActionLogicUtility
 	$queryBuilder->addLeftJoin(PlayerScoreActionLogicUtility::$TABLE_NAME, AdminGameActionLogicUtility::$TABLE_NAME,
 		AdminGameActionLogicUtility::$FK_GAME_ACTION_ID_FIELD, PlayerScoreActionLogicUtility::$TABLE_NAME,
 		PlayerScoreActionLogicUtility::$FK_GAME_ACTION_ID_FIELD);
+
+	$queryBuilder->addLeftJoin(PlayerSubstituteActionLogicUtility::$TABLE_NAME, AdminGameActionLogicUtility::$TABLE_NAME,
+		AdminGameActionLogicUtility::$FK_GAME_ACTION_ID_FIELD, PlayerSubstituteActionLogicUtility::$TABLE_NAME,
+		PlayerSubstituteActionLogicUtility::$FK_GAME_ACTION_ID_FIELD);
 
 	$queryBuilder->addAndConditionWithValue(AdminGameActionLogicUtility::$ACTION_STATUS_FIELD,
 		AdminGameActionLogicUtility::$STATUS_VALIDATED, QueryBuilder::$OPERATOR_EQUAL,
@@ -223,11 +243,12 @@ class AdminGameActionLogicUtility extends BaseAdminGameActionLogicUtility
 	$redCardPlayerName = $resultDetails['red_card_player_name'];
 	$yellowCardPlayerName = $resultDetails['yellow_card_player_name'];
 	$playerScorePlayerName = $resultDetails['player_score_player_name'];
+	$playerSubstitutePlayerName = $resultDetails['player_substitute_player_name'];
 
 	return new AdminGameActionLineEntity($gameActionId, $adminId, $actionStatus, $gameId, $actionMinute, $actionDate,
 		$actionAutomaticDate, $actionType, $redCardGameActionId, $redCardPlayerId, $yellowCardGameActionId,
 		$yellowCardPlayerId, $playerScoreGameActionId, $playerScorePlayerId, $redCardPlayerName, $yellowCardPlayerName,
-		$playerScorePlayerName, $resultDetails);
+		$playerScorePlayerName, $playerSubstitutePlayerName, $resultDetails);
     }
 }
 

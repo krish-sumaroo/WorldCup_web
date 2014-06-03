@@ -19,7 +19,8 @@ class BootstrapModalGuiUtility
 	return $output;
     }
 
-    public static function getAction($actionText, $javascriptAction, $additionalClass = "", $showAsButton = true)
+    public static function getAction($actionText, $javascriptAction, $additionalClass = "", $showAsButton = true,
+	    $title = "")
     {
 	$output = "";
 
@@ -35,7 +36,7 @@ class BootstrapModalGuiUtility
 	    $class .= " ".$additionalClass;
 	}
 
-	$output .= "<a data-toggle='modal' data-target='#myModal' class='$class' onclick=\"$javascriptAction\">$actionText</a>";
+	$output .= "<a data-toggle='modal' data-target='#myModal' class='$class' onclick=\"$javascriptAction\" title=\"$title\">$actionText</a>";
 
 	return $output;
     }

@@ -16,8 +16,6 @@ class UserPlayerActionLogicUtility extends BaseUserPlayerActionLogicUtility
 	$queryBuilder->addUpdateField(UserPlayerActionLogicUtility::$STATUS_FIELD,
 		UserPlayerActionLogicUtility::$STATUS_SUCCESS);
 
-	$queryBuilder->debugUpdate(); //debug
-
 	$queryBuilder->executeUpdateQuery();
     }
 
@@ -31,8 +29,6 @@ class UserPlayerActionLogicUtility extends BaseUserPlayerActionLogicUtility
 		QueryBuilder::$OPERATOR_NOT_EQUAL, UserPlayerActionLogicUtility::$TABLE_NAME);
 
 	$queryBuilder->addUpdateField(UserPlayerActionLogicUtility::$STATUS_FIELD, UserPlayerActionLogicUtility::$STATUS_FAILED);
-
-	$queryBuilder->debugUpdate(); //debug
 
 	$queryBuilder->executeUpdateQuery();
     }

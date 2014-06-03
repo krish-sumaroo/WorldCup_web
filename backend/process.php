@@ -384,8 +384,18 @@ if(isset($_REQUEST['action']))
 		    RequestHelper::getRequestValue("game_id"));
 	    break;
 
+	case "getPlayerSubstituteAction":
+	    echo PlayerSubstituteActionGuiUtility::getPlayerSubstituteAction(RequestHelper::getRequestValue("player_id"),
+		    RequestHelper::getRequestValue("game_id"));
+	    break;
+
 	case "adminPlayerScoreAction":
 	    echo PlayerScoreActionGuiUtility::adminPlayerScoreAction(RequestHelper::getRequestValue("player_id"),
+		    RequestHelper::getRequestValue("game_id"), RequestHelper::getRequestValue("date"), SessionHelper::getUserId());
+	    break;
+
+	case "adminPlayerSubstituteAction":
+	    echo PlayerSubstituteActionGuiUtility::adminPlayerSubstituteAction(RequestHelper::getRequestValue("player_id"),
 		    RequestHelper::getRequestValue("game_id"), RequestHelper::getRequestValue("date"), SessionHelper::getUserId());
 	    break;
 

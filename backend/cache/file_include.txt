@@ -9,6 +9,7 @@
 /opt/lampp/htdocs/applications/git/WorldCup_web/backend/includes/classes/validator/model/base/BaseGamesPlayersValidator.php
 /opt/lampp/htdocs/applications/git/WorldCup_web/backend/includes/classes/validator/model/base/BaseGamesValidator.php
 /opt/lampp/htdocs/applications/git/WorldCup_web/backend/includes/classes/validator/model/base/BasePlayerScoreActionValidator.php
+/opt/lampp/htdocs/applications/git/WorldCup_web/backend/includes/classes/validator/model/base/BasePlayerSubstituteActionValidator.php
 /opt/lampp/htdocs/applications/git/WorldCup_web/backend/includes/classes/validator/model/base/BasePlayersValidator.php
 /opt/lampp/htdocs/applications/git/WorldCup_web/backend/includes/classes/validator/model/base/BaseRedCardActionValidator.php
 /opt/lampp/htdocs/applications/git/WorldCup_web/backend/includes/classes/validator/model/base/BaseStadiumValidator.php
@@ -50,6 +51,7 @@
 /opt/lampp/htdocs/applications/git/WorldCup_web/backend/includes/classes/manager/model/GamesPlayersManager.php
 /opt/lampp/htdocs/applications/git/WorldCup_web/backend/includes/classes/manager/model/PlayerScoreActionManager.php
 /opt/lampp/htdocs/applications/git/WorldCup_web/backend/includes/classes/manager/model/PlayersManager.php
+/opt/lampp/htdocs/applications/git/WorldCup_web/backend/includes/classes/manager/model/PlayerSubstituteActionManager.php
 /opt/lampp/htdocs/applications/git/WorldCup_web/backend/includes/classes/manager/model/RedCardActionManager.php
 /opt/lampp/htdocs/applications/git/WorldCup_web/backend/includes/classes/manager/model/StadiumManager.php
 /opt/lampp/htdocs/applications/git/WorldCup_web/backend/includes/classes/manager/model/TeamActionManager.php
@@ -77,6 +79,7 @@
 /opt/lampp/htdocs/applications/git/WorldCup_web/backend/includes/classes/logic/model/GamesPlayersLogicUtility.php
 /opt/lampp/htdocs/applications/git/WorldCup_web/backend/includes/classes/logic/model/PlayerScoreActionLogicUtility.php
 /opt/lampp/htdocs/applications/git/WorldCup_web/backend/includes/classes/logic/model/PlayersLogicUtility.php
+/opt/lampp/htdocs/applications/git/WorldCup_web/backend/includes/classes/logic/model/PlayerSubstituteActionLogicUtility.php
 /opt/lampp/htdocs/applications/git/WorldCup_web/backend/includes/classes/logic/model/RedCardActionLogicUtility.php
 /opt/lampp/htdocs/applications/git/WorldCup_web/backend/includes/classes/logic/model/StadiumLogicUtility.php
 /opt/lampp/htdocs/applications/git/WorldCup_web/backend/includes/classes/logic/model/TeamActionLogicUtility.php
@@ -96,6 +99,7 @@
 /opt/lampp/htdocs/applications/git/WorldCup_web/backend/includes/classes/logic/model/base/BaseGamesPlayersLogicUtility.php
 /opt/lampp/htdocs/applications/git/WorldCup_web/backend/includes/classes/logic/model/base/BasePlayerScoreActionLogicUtility.php
 /opt/lampp/htdocs/applications/git/WorldCup_web/backend/includes/classes/logic/model/base/BasePlayersLogicUtility.php
+/opt/lampp/htdocs/applications/git/WorldCup_web/backend/includes/classes/logic/model/base/BasePlayerSubstituteActionLogicUtility.php
 /opt/lampp/htdocs/applications/git/WorldCup_web/backend/includes/classes/logic/model/base/BaseRedCardActionLogicUtility.php
 /opt/lampp/htdocs/applications/git/WorldCup_web/backend/includes/classes/logic/model/base/BaseStadiumLogicUtility.php
 /opt/lampp/htdocs/applications/git/WorldCup_web/backend/includes/classes/logic/model/base/BaseTeamActionLogicUtility.php
@@ -115,6 +119,7 @@
 /opt/lampp/htdocs/applications/git/WorldCup_web/backend/includes/classes/logic/entity/model/GamesPlayersEntity.php
 /opt/lampp/htdocs/applications/git/WorldCup_web/backend/includes/classes/logic/entity/model/PlayerScoreActionEntity.php
 /opt/lampp/htdocs/applications/git/WorldCup_web/backend/includes/classes/logic/entity/model/PlayersEntity.php
+/opt/lampp/htdocs/applications/git/WorldCup_web/backend/includes/classes/logic/entity/model/PlayerSubstituteActionEntity.php
 /opt/lampp/htdocs/applications/git/WorldCup_web/backend/includes/classes/logic/entity/model/RedCardActionEntity.php
 /opt/lampp/htdocs/applications/git/WorldCup_web/backend/includes/classes/logic/entity/model/StadiumEntity.php
 /opt/lampp/htdocs/applications/git/WorldCup_web/backend/includes/classes/logic/entity/model/TeamActionEntity.php
@@ -134,6 +139,7 @@
 /opt/lampp/htdocs/applications/git/WorldCup_web/backend/includes/classes/logic/entity/model/base/BaseGamesPlayersEntity.php
 /opt/lampp/htdocs/applications/git/WorldCup_web/backend/includes/classes/logic/entity/model/base/BasePlayerScoreActionEntity.php
 /opt/lampp/htdocs/applications/git/WorldCup_web/backend/includes/classes/logic/entity/model/base/BasePlayersEntity.php
+/opt/lampp/htdocs/applications/git/WorldCup_web/backend/includes/classes/logic/entity/model/base/BasePlayerSubstituteActionEntity.php
 /opt/lampp/htdocs/applications/git/WorldCup_web/backend/includes/classes/logic/entity/model/base/BaseRedCardActionEntity.php
 /opt/lampp/htdocs/applications/git/WorldCup_web/backend/includes/classes/logic/entity/model/base/BaseStadiumEntity.php
 /opt/lampp/htdocs/applications/git/WorldCup_web/backend/includes/classes/logic/entity/model/base/BaseTeamActionEntity.php
@@ -175,6 +181,7 @@
 /opt/lampp/htdocs/applications/git/WorldCup_web/backend/includes/classes/gui/model/GamesPlayersGuiUtility.php
 /opt/lampp/htdocs/applications/git/WorldCup_web/backend/includes/classes/gui/model/PlayerScoreActionGuiUtility.php
 /opt/lampp/htdocs/applications/git/WorldCup_web/backend/includes/classes/gui/model/PlayersGuiUtility.php
+/opt/lampp/htdocs/applications/git/WorldCup_web/backend/includes/classes/gui/model/PlayerSubstituteActionGuiUtility.php
 /opt/lampp/htdocs/applications/git/WorldCup_web/backend/includes/classes/gui/model/RedCardActionGuiUtility.php
 /opt/lampp/htdocs/applications/git/WorldCup_web/backend/includes/classes/gui/model/StadiumGuiUtility.php
 /opt/lampp/htdocs/applications/git/WorldCup_web/backend/includes/classes/gui/model/TeamActionGuiUtility.php
@@ -195,6 +202,7 @@
 /opt/lampp/htdocs/applications/git/WorldCup_web/backend/includes/classes/gui/model/base/BaseGamesPlayersGuiUtility.php
 /opt/lampp/htdocs/applications/git/WorldCup_web/backend/includes/classes/gui/model/base/BasePlayerScoreActionGuiUtility.php
 /opt/lampp/htdocs/applications/git/WorldCup_web/backend/includes/classes/gui/model/base/BasePlayersGuiUtility.php
+/opt/lampp/htdocs/applications/git/WorldCup_web/backend/includes/classes/gui/model/base/BasePlayerSubstituteActionGuiUtility.php
 /opt/lampp/htdocs/applications/git/WorldCup_web/backend/includes/classes/gui/model/base/BaseRedCardActionGuiUtility.php
 /opt/lampp/htdocs/applications/git/WorldCup_web/backend/includes/classes/gui/model/base/BaseStadiumGuiUtility.php
 /opt/lampp/htdocs/applications/git/WorldCup_web/backend/includes/classes/gui/model/base/BaseTeamActionGuiUtility.php

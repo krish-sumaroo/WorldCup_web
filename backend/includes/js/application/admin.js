@@ -30,11 +30,24 @@ function getPlayerScoreAction(playerId, gameId)
     getSSContent("getPlayerScoreAction", "modal_content", params);
 }
 
+function getPlayerSubstituteAction(playerId, gameId)
+{
+    var params = {"player_id": playerId, "game_id": gameId};
+    getSSContent("getPlayerSubstituteAction", "modal_content", params);
+}
+
 function adminPlayerScoreAction(playerId, gameId)
 {
     var date = $("#txt_player_score_date").val();
     var params = {"player_id": playerId, "game_id": gameId, "date": date};
     getSSContent("adminPlayerScoreAction", "player_action_con", params);
+}
+
+function adminPlayerSubstituteAction(playerId, gameId)
+{
+    var date = $("#txt_player_substitute_date").val();
+    var params = {"player_id": playerId, "game_id": gameId, "date": date};
+    getSSContent("adminPlayerSubstituteAction", "player_action_con", params);
 }
 
 function reloadMatchEngageDisplay(id)

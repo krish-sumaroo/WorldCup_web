@@ -20,12 +20,13 @@ class AdminGameActionLineEntity extends AdminGameActionEntity
     protected $redCardPlayerName;
     protected $yellowCardPlayerName;
     protected $playerScorePlayerName;
+    protected $playerSubstitutePlayerName;
     protected $values;
 
     public function __construct($gameActionId, $adminId, $actionStatus, $gameId, $actionMinute, $actionDate,
 	    $actionAutomaticDate, $actionType, $redCardGameActionId, $redCardPlayerId, $yellowCardGameActionId,
 	    $yellowCardPlayerId, $playerScoreGameActionId, $playerScorePlayerId, $redCardPlayerName, $yellowCardPlayerName,
-	    $playerScorePlayerName, $values)
+	    $playerScorePlayerName, $playerSubstitutePlayerName, $values)
     {
 	$this->gameActionId = $gameActionId;
 	$this->adminId = $adminId;
@@ -44,6 +45,7 @@ class AdminGameActionLineEntity extends AdminGameActionEntity
 	$this->redCardPlayerName = $redCardPlayerName;
 	$this->yellowCardPlayerName = $yellowCardPlayerName;
 	$this->playerScorePlayerName = $playerScorePlayerName;
+	$this->playerSubstitutePlayerName = $playerSubstitutePlayerName;
 	$this->values = $values;
     }
 
@@ -127,6 +129,11 @@ class AdminGameActionLineEntity extends AdminGameActionEntity
 	return utf8_encode($this->playerScorePlayerName);
     }
 
+    public function getPlayerSubstitutePlayerName()
+    {
+	return utf8_encode($this->playerSubstitutePlayerName);
+    }
+
     public function getValues()
     {
 	return $this->values;
@@ -145,6 +152,11 @@ class AdminGameActionLineEntity extends AdminGameActionEntity
     protected function isTypePlayerScore()
     {
 	return ($this->getActionType() == GameActionLogicUtility::$ACTION_TYPE_PLAYER_SCORE);
+    }
+
+    protected function isTypePlayerSubstitute()
+    {
+	return ($this->getActionType() == GameActionLogicUtility::$ACTION_TYPE_PLAYER_SUBSTITUTE);
     }
 
     public function getLineDisplay()
@@ -192,6 +204,19 @@ class AdminGameActionLineEntity extends AdminGameActionEntity
 	    $output .= "<img class='en4' src='$urlRedCardImage' alt='Player Scores' title='Player Scores' />";
 	    $output .= "&nbsp;&nbsp;";
 	    $output .= $this->getPlayerScorePlayerName();
+	    $output .= $validateDisplay;
+	    $output .= "</div>";
+	}
+	elseif($this->isTypePlayerSubstitute())
+	{
+	    $urlPlayerSubstituteImage = UrlConfiguration::getImageSrc("substitute.png", "application");
+
+	    $output .= "<div class=''>";
+	    $output .= $dateUtility->getFormattedOffsetAdjustedDate($this->getActionDate(), $offset);
+	    $output .= " : ";
+	    $output .= "<img class='en4' src='$urlPlayerSubstituteImage' alt='Player is substituted' title='Player is substituted' />";
+	    $output .= "&nbsp;&nbsp;";
+	    $output .= $this->getPlayerSubstitutePlayerName();
 	    $output .= $validateDisplay;
 	    $output .= "</div>";
 	}

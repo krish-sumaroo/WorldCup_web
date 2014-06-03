@@ -146,10 +146,12 @@ class GamesGuiUtility extends BaseGamesGuiUtility
 	$yellowCardImage = UrlConfiguration::getImageSrc("yellow_card.png", "application");
 	$redCardImage = UrlConfiguration::getImageSrc("red_card.png", "application");
 	$scoreCardImage = UrlConfiguration::getImageSrc("score.png", "application");
+	$substituteImage = UrlConfiguration::getImageSrc("substitute.png", "application");
 
 	$yellowCardImgTag = "<img src='$yellowCardImage' alt='Yellow Card' class='en4' />";
 	$redCardImgTag = "<img src='$redCardImage' alt='Red Card' class='en4' />";
-	$scoreCardImgTag = "<img src='$scoreCardImage' alt='Player Scores' class='en4' />";
+	$scoreImgTag = "<img src='$scoreCardImage' alt='Player Scores' class='en4' />";
+	$substituteImgTag = "<img src='$substituteImage' alt='Player Scores' class='en4' />";
 
 	for($i = 0; $i < count($gamePlayersEntityList); $i++)
 	{
@@ -161,15 +163,19 @@ class GamesGuiUtility extends BaseGamesGuiUtility
 	    $output .= "<td>$playerName</td>";
 	    $output .= "<td>";
 	    $output .= BootstrapModalGuiUtility::getAction($yellowCardImgTag, "getYellowCardAction('$playerId', '$gameId');",
-			    "en1", true);
+			    "en1", true, "Yellow Card");
 	    $output .= "</td>";
 	    $output .= "<td>";
 	    $output .= BootstrapModalGuiUtility::getAction($redCardImgTag, "getRedCardAction('$playerId', '$gameId');", "en1",
-			    true);
+			    true, "Red Card");
 	    $output .= "</td>";
 	    $output .= "<td>";
-	    $output .= BootstrapModalGuiUtility::getAction($scoreCardImgTag, "getPlayerScoreAction('$playerId', '$gameId');",
-			    "en1", true);
+	    $output .= BootstrapModalGuiUtility::getAction($scoreImgTag, "getPlayerScoreAction('$playerId', '$gameId');",
+			    "en1", true, "Player Scores");
+	    $output .= "</td>";
+	    $output .= "<td>";
+	    $output .= BootstrapModalGuiUtility::getAction($substituteImgTag,
+			    "getPlayerSubstituteAction('$playerId', '$gameId');", "en1", true, "Substitute Player");
 	    $output .= "</td>";
 	    $output .= "</tr>";
 	}

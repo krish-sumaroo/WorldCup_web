@@ -20,7 +20,7 @@ class BaseUserPlayerActionLogicUtility
     public static $SCORE_GOAL_ACTION_ID = 1;
     public static $YELLOW_CARD_ACTION_ID = 2;
     public static $GETS_SUBSTITUTED_ACTION_ID = 3;
-    public static $RED_CARD_ACTION_ID = 4;
+    public static $RED_CARD_ACTION_ID = 2;
     //status
     public static $STATUS_INITIAL = 0;
     public static $STATUS_SUCCESS = 1;

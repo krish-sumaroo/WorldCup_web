@@ -15,8 +15,6 @@ class UserActionProcessManager
 	$adminGameActionEntityList = AdminGameActionLogicUtility::getValidatedGameAction($currentMySqlDate,
 			GameProcessConfiguration::$GAME_PROCESS_LIMIT, AdminGameActionLogicUtility::$PROCESS_STATUS_NOT_STARTED, $sortQuery);
 
-	Debug::dumpArray($adminGameActionEntityList); //debug
-
 	if(count($adminGameActionEntityList) > 0)
 	{
 	    $adminGameActionIdArray = UserActionProcessManager::getAdminGameIdArray($adminGameActionEntityList);
@@ -47,6 +45,11 @@ class UserActionProcessManager
 		{
 		    $playerId = $values[AdminGameActionLogicUtility::$PLAYER_ID_PLAYER_SCORE_ALIAS];
 		    $actionId = UserPlayerActionLogicUtility::$SCORE_GOAL_ACTION_ID;
+		}
+		elseif($actionType == GameActionLogicUtility::$ACTION_TYPE_PLAYER_SUBSTITUTE)
+		{
+		    $playerId = $values[AdminGameActionLogicUtility::$PLAYER_ID_PLAYER_SCORE_ALIAS];
+		    $actionId = UserPlayerActionLogicUtility::$GETS_SUBSTITUTED_ACTION_ID;
 		}
 
 		UserPlayerActionLogicUtility::updateSuccess($playerId, $actionId, $actionDate, $gameId);
