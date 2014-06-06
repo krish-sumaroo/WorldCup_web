@@ -159,6 +159,11 @@ class AdminGameActionLineEntity extends AdminGameActionEntity
 	return ($this->getActionType() == GameActionLogicUtility::$ACTION_TYPE_PLAYER_SUBSTITUTE);
     }
 
+    protected function isTypeTeamAction()
+    {
+	return ($this->getActionType() == GameActionLogicUtility::$ACTION_TYPE_TEAM_ACTION);
+    }
+
     public function getLineDisplay()
     {
 	$output = "";
@@ -218,6 +223,14 @@ class AdminGameActionLineEntity extends AdminGameActionEntity
 	    $output .= "&nbsp;&nbsp;";
 	    $output .= $this->getPlayerSubstitutePlayerName();
 	    $output .= $validateDisplay;
+	    $output .= "</div>";
+	}
+	elseif($this->isTypeTeamAction())
+	{
+	    $output .= "<div class=''>";
+	    $output .= $dateUtility->getFormattedOffsetAdjustedDate($this->getActionDate(), $offset);
+	    $output .= " : ";
+	    $output .= "Score set for match";
 	    $output .= "</div>";
 	}
 

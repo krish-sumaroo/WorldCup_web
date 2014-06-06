@@ -1,38 +1,67 @@
 <?php
 
+
 class TeamActionManager
 {
-    public static function addTeamAction($fkGameActionId, $fkTeamId, $teamActionType)
+
+    public static function addTeamAction($gameId, $actionDate, $team1Score, $team2Score, $adminId = "", $userId = "")
     {
-        $teamActionValidator = new BaseTeamActionValidator();
+	$error = new Error();
 
-        $error = $teamActionValidator->validateAddTeamAction($fkGameActionId, $fkTeamId, $teamActionType);
+	$dateUtility = DateUtilityHelper::getDateUtility();
 
-        if(!$error->errorExists())
-        {
-            TeamActionLogicUtility::addTeamAction($fkGameActionId, $fkTeamId, $teamActionType);
-        }
+	$actionAutomaticDate = $dateUtility->getCurrentGMTMysqlDateTime();
+	$formattedActionDate = "$actionDate:00";
+	$adjustedActionDate = $dateUtility->getGmtAdjustedTime($formattedActionDate, SessionHelper::getTimeOffset() * 60);
+	$actionType = GameActionLogicUtility::$ACTION_TYPE_TEAM_ACTION;
 
-        return $error;
+	$teamActionEntity = TeamActionLogicUtility::getTeamActionDetailsByGameId($gameId);
+
+	if($teamActionEntity)
+	{
+	    $gameActionId = $teamActionEntity->getFkGameActionId();
+	    TeamActionLogicUtility::updateTeamAction($gameId, $team1Score, $team2Score);
+	    GamesLogicUtility::updateT1Score($gameId, $team1Score);
+	    GamesLogicUtility::updateT2Score($gameId, $team2Score);
+	}
+	else
+	{
+	    $gameActionId = GameActionLogicUtility::addGameAction($gameId, "", $adjustedActionDate, $actionAutomaticDate,
+			    $actionType);
+	    TeamActionLogicUtility::addTeamAction($gameId, $team1Score, $team2Score);
+	    GamesLogicUtility::updateT1Score($gameId, $team1Score);
+	    GamesLogicUtility::updateT2Score($gameId, $team2Score);
+
+	    if($adminId != "")
+	    {
+		AdminGameActionLogicUtility::addAdminGameAction($gameActionId, $adminId);
+	    }
+	    elseif($userId != "")
+	    {
+		UserGameActionLogicUtility::addUserGameAction($gameActionId, $userId);
+	    }
+	}
+
+	return $error;
     }
 
     public static function editTeamAction($fkGameActionId, $fkTeamId, $teamActionType)
     {
-        $teamActionValidator = new BaseTeamActionValidator();
+	$teamActionValidator = new BaseTeamActionValidator();
 
-        $error = $teamActionValidator->validateEditTeamAction($fkGameActionId, $fkTeamId, $teamActionType);
+	$error = $teamActionValidator->validateEditTeamAction($fkGameActionId, $fkTeamId, $teamActionType);
 
-        if(!$error->errorExists())
-        {
-            TeamActionLogicUtility::updateTeamAction($fkGameActionId, $fkTeamId, $teamActionType);
-        }
+	if(!$error->errorExists())
+	{
+	    TeamActionLogicUtility::updateTeamAction($fkGameActionId, $fkTeamId, $teamActionType);
+	}
 
-        return $error;
+	return $error;
     }
 
     public static function deleteTeamAction($fkGameActionId)
     {
-        TeamActionLogicUtility::deleteTeamAction($fkGameActionId);
+	TeamActionLogicUtility::deleteTeamAction($fkGameActionId);
     }
 }
 

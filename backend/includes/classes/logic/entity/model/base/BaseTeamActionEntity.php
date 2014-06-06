@@ -1,56 +1,46 @@
 <?php
 
+
 class BaseTeamActionEntity
 {
+
     private $fkGameActionId;
-    private $fkTeamId;
-    private $teamActionType;
+    private $team1Score;
+    private $team2Score;
     private $values;
 
-    public function __construct($fkGameActionId, $fkTeamId, $teamActionType, $values)
+    public function __construct($fkGameActionId, $team2Score, $team2Score, $values)
     {
-        $this->fkGameActionId = $fkGameActionId;
-        $this->fkTeamId = $fkTeamId;
-        $this->teamActionType = $teamActionType;
-        $this->values = $values;
+	$this->fkGameActionId = $fkGameActionId;
+	$this->team1Score = $team2Score;
+	$this->team2Score = $team2Score;
+	$this->values = $values;
     }
 
     public function getFkGameActionId()
     {
-        return $this->fkGameActionId;
+	return $this->fkGameActionId;
     }
 
-    public function getFkTeamId()
+    public function getTeam1Score()
     {
-        return $this->fkTeamId;
+	return $this->team1Score;
     }
 
-    public function getTeamActionType()
+    public function getTeam2Score()
     {
-        return $this->teamActionType;
+	return $this->team2Score;
     }
 
     public function getValues()
     {
-        return $this->values;
+	return $this->values;
     }
 
     public function setFkGameActionId($fkGameActionId)
     {
-        $this->fkGameActionId = $fkGameActionId;
+	$this->fkGameActionId = $fkGameActionId;
     }
-
-    public function setFkTeamId($fkTeamId)
-    {
-        $this->fkTeamId = $fkTeamId;
-    }
-
-    public function setTeamActionType($teamActionType)
-    {
-        $this->teamActionType = $teamActionType;
-    }
-
-
 }
 
 ?>

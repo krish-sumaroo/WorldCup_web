@@ -97,3 +97,10 @@ RENAME TO  `player_substitute_action` ;
 -- not yet applied
 ALTER TABLE `game_action`
 CHANGE COLUMN `action_type` `action_type` ENUM('red_card','yellow_card','player_score','team_action', 'player_substitute') NULL DEFAULT NULL ;
+
+
+ALTER TABLE `team_action`
+DROP COLUMN `team_action_type`,
+DROP COLUMN `fk_team_id`,
+ADD COLUMN `team1_score` VARCHAR(45) NULL AFTER `fk_game_action_id`,
+ADD COLUMN `team2_score` VARCHAR(45) NULL AFTER `team1_score`;

@@ -69,3 +69,18 @@ function invalidateAdminGameAction(id)
     var params = {"id": id};
     getSSContent("invalidateAdminGameAction", con, params);
 }
+
+function getEndGame(id)
+{
+    var params = {"id": id};
+    getSSContent("getEndGame", "modal_content", params);
+}
+
+function endGame(id)
+{
+    var date = $("#txt_game_end_date").val();
+    var team1Score = $("#txt_team1_score").val();
+    var team2Score = $("#txt_team2_score").val();
+    var params = {"team1_score": team1Score, "team2_score": team2Score, "date": date, "game_id": id};
+    getSSContent("endGame", "player_action_con", params);
+}

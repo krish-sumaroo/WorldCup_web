@@ -18,6 +18,8 @@ class BaseGamesEntity
     private $matchDate;
     private $matchStatus;
     private $values;
+    private $team1Entity = "";
+    private $team2Entity = "";
 
     public function __construct($id, $stage, $team1, $team2, $venue, $t1Score, $t2Score, $extraScore, $timeStarted,
 	    $startedF, $playerInfo, $matchDate, $matchStatus, $values)
@@ -170,12 +172,22 @@ class BaseGamesEntity
 
     public function getTeam1Entity()
     {
-	return BaseTeamsLogicUtility::getTeamsDetails($this->getTeam1());
+	if(!$this->team1Entity)
+	{
+	    $this->team1Entity = BaseTeamsLogicUtility::getTeamsDetails($this->getTeam1());
+	}
+
+	return $this->team1Entity;
     }
 
     public function getTeam2Entity()
     {
-	return BaseTeamsLogicUtility::getTeamsDetails($this->getTeam2());
+	if(!$this->team2Entity)
+	{
+	    $this->team2Entity = BaseTeamsLogicUtility::getTeamsDetails($this->getTeam2());
+	}
+
+	return $this->team2Entity;
     }
 }
 

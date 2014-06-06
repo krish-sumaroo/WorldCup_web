@@ -15,6 +15,21 @@ class GamesEntity extends BaseGamesEntity
 	return "$team1 v/s $team2";
     }
 
+    public function getScoreDisplay()
+    {
+	if(($this->getT1Score() != "") && ($this->getT2Score() != ""))
+	{
+	    $team1Score = $this->getT1Score();
+	    $team2Score = $this->getT2Score();
+
+	    return "($team1Score - $team2Score)";
+	}
+	else
+	{
+	    return "";
+	}
+    }
+
     public function getPlayersTeam1EntityList()
     {
 	if($this->playersTeam1EntityList == "")

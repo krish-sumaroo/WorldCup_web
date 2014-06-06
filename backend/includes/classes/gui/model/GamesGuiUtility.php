@@ -34,7 +34,11 @@ class GamesGuiUtility extends BaseGamesGuiUtility
 
 		$output .= "<tr>";
 		$output .= "<td>".$gamesEntityList[$i]->getMatchDate()."</td>";
-		$output .= "<td>".$gamesEntityList[$i]->getVsDisplay()."</td>";
+		$output .= "<td>";
+		$output .= $gamesEntityList[$i]->getVsDisplay();
+		$output .= "&nbsp;";
+		$output .= $gamesEntityList[$i]->getScoreDisplay();
+		$output .= "</td>";
 		$output .= "<td>";
 		$output .= "<a class='btn btn-primary' href='$matchEngageUrl'>Engage</a>";
 		$output .= "</td>";
@@ -88,7 +92,9 @@ class GamesGuiUtility extends BaseGamesGuiUtility
 
 	$title = "<span class='glyphicon glyphicon-plus'></span> Game Actions List";
 	$title .= "&nbsp;&nbsp;";
-	$title .= "<a href='javascript:void(0);' onclick=\"reloadMatchEngageDisplay('$gamesId')\" class='btn btn-default'>Reload</a>";
+	$title .= "<a href='javascript:void(0);' onclick=\"reloadMatchEngageDisplay('$gamesId')\" class='btn btn-primary'>Reload</a>";
+	$title .= "&nbsp;&nbsp;";
+	$title .= BootstrapModalGuiUtility::getAction("End Match", "getEndGame('$gamesId');");
 
 	$backendWidgetDisplayUtility = new BackendWidgetDisplayUtility(12, $title, $output);
 
@@ -184,6 +190,79 @@ class GamesGuiUtility extends BaseGamesGuiUtility
 
 	$output .= "</table>";
 	$output .= "</div>";
+
+	return $output;
+    }
+
+    public static function getEndGame($gameId)
+    {
+	$headerContent = "";
+	$content = "";
+	$footerContent = "";
+
+	$gamesEntity = GamesLogicUtility::getGamesDetails($gameId);
+
+	if($gamesEntity)
+	{
+	    $dateUtility = DateUtilityHelper::getDateUtility();
+	    $currentDate = $dateUtility->getCurrentUserMysqlDateTime();
+
+	    $team1Score = $gamesEntity->getT1Score();
+	    $team2Score = $gamesEntity->getT2Score();
+
+	    $headerContent = "Enter Final Score for ".$gamesEntity->getVsDisplay();
+	    $footerContent = "<button id='btn_action_button' class='btn btn-primary' onclick=\"endGame('$gameId');\">Confirm Game Score</button>";
+
+	    $content .= "<form role='form' class='form-horizontal'>";
+
+	    $content .= "<div class='form-group'>";
+	    $content .= "<label class='col-sm-2 control-label' for='txt_game_end_date'>Game Finish Date/Time</label>";
+	    $content .= "<div class='col-sm-10'>";
+	    $content .= "<input class='form-control' type='text' id='txt_game_end_date' name='txt_game_end_date' placeholder='Date' value=\"$currentDate\" />";
+	    $content .= "</div>";
+	    $content .= "</div>";
+
+	    $content .= "<div class='form-group'>";
+	    $content .= "<label class='col-sm-2 control-label' for='txt_team1_score'>".$gamesEntity->getTeam1Entity()->getName()."</label>";
+	    $content .= "<div class='col-sm-10'>";
+	    $content .= "<input class='form-control' type='text' id='txt_team1_score' name='txt_team1_score' placeholder='Team Score' value=\"$team1Score\" />";
+	    $content .= "</div>";
+	    $content .= "</div>";
+
+	    $content .= "<div class='form-group'>";
+	    $content .= "<label class='col-sm-2 control-label' for='txt_team2_score'>".$gamesEntity->getTeam2Entity()->getName()."</label>";
+	    $content .= "<div class='col-sm-10'>";
+	    $content .= "<input class='form-control' type='text' id='txt_team2_score' name='txt_team2_score' placeholder='Team Score' value=\"$team2Score\" />";
+	    $content .= "</div>";
+	    $content .= "</div>";
+
+	    $content .= "<div class='form-group' id='player_action_con'>";
+	    $content .= "</div>";
+
+	    $content .= "</form>";
+	}
+
+	return BootstrapModalGuiUtility::getModalContent($headerContent, $content, $footerContent);
+    }
+
+    public static function endGame($gamesId, $date, $team1Score, $team2Score, $adminId)
+    {
+	$output = "";
+
+	$error = TeamActionManager::addTeamAction($gamesId, $date, $team1Score, $team2Score, $adminId);
+
+	if($error->errorExists())
+	{
+	    $output .= $error->getBoostrapError();
+	}
+	else
+	{
+	    $output .= ResultUpdateGuiUtility::getBootstrapSuccessDisplay("Match Score saved");
+
+	    $output .= "<script>";
+	    $output .= "$('#btn_action_button').hide();";
+	    $output .= "</script>";
+	}
 
 	return $output;
     }
