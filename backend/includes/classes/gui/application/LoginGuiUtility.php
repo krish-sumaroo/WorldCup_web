@@ -78,7 +78,8 @@ class LoginGuiUtility
 	{
 	    $adminEntity = $error->getObject();
 
-	    SessionHelper::setUserSessionVariable($adminEntity->getAdminId(), $adminEntity->getTimeOffset());
+	    SessionHelper::setUserSessionVariable($adminEntity->getAdminId(), $adminEntity->getTimeOffset(),
+		    $adminEntity->getAdminRole());
 
 	    $urlIndex = UrlConfiguration::getRootPagesUrl("index.php");
 

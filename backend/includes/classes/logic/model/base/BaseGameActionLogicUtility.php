@@ -18,6 +18,7 @@ class BaseGameActionLogicUtility
     public static $ACTION_TYPE_RED_CARD = "red_card";
     public static $ACTION_TYPE_YELLOW_CARD = "yellow_card";
     public static $ACTION_TYPE_PLAYER_SCORE = "player_score";
+    public static $ACTION_TYPE_PLAYER_SUBSTITUTE = "player_substitute";
     public static $ACTION_TYPE_TEAM_ACTION = "team_action";
     //fields limits
     public static $GAME_ACTION_ID_LIMIT = 11;

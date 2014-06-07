@@ -1,7 +1,31 @@
 <?php
 
+
 class UsersLogicUtility extends BaseUsersLogicUtility
 {
+
+    public static function getUserDetailsFromUsernameAndUid($username, $uid)
+    {
+	$queryBuilder = new QueryBuilder();
+	$queryBuilder->addTable(UsersLogicUtility::$TABLE_NAME);
+	$queryBuilder = UsersLogicUtility::addAllFields($queryBuilder);
+
+	$queryBuilder->addAndConditionWithValue(UsersLogicUtility::$USERNAME_FIELD, $username, QueryBuilder::$OPERATOR_EQUAL,
+		UsersLogicUtility::$TABLE_NAME);
+	$queryBuilder->addAndConditionWithValue(UsersLogicUtility::$UID_FIELD, $uid, QueryBuilder::$OPERATOR_EQUAL,
+		UsersLogicUtility::$TABLE_NAME);
+
+	$result = $queryBuilder->executeQuery();
+
+	if(count($result) > 0)
+	{
+	    return UsersLogicUtility::convertToObject($result[0]);
+	}
+	else
+	{
+	    return null;
+	}
+    }
 }
 
 ?>

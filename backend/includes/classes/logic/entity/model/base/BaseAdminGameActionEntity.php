@@ -1,44 +1,58 @@
 <?php
 
+
 class BaseAdminGameActionEntity
 {
-    private $fkGameActionId;
-    private $fkAdminId;
-    private $values;
 
-    public function __construct($fkGameActionId, $fkAdminId, $values)
+    protected $fkGameActionId;
+    protected $fkAdminId;
+    protected $actionStatus;
+    protected $processStatus;
+    protected $values;
+
+    public function __construct($fkGameActionId, $fkAdminId, $actionStatus, $processStatus, $values)
     {
-        $this->fkGameActionId = $fkGameActionId;
-        $this->fkAdminId = $fkAdminId;
-        $this->values = $values;
+	$this->fkGameActionId = $fkGameActionId;
+	$this->fkAdminId = $fkAdminId;
+	$this->actionStatus = $actionStatus;
+	$this->processStatus = $processStatus;
+	$this->values = $values;
     }
 
     public function getFkGameActionId()
     {
-        return $this->fkGameActionId;
+	return $this->fkGameActionId;
     }
 
     public function getFkAdminId()
     {
-        return $this->fkAdminId;
+	return $this->fkAdminId;
+    }
+
+    public function getActionStatus()
+    {
+	return $this->actionStatus;
+    }
+
+    public function getProcessStatus()
+    {
+	return $this->processStatus;
     }
 
     public function getValues()
     {
-        return $this->values;
+	return $this->values;
     }
 
     public function setFkGameActionId($fkGameActionId)
     {
-        $this->fkGameActionId = $fkGameActionId;
+	$this->fkGameActionId = $fkGameActionId;
     }
 
     public function setFkAdminId($fkAdminId)
     {
-        $this->fkAdminId = $fkAdminId;
+	$this->fkAdminId = $fkAdminId;
     }
-
-
 }
 
 ?>

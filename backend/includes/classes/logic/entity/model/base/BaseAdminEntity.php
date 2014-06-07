@@ -8,14 +8,16 @@ class BaseAdminEntity
     private $username;
     private $password;
     private $timeOffset;
+    private $adminRole;
     private $values;
 
-    public function __construct($adminId, $username, $password, $timeOffset, $values)
+    public function __construct($adminId, $username, $password, $timeOffset, $adminRole, $values)
     {
 	$this->adminId = $adminId;
 	$this->username = $username;
 	$this->password = $password;
 	$this->timeOffset = $timeOffset;
+	$this->adminRole = $adminRole;
 	$this->values = $values;
     }
 
@@ -37,6 +39,11 @@ class BaseAdminEntity
     public function getTimeOffset()
     {
 	return $this->timeOffset;
+    }
+
+    public function getAdminRole()
+    {
+	return $this->adminRole;
     }
 
     public function getValues()

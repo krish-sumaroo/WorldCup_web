@@ -65,5 +65,42 @@ ALTER TABLE `admin`
 ADD COLUMN `time_offset` DOUBLE NULL DEFAULT 0 AFTER `password`;
 
 
-ALTER TABLE `wc_2014`.`game_action`
+ALTER TABLE `game_action`
 DROP COLUMN `fk_user_id`;
+
+ALTER TABLE `admin`
+ADD COLUMN `admin_role` ENUM('creator','validator') NULL DEFAULT 'creator' AFTER `time_offset`;
+
+ALTER TABLE `admin_game_action`
+ADD COLUMN `action_status` ENUM('not_validated','validated') NULL DEFAULT 'not_validated' AFTER `fk_admin_id`;
+
+ALTER TABLE `userPlayerAction`
+ADD COLUMN `points` INT(10) NULL AFTER `gameId`,
+ADD COLUMN `status` INT(1) NULL AFTER `points`;
+
+
+ALTER TABLE `admin_game_action`
+ADD COLUMN `process_status` ENUM('not_started','started','finished','error') NULL DEFAULT 'not_started' AFTER `action_status`;
+
+
+CREATE TABLE `new_table` (
+  `fk_game_action_id` INT(11) NOT NULL,
+  `fk_player_id` INT(11) NULL,
+  PRIMARY KEY (`fk_game_action_id`));
+
+ALTER TABLE `new_table`
+RENAME TO  `player_substitute_action` ;
+
+
+
+
+-- not yet applied
+ALTER TABLE `game_action`
+CHANGE COLUMN `action_type` `action_type` ENUM('red_card','yellow_card','player_score','team_action', 'player_substitute') NULL DEFAULT NULL ;
+
+
+ALTER TABLE `team_action`
+DROP COLUMN `team_action_type`,
+DROP COLUMN `fk_team_id`,
+ADD COLUMN `team1_score` VARCHAR(45) NULL AFTER `fk_game_action_id`,
+ADD COLUMN `team2_score` VARCHAR(45) NULL AFTER `team1_score`;

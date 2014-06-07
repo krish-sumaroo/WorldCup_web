@@ -9,11 +9,11 @@
 class ResultUpdateGuiUtility
 {
 
-    public static function getResultDisplay($resultText = "", $containerId = "", $fade = true)
+    public static function getResultDisplay($resultText = "", $containerId = "", $fade = true, $span = false)
     {
 	$output = "";
 
-	$output .= ResultUpdateGuiUtility::getDisplay($resultText, $containerId, $fade);
+	$output .= ResultUpdateGuiUtility::getDisplay($resultText, $containerId, $fade, "action_message", $span);
 
 	return $output;
     }
@@ -101,7 +101,8 @@ class ResultUpdateGuiUtility
 	return $output;
     }
 
-    private static function getDisplay($resultText = "", $containerId = "", $fade = true, $class = "action_message")
+    private static function getDisplay($resultText = "", $containerId = "", $fade = true, $class = "action_message",
+	    $span = false)
     {
 	$output = "";
 
@@ -115,7 +116,14 @@ class ResultUpdateGuiUtility
 	    $containerId = "con_".time();
 	}
 
-	$output .= "<div id='$containerId' class='$class'>$resultText</div>";
+	if($span)
+	{
+	    $output .= "<span id='$containerId' class='$class'>$resultText</span>";
+	}
+	else
+	{
+	    $output .= "<div id='$containerId' class='$class'>$resultText</div>";
+	}
 
 	if($fade)
 	{

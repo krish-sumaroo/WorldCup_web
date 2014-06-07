@@ -239,12 +239,12 @@ class BaseGamesLogicUtility
 
     public static function updateT1Score($id, $value)
     {
-	BaseGamesLogicUtility::updateSpecificField($id, $value, BaseGamesLogicUtility::$T1SCORE_FIELD, $value);
+	BaseGamesLogicUtility::updateSpecificField($id, BaseGamesLogicUtility::$T1SCORE_FIELD, $value);
     }
 
     public static function updateT2Score($id, $value)
     {
-	BaseGamesLogicUtility::updateSpecificField($id, $value, BaseGamesLogicUtility::$T2SCORE_FIELD, $value);
+	BaseGamesLogicUtility::updateSpecificField($id, BaseGamesLogicUtility::$T2SCORE_FIELD, $value);
     }
 
     public static function updateExtraScore($id, $value)

@@ -13,7 +13,8 @@ if(SessionHelper::isLoggedIn())
 
     if($gameEntity)
     {
-	$backendTemplateGuiUtility = new BackendTemplateGuiUtility($gameEntity->getVsDisplay());
+	$pageTitle = $gameEntity->getVsDisplay()." ".$gameEntity->getScoreDisplay();
+	$backendTemplateGuiUtility = new BackendTemplateGuiUtility($pageTitle);
 	$mainContent = GamesGuiUtility::getEngageDisplay($gamesId);
     }
     else

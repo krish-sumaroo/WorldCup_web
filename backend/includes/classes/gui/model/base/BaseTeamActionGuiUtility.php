@@ -108,8 +108,8 @@ class BaseTeamActionGuiUtility
             for($i = 0; $i < count($teamActionList); $i++)
             {
                 $fkGameActionId = $teamActionList[$i]->getFkGameActionId();
-                $fkTeamId = $teamActionList[$i]->getFkTeamId();
-                $teamActionType = $teamActionList[$i]->getTeamActionType();
+                $fkTeamId = $teamActionList[$i]->getTeam1Score();
+                $teamActionType = $teamActionList[$i]->getTeam2Score();
 
                 $teamActionLineContainerId = "team_action_line_con_".$fkGameActionId;
                 $teamActionActionLineContainerId = "team_action_action_line_con_".$fkGameActionId;
@@ -173,8 +173,8 @@ class BaseTeamActionGuiUtility
             $editCommandContainer = "team_action_edit_com_".$fkGameActionId;
 
             $fkGameActionId = $teamActionEntity->getFkGameActionId();
-            $fkTeamId = $teamActionEntity->getFkTeamId();
-            $teamActionType = $teamActionEntity->getTeamActionType();
+            $fkTeamId = $teamActionEntity->getTeam1Score();
+            $teamActionType = $teamActionEntity->getTeam2Score();
 
             $fkGameActionIdContainer = "team_action_txt_fk_game_action_id_".$fkGameActionId;
             $fkTeamIdContainer = "team_action_txt_fk_team_id_".$fkGameActionId;

@@ -10,6 +10,7 @@ class AdminLogicUtility extends BaseAdminLogicUtility
 	$queryBuilder->addTable(AdminLogicUtility::$TABLE_NAME);
 	$queryBuilder->addFields(AdminLogicUtility::$ADMIN_ID_FIELD);
 	$queryBuilder->addFields(AdminLogicUtility::$TIME_OFFSET_FIELD);
+	$queryBuilder->addFields(AdminLogicUtility::$ADMIN_ROLE_FIELD);
 	$queryBuilder->addAndConditionWithValue(AdminLogicUtility::$USERNAME_FIELD, $username);
 	$queryBuilder->addAndConditionWithValue(AdminLogicUtility::$PASSWORD_FIELD, $encryptedPassword);
 
