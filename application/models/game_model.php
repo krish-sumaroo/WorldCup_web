@@ -199,7 +199,9 @@ class game_model extends CI_Model {
     
     public function registerScore($data)
     {
-         $this->db->insert('userScoreAction', $data);
+        $this->db->insert('userScoreAction', $data);
+        
+        log_message('error', 'insert score =>'.$this->db->last_query());
 
         if($this->db->affected_rows())
         {
@@ -213,6 +215,23 @@ class game_model extends CI_Model {
         }
     }
     
+    public function registerAction($data)
+    {
+        $this->db->insert('userPlayerAction', $data);
+
+        if($this->db->affected_rows())
+        {
+            $this->db->close();
+            return TRUE;
+        }
+        else
+        {
+            $this->db->close();
+            return FALSE;
+        }
+    }
+
+
     public function updateNMove($id, $moves)
     {
         $sql = 'UPDATE user_game_details SET nMoves = '.$moves." WHERE id = ".$id;

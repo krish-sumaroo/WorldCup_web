@@ -21,8 +21,17 @@ class Users extends CI_Controller {
     public function checkUsername()
     {
         $email = $this->input->post('username');
-        $result = $this->user->checkAvailability('username',$email);
-        echo json_encode(['status' => $result]);       
+        $response = $this->user->checkUsername($email);
+        
+        if($response)
+        {
+            $response['status'] = true;
+        }
+        else
+        {
+            $response['status'] = false;
+        }
+       echo json_encode($response);  
     }
     
     public function regisGCM()
@@ -40,6 +49,15 @@ class Users extends CI_Controller {
         $favTeam = $this->input->post('favTeam');
         $uid = $this->input->post('uid');
         $country = $this->input->post('country');
+        
+//        $username = 'test123';
+//        $password = 'elo';        
+//        $nickname = 'what';
+//        $favTeam = 5;
+//        $uid = '34546346';
+//        $country = 'mau';
+        
+        
      
         if($this->user->checkAvailability('username',$username) && $this->user->checkAvailability('nickname',$nickname))
         {
@@ -51,9 +69,16 @@ class Users extends CI_Controller {
                            'teamId' => $favTeam
                             );
             
+       
             $result = $this->user->addUser($saveArray);
-            $response = $this->dbhelper->buildResponse($result);
-            echo $response;
+           
+            $response['status'] = true;
+            $response['id'] = $result;
+            $response['profile'] = 0;
+            $response['favTeamId'] = $favTeam;
+            $response['score'] = 0;
+            
+            echo json_encode($response);
         }
         else
         {
@@ -92,6 +117,7 @@ class Users extends CI_Controller {
 //         $password = 't';
 //         $uid = 'b26cee37382e797ertyreergggrgrg';
          
+         
          log_message('error', 'uid =>'.print_r($this->input->post(), true));
          
          $params = array('username' => $username,
@@ -125,5 +151,65 @@ class Users extends CI_Controller {
         echo $response;
     }
     
+    public function search()
+    {
+        $search = $this->input->post('search');
+        $userId = $this->input->post('user');
+        
+        //$search = 'boul';
+        //$userId = 43;
 
+        $result = $this->user->findMatch($search, $userId);
+        echo json_encode($result);
+    }
+    
+    public function sendInvite()
+    {
+        $userId = $this->input->post('user');
+        $friendId = $this->input->post('friend');
+        
+        //$userId = 43;
+        //$friendId = 31;
+        
+        $status = $this->user->sendInvite($userId, $friendId);  
+    
+        echo json_encode(array('status' => $status));
+    }
+     
+    public function friends()
+    {
+        $userid = $this->input->post('user');
+        
+        //$userid = 46;
+        
+        $friends = $this->user->listFriends($userid);
+        
+        echo json_encode($friends);
+    }
+    
+    public function decline()
+    {
+        $userid = $this->input->post('user');
+        $friendId = $this->input->post('friend');
+        
+        //$userid = 46;
+        
+        $friends = $this->user->decline($userid, $friendId);
+        
+        echo json_encode($friends);
+    }
+
+
+    public function acceptInvite()
+    {
+        $userId = $this->input->post('user');
+        $friendId = $this->input->post('friend');
+        
+        //$userId = 31;
+        //$friendId = 43;
+        
+        $status = $this->user->accept($userId, $friendId);
+        
+        echo json_encode(array('status' => $status));
+    }
 }

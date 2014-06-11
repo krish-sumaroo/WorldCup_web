@@ -34,6 +34,8 @@ class Actions extends CI_Controller {
         $team2Score = $this->input->post('team2Score');
         $userId = $this->input->post('userId');
         
+        log_message('error', 'posts=>'.print_r($this->input->post(), true));
+        
          //test save array //
 //            $gameId = 2;
 //            $team1Id = 1;
@@ -43,6 +45,8 @@ class Actions extends CI_Controller {
 //            $userId = 2;
         
         $moves = $this->_checkMoves($userId, $gameId);
+        
+        log_message('error', 'moves =>'.print_r($moves, true));
         
         if($moves)
         {
@@ -65,16 +69,21 @@ class Actions extends CI_Controller {
                if( $newNMove > 0)
                {
                     $newNMove = $newNMove - 1;
+                    $sMoveLeft = $newSMove;
                     $this->game->updateNMove($moves['nMoves']['id'],$newNMove);
+                    
+                    log_message('error', 'normal');
                }
                else
                {
                    $sMoveLeft = $newSMove - 1;
                    $this->game->updateSMove($userId, $sMoveLeft);
+                   log_message('error', 'special'.$sMoveLeft);
+                   
                }
                $response['status'] = true;
                $response['nMove'] = $newNMove;
-               $response['sMove'] = $newSMove;
+               $response['sMove'] = $sMoveLeft;
             }
             else
             {
@@ -90,6 +99,8 @@ class Actions extends CI_Controller {
             $response['msg'] = 'No moves found';
         }
         
+        
+        log_message('error', 'reponse =>'.print_r($response, true));
         echo json_encode($response);
     }
     
@@ -105,7 +116,8 @@ class Actions extends CI_Controller {
 //        $userId = 2;
 //        $gameId = 2;
         
-        $moves = $this->_checkMoves($userId, $gameId);
+        $moves = $this->_checkMoves($userId, $gameId);        
+        
         if($moves)
         {
             // register score and update points
@@ -113,24 +125,28 @@ class Actions extends CI_Controller {
             $saveArray['actionId'] = $actionId;
             $saveArray['playerId'] = $playerId;
             $saveArray['userId'] = $userId;
+            $result = $this->game->registerAction($saveArray); 
             
-            $result = $this->game->registerAction(); 
+            $newNMove = $moves['nMoves']['nMoves'];
+            $newSMove = $moves['sMoves'];
+
             if($result)
             {
-               $nMoveLeft = $moves['nMoves']['nMoves'];
+
                if( $newNMove > 0)
                {
                     $newNMove = $newNMove - 1;
                     $this->game->updateNMove($moves['nMoves']['id'],$newNMove);
+                    $sMoveLeft = $newSMove;
                }
                else
                {
-                   $sMoveLeft = $newSMove - 1;
-                   $this->game->updateSMove($userId, $sMoveLeft);
+                  $sMoveLeft = $newSMove - 1;
+                  $this->game->updateSMove($userId, $sMoveLeft);
                }
                $response['status'] = true;
                $response['nMove'] = $newNMove;
-               $response['sMove'] = $newSMove;
+               $response['sMove'] = $sMoveLeft;
             }
             else
             {
@@ -145,6 +161,8 @@ class Actions extends CI_Controller {
             $response['errorCode'] = 402;
             $response['msg'] = 'No moves found';
         }
+        
+        log_message('error', 'reponse =>'.print_r($response, true));
        echo json_encode($response); 
     }
 }
