@@ -170,6 +170,18 @@ class Error
 	return $output;
     }
 
+    public function getFirstErrorDisplay()
+    {
+	if(count($this->error) > 0)
+	{
+	    return $this->error[0];
+	}
+	else
+	{
+	    return "";
+	}
+    }
+
     public function getBoostrapError($width = "")
     {
 	return ResultUpdateGuiUtility::getBootstrapErrorDisplay($this->getSimpleErrorList(), $width);

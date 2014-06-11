@@ -115,7 +115,7 @@ class AdminGameActionLogicUtility extends BaseAdminGameActionLogicUtility
     }
 
     public static function getValidatedGameAction($dateBefore, $limit = "", $processStatus = "",
-	    SortQuery $sortQuery = null)
+	    SortQuery $sortQuery = null, $actionType = "", $gameActionId = "")
     {
 	$queryBuilder = new QueryBuilder();
 	$queryBuilder->addTable(AdminGameActionLogicUtility::$TABLE_NAME);
@@ -178,6 +178,18 @@ class AdminGameActionLogicUtility extends BaseAdminGameActionLogicUtility
 	if($sortQuery)
 	{
 	    $queryBuilder->addSortQuery($sortQuery);
+	}
+
+	if($actionType != "")
+	{
+	    $queryBuilder->addAndConditionWithValue(GameActionLogicUtility::$ACTION_TYPE_FIELD, $actionType,
+		    QueryBuilder::$OPERATOR_EQUAL, GameActionLogicUtility::$TABLE_NAME);
+	}
+
+	if($gameActionId != "")
+	{
+	    $queryBuilder->addAndConditionWithValue(AdminGameActionLogicUtility::$FK_GAME_ACTION_ID_FIELD, $gameActionId,
+		    QueryBuilder::$OPERATOR_EQUAL, AdminGameActionLogicUtility::$TABLE_NAME);
 	}
 
 	$result = $queryBuilder->executeQuery();

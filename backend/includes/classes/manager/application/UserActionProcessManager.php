@@ -4,7 +4,7 @@
 class UserActionProcessManager
 {
 
-    public static function processUserAction()
+    public static function processUserAction($gameActionId = "")
     {
 	$sortQuery = new SortQuery();
 	$sortQuery->addSort(GameActionLogicUtility::$ACTION_DATE_FIELD, SortQuery::$ASCENDING);
@@ -13,7 +13,8 @@ class UserActionProcessManager
 	$currentMySqlDate = $dateUtility->getCurrentGMTMysqlDateTime();
 
 	$adminGameActionEntityList = AdminGameActionLogicUtility::getValidatedGameAction($currentMySqlDate,
-			GameProcessConfiguration::$GAME_PROCESS_LIMIT, AdminGameActionLogicUtility::$PROCESS_STATUS_NOT_STARTED, $sortQuery);
+			GameProcessConfiguration::$GAME_PROCESS_LIMIT, AdminGameActionLogicUtility::$PROCESS_STATUS_NOT_STARTED, $sortQuery,
+			"", $gameActionId);
 
 	if(count($adminGameActionEntityList) > 0)
 	{
@@ -70,6 +71,32 @@ class UserActionProcessManager
 	}
 
 	return $idArray;
+    }
+
+    public static function processSpecificAction($gameActionId, $gameId)
+    {
+	$error = new Error();
+
+	$gameActionEntity = GameActionLogicUtility::getActionAutomaticDate($gameActionId);
+
+	if($gameActionEntity)
+	{
+	    $actionAutomaticDate = $gameActionEntity->getActionAutomaticDate();
+
+	    $numberOfValidatedActionsBefore = GameActionLogicUtility::getNumberOfValidatedActionsBefore($actionAutomaticDate,
+			    $gameId);
+
+	    if($numberOfValidatedActionsBefore > 0)
+	    {
+		$error->addError("There are other actions for which rewards have not yet been awarded. We strongly recommend you to award the other rewards first.");
+	    }
+	    else
+	    {
+		UserActionProcessManager::processUserAction($gameActionId);
+	    }
+	}
+
+	return $error;
     }
 }
 

@@ -113,7 +113,7 @@ class GamesGuiUtility extends BaseGamesGuiUtility
 	for($i = 0; $i < count($adminGameActionEntityList); $i++)
 	{
 	    $output .= "<div class='well'>";
-	    $output .= $adminGameActionEntityList[$i]->getLineDisplay();
+	    $output .= $adminGameActionEntityList[$i]->getLineDisplay($gamesId);
 	    $output .= "</div>";
 	}
 

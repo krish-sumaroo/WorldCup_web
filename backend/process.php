@@ -414,11 +414,22 @@ if(SessionHelper::isLoggedIn())
 		break;
 
 	    case "validateAdminGameAction":
-		echo AdminGameActionGuiUtility::validateAdminGameAction(RequestHelper::getRequestValue("id"));
+		echo AdminGameActionGuiUtility::validateAdminGameAction(RequestHelper::getRequestValue("id"),
+			RequestHelper::getRequestValue("game_id"));
 		break;
 
 	    case "invalidateAdminGameAction":
-		echo AdminGameActionGuiUtility::invalidateAdminGameAction(RequestHelper::getRequestValue("id"));
+		echo AdminGameActionGuiUtility::invalidateAdminGameAction(RequestHelper::getRequestValue("id"),
+			RequestHelper::getRequestValue("game_id"));
+		break;
+
+	    case "triggerRewards":
+		echo UserActionProcessGuiUtility::triggerAwards(RequestHelper::getRequestValue("id"),
+			RequestHelper::getRequestValue("game_id"));
+		break;
+
+	    case "confirmTriggerRewards":
+		echo UserActionProcessGuiUtility::confirmTriggerAwards(RequestHelper::getRequestValue("id"));
 		break;
 	    /////////////////////////end of Engage///////////////////////
 

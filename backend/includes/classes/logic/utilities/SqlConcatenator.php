@@ -123,7 +123,7 @@ class SqlConcatenator
 	return $output;
     }
 
-    public static function createSelectInQueryPart($array, $addSingleQuote = false, $field = "")
+    public static function createSelectInQueryPart($array, $addSingleQuote = false, $field = "", $tableName = "")
     {
 	$output = "";
 	$text = "";
@@ -161,6 +161,11 @@ class SqlConcatenator
 	    }
 	    else
 	    {
+		if($tableName != "")
+		{
+		    $field = "$tableName.$field";
+		}
+
 		$output = "$field IN ($text)";
 	    }
 	}

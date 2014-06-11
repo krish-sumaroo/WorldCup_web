@@ -213,6 +213,7 @@
 /opt/lampp/htdocs/applications/git/WorldCup_web/backend/includes/classes/gui/model/base/BaseUsersGuiUtility.php
 /opt/lampp/htdocs/applications/git/WorldCup_web/backend/includes/classes/gui/model/base/BaseYellowCardActionGuiUtility.php
 /opt/lampp/htdocs/applications/git/WorldCup_web/backend/includes/classes/gui/application/LoginGuiUtility.php
+/opt/lampp/htdocs/applications/git/WorldCup_web/backend/includes/classes/gui/application/UserActionProcessGuiUtility.php
 /opt/lampp/htdocs/applications/git/WorldCup_web/backend/includes/classes/framework/helper/RequestHelper.php
 /opt/lampp/htdocs/applications/git/WorldCup_web/backend/includes/classes/framework/helper/SessionHelper.php
 /opt/lampp/htdocs/applications/git/WorldCup_web/backend/includes/classes/framework/gui/BackendLoginTemplate.php
