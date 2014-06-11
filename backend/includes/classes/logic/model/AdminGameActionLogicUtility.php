@@ -197,6 +197,66 @@ class AdminGameActionLogicUtility extends BaseAdminGameActionLogicUtility
 	return AdminGameActionLogicUtility::convertToObjectArray($result);
     }
 
+    public static function getValidatedTeamAction($limit = "", $processStatus = "", SortQuery $sortQuery = null,
+	    $actionType = "", $gameActionId = "")
+    {
+	$queryBuilder = new QueryBuilder();
+	$queryBuilder->addTable(AdminGameActionLogicUtility::$TABLE_NAME);
+
+	$queryBuilder->addFields(AdminGameActionLogicUtility::$FK_GAME_ACTION_ID_FIELD,
+		AdminGameActionLogicUtility::$TABLE_NAME);
+
+	$queryBuilder->addFields(GameActionLogicUtility::$ACTION_TYPE_FIELD, GameActionLogicUtility::$TABLE_NAME);
+	$queryBuilder->addFields(GameActionLogicUtility::$FK_GAME_ID_FIELD, GameActionLogicUtility::$TABLE_NAME);
+	$queryBuilder->addFields(GameActionLogicUtility::$ACTION_DATE_FIELD, GameActionLogicUtility::$TABLE_NAME);
+
+	$queryBuilder->addFields(TeamActionLogicUtility::$TEAM1_SCORE_FIELD, TeamActionLogicUtility::$TABLE_NAME);
+	$queryBuilder->addFields(TeamActionLogicUtility::$TEAM2_SCORE_FIELD, TeamActionLogicUtility::$TABLE_NAME);
+
+	$queryBuilder->addJoin(GameActionLogicUtility::$TABLE_NAME, AdminGameActionLogicUtility::$TABLE_NAME,
+		AdminGameActionLogicUtility::$FK_GAME_ACTION_ID_FIELD, GameActionLogicUtility::$TABLE_NAME,
+		GameActionLogicUtility::$GAME_ACTION_ID_FIELD);
+	$queryBuilder->addLeftJoin(TeamActionLogicUtility::$TABLE_NAME, AdminGameActionLogicUtility::$TABLE_NAME,
+		AdminGameActionLogicUtility::$FK_GAME_ACTION_ID_FIELD, TeamActionLogicUtility::$TABLE_NAME,
+		TeamActionLogicUtility::$FK_GAME_ACTION_ID_FIELD);
+
+//	$queryBuilder->addAndConditionWithValue(AdminGameActionLogicUtility::$ACTION_STATUS_FIELD,
+//		AdminGameActionLogicUtility::$STATUS_VALIDATED, QueryBuilder::$OPERATOR_EQUAL,
+//		AdminGameActionLogicUtility::$TABLE_NAME);
+
+	if($processStatus != "")
+	{
+	    $queryBuilder->addAndConditionWithValue(AdminGameActionLogicUtility::$PROCESS_STATUS_FIELD, $processStatus,
+		    QueryBuilder::$OPERATOR_EQUAL, AdminGameActionLogicUtility::$TABLE_NAME);
+	}
+
+	if($limit != "")
+	{
+	    $queryBuilder->setLimit($limit);
+	}
+
+	if($sortQuery)
+	{
+	    $queryBuilder->addSortQuery($sortQuery);
+	}
+
+	if($actionType != "")
+	{
+	    $queryBuilder->addAndConditionWithValue(GameActionLogicUtility::$ACTION_TYPE_FIELD, $actionType,
+		    QueryBuilder::$OPERATOR_EQUAL, GameActionLogicUtility::$TABLE_NAME);
+	}
+
+	if($gameActionId != "")
+	{
+	    $queryBuilder->addAndConditionWithValue(AdminGameActionLogicUtility::$FK_GAME_ACTION_ID_FIELD, $gameActionId,
+		    QueryBuilder::$OPERATOR_EQUAL, AdminGameActionLogicUtility::$TABLE_NAME);
+	}
+
+	$result = $queryBuilder->executeQuery();
+
+	return AdminGameActionLogicUtility::convertToObjectArray($result);
+    }
+
     public static function updateIdArrayToStarted($idArray)
     {
 	AdminGameActionLogicUtility::updateIdArrayToStatus($idArray, AdminGameActionLogicUtility::$PROCESS_STATUS_STARTED);

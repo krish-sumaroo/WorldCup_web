@@ -87,7 +87,6 @@ function endGame(id)
 
 function triggerRewards(id, gameId)
 {
-//    var con = "trigger_action_con_" + id;
     var con = "validate_act_con_" + id;
     var params = {"id": id, "game_id": gameId};
     getSSContent("triggerRewards", con, params);
@@ -99,9 +98,22 @@ function confirmTriggerRewards(id, msg)
 
     if (conf)
     {
-//	var con = "trigger_action_con_" + id;
 	var con = "validate_act_con_" + id;
 	var params = {"id": id};
 	getSSContent("confirmTriggerRewards", con, params);
     }
+}
+
+function triggerMatchAward(gameActionId, gameId)
+{
+    var con = "game_action_general_action_con";
+    var params = {"game_action_id": gameActionId, "game_id": gameId};
+    getSSContent("triggerMatchAward", con, params);
+}
+
+function reloadMatchActionButtonContainer(gameId)
+{
+    var con = "game_action_general_action_con";
+    var params = {"game_id": gameId};
+    getSSContent("reloadMatchActionButtonContainer", con, params);
 }

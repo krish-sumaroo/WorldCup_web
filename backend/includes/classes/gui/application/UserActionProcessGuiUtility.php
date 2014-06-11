@@ -38,6 +38,19 @@ class UserActionProcessGuiUtility
 
 	return $output;
     }
+
+    public static function triggerMatchAwards($gameActionId, $gameId)
+    {
+	$output = "";
+
+	UserActionProcessManager::processSpecificMatchAction($gameActionId, $gameId);
+
+	$output .= "<script>";
+	$output .= "reloadMatchActionButtonContainer('$gameId');";
+	$output .= "</script>";
+
+	return $output;
+    }
 }
 
 ?>
