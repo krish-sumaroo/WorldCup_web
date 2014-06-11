@@ -58,7 +58,7 @@ class BackendNavigation
 	$output .= "<!-- Dropdown menu -->";
 	$output .= "<ul class='dropdown-menu'>";
 //	$output .= "<li><a href='#'><i class='icon-user'></i> Profile</a></li>";
-	$output .= "<li><a href='$settingsUrl'><i class='icon-cogs'></i> Settings</a></li>";
+//	$output .= "<li><a href='$settingsUrl'><i class='icon-cogs'></i> Settings</a></li>";
 	$output .= "<li><a href='$logoutUrl'><i class='icon-off'></i> Logout</a></li>";
 	$output .= "</ul>";
 	$output .= "</li>";

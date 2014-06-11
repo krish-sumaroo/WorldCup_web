@@ -96,9 +96,13 @@ class BaseAdminGameActionLogicUtility
     {
 	$queryBuilder = new QueryBuilder();
 	$queryBuilder->addTable(BaseAdminGameActionLogicUtility::$TABLE_NAME);
-	$queryBuilder->addField($field);
+	$queryBuilder->addFields($field);
 	$queryBuilder->addAndConditionWithValue(BaseAdminGameActionLogicUtility::$FK_GAME_ACTION_ID_FIELD, $fkGameActionId);
-	$queryBuilder->addAndConditionWithValue(BaseAdminGameActionLogicUtility::$FK_ADMIN_ID_FIELD, $fkAdminId);
+
+	if($fkAdminId != "")
+	{
+	    $queryBuilder->addAndConditionWithValue(BaseAdminGameActionLogicUtility::$FK_ADMIN_ID_FIELD, $fkAdminId);
+	}
 
 	$result = $queryBuilder->executeQuery();
 
@@ -120,8 +124,14 @@ class BaseAdminGameActionLogicUtility
 
     public static function getFkAdminId($fkGameActionId, $fkAdminId)
     {
-	return BaseBannerLogicUtility::getSpecificDetails($fkGameActionId, $fkAdminId,
+	return BaseAdminGameActionLogicUtility::getSpecificDetails($fkGameActionId, $fkAdminId,
 			BaseAdminGameActionLogicUtility::$FK_ADMIN_ID_FIELD);
+    }
+
+    public static function getProcessStatus($adminGameActionId)
+    {
+	return BaseAdminGameActionLogicUtility::getSpecificDetails($adminGameActionId, "",
+			BaseAdminGameActionLogicUtility::$PROCESS_STATUS_FIELD);
     }
 
     protected static function updateSpecificField($fkGameActionId, $fkAdminId, $field, $value)

@@ -56,17 +56,17 @@ function reloadMatchEngageDisplay(id)
     getSSContent("reloadMatchEngageDisplay", "con_match_actions_list", params);
 }
 
-function validateAdminGameAction(id)
+function validateAdminGameAction(id, gameId)
 {
     var con = "validate_act_con_" + id;
-    var params = {"id": id};
+    var params = {"id": id, "game_id": gameId};
     getSSContent("validateAdminGameAction", con, params);
 }
 
-function invalidateAdminGameAction(id)
+function invalidateAdminGameAction(id, gameId)
 {
     var con = "validate_act_con_" + id;
-    var params = {"id": id};
+    var params = {"id": id, "game_id": gameId};
     getSSContent("invalidateAdminGameAction", con, params);
 }
 
@@ -83,4 +83,25 @@ function endGame(id)
     var team2Score = $("#txt_team2_score").val();
     var params = {"team1_score": team1Score, "team2_score": team2Score, "date": date, "game_id": id};
     getSSContent("endGame", "player_action_con", params);
+}
+
+function triggerRewards(id, gameId)
+{
+//    var con = "trigger_action_con_" + id;
+    var con = "validate_act_con_" + id;
+    var params = {"id": id, "game_id": gameId};
+    getSSContent("triggerRewards", con, params);
+}
+
+function confirmTriggerRewards(id, msg)
+{
+    var conf = confirm(msg);
+
+    if (conf)
+    {
+//	var con = "trigger_action_con_" + id;
+	var con = "validate_act_con_" + id;
+	var params = {"id": id};
+	getSSContent("confirmTriggerRewards", con, params);
+    }
 }

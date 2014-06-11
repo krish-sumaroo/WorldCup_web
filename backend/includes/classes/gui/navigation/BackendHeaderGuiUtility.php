@@ -32,7 +32,7 @@ class BackendHeaderGuiUtility
 	$output .= "<!-- Buttons -->";
 	$output .= "<ul class='nav nav-pills'>";
 
-	$output .= BackendHeaderGuiUtility::getSimpleLineDisplay();
+//	$output .= BackendHeaderGuiUtility::getSimpleLineDisplay();
 //	$output .= BackendHeaderGuiUtility::getExtendedLineDisplay();
 //	$output .= BackendHeaderGuiUtility::getSecondSimpleLineDisplay();
 
@@ -52,8 +52,8 @@ class BackendHeaderGuiUtility
 	$output .= "<div class='header-data'>";
 
 //	$output .= BackendHeaderGuiUtility::getTrafficDisplay();
-	$output .= BackendHeaderGuiUtility::getMemberData();
-	$output .= BackendHeaderGuiUtility::getRevenueData();
+//	$output .= BackendHeaderGuiUtility::getMemberData();
+//	$output .= BackendHeaderGuiUtility::getRevenueData();
 
 	$output .= "</div>";
 	$output .= "</div>";

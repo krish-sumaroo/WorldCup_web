@@ -164,14 +164,14 @@ class AdminGameActionLineEntity extends AdminGameActionEntity
 	return ($this->getActionType() == GameActionLogicUtility::$ACTION_TYPE_TEAM_ACTION);
     }
 
-    public function getLineDisplay()
+    public function getLineDisplay($gamesId)
     {
 	$output = "";
 
 	$dateUtility = DateUtilityHelper::getDateUtility();
 	$offset = SessionHelper::getTimeOffset() * -60;
 
-	$validateDisplay = $this->getValidateDisplay();
+	$validateDisplay = $this->getValidateDisplay($gamesId);
 
 	if($this->isTypeYellowCard())
 	{
@@ -237,7 +237,7 @@ class AdminGameActionLineEntity extends AdminGameActionEntity
 	return $output;
     }
 
-    protected function getValidateDisplay()
+    protected function getValidateDisplay($gamesId)
     {
 	$output = "";
 
@@ -251,8 +251,7 @@ class AdminGameActionLineEntity extends AdminGameActionEntity
 	    {
 		$output .= "&nbsp;&nbsp;&nbsp;";
 		$output .= "<span id='$validateActionContainer'>";
-		$output .= AdminGameActionLineEntity::getValidateActionButton($gameActionId);
-//		$output .= "<button class='btn btn-primary btn-xs' onclick=\"validateAdminGameAction('$gameActionId');\">Validate</button>";
+		$output .= AdminGameActionLineEntity::getValidateActionButton($gameActionId, $gamesId);
 		$output .= "</span>";
 	    }
 	}
@@ -262,8 +261,7 @@ class AdminGameActionLineEntity extends AdminGameActionEntity
 	    {
 		$output .= "&nbsp;&nbsp;&nbsp;";
 		$output .= "<span id='$validateActionContainer'>";
-		$output .= AdminGameActionLineEntity::getInvalidateActionButton($gameActionId);
-//		$output .= "<button class='btn btn-danger btn-xs' onclick=\"invalidateAdminGameAction('$gameActionId');\">Invalidate</button>";
+		$output .= AdminGameActionLineEntity::getInvalidateActionButton($gameActionId, $gamesId);
 		$output .= "</span>";
 	    }
 	}
@@ -271,20 +269,44 @@ class AdminGameActionLineEntity extends AdminGameActionEntity
 	return $output;
     }
 
-    public static function getValidateActionButton($gameActionId)
+    public static function getValidateActionButton($gameActionId, $gamesId)
     {
 	$output = "";
 
-	$output .= "<button class='btn btn-primary btn-xs' onclick=\"validateAdminGameAction('$gameActionId');\">Validate</button>";
+	$output .= "<button class='btn btn-primary btn-xs' onclick=\"validateAdminGameAction('$gameActionId', '$gamesId');\">Validate</button>";
 
 	return $output;
     }
 
-    public static function getInvalidateActionButton($gameActionId)
+    public static function getInvalidateActionButton($gameActionId, $gameId)
     {
 	$output = "";
 
-	$output .= "<button class='btn btn-danger btn-xs' onclick=\"invalidateAdminGameAction('$gameActionId');\">Invalidate</button>";
+	$triggerActionContainer = "trigger_action_con_".$gameActionId;
+
+	$adminGameActionEntity = AdminGameActionLogicUtility::getProcessStatus($gameActionId);
+
+	$output .= "<button class='btn btn-danger btn-xs' onclick=\"invalidateAdminGameAction('$gameActionId', '$gameId');\">Invalidate</button>";
+	$output .= "&nbsp;&nbsp;";
+
+	if($adminGameActionEntity->isProcessStarted() || $adminGameActionEntity->isProcessNotStarted())
+	{
+	    $output .= "Process is under way to give awards";
+	}
+	elseif($adminGameActionEntity->isProcessFinished())
+	{
+	    $output .= "Awards have already been given to users";
+	}
+	elseif($adminGameActionEntity->isProcessError())
+	{
+	    $output .= "An error occurred while awarding points to users";
+	}
+	else
+	{
+	    $output .= "<button class='btn btn-warning btn-xs' onclick=\"triggerRewards('$gameActionId', '$gameId');\">Trigger Rewards</button>";
+	}
+
+	$output .= "<div id='$triggerActionContainer'></div>";
 
 	return $output;
     }

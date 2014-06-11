@@ -4,11 +4,11 @@
 class AdminGameActionGuiUtility extends BaseAdminGameActionGuiUtility
 {
 
-    public static function validateAdminGameAction($adminGameActionId)
+    public static function validateAdminGameAction($adminGameActionId, $gameId)
     {
 	$output = "";
 
-	$error = AdminGameActionManager::validateAdminGameAction($adminGameActionId);
+	$error = AdminGameActionManager::validateAdminGameAction($adminGameActionId, $gameId);
 
 	if($error->errorExists())
 	{
@@ -16,7 +16,7 @@ class AdminGameActionGuiUtility extends BaseAdminGameActionGuiUtility
 	}
 	else
 	{
-	    $output .= AdminGameActionLineEntity::getInvalidateActionButton($adminGameActionId);
+	    $output .= AdminGameActionLineEntity::getInvalidateActionButton($adminGameActionId, $gameId);
 	    $output .= "&nbsp;&nbsp;";
 	    $output .= ResultUpdateGuiUtility::getResultDisplay("Action Saved", "", true, true);
 	}
@@ -24,7 +24,7 @@ class AdminGameActionGuiUtility extends BaseAdminGameActionGuiUtility
 	return $output;
     }
 
-    public static function invalidateAdminGameAction($adminGameActionId)
+    public static function invalidateAdminGameAction($adminGameActionId, $gameId)
     {
 	$output = "";
 
@@ -36,7 +36,7 @@ class AdminGameActionGuiUtility extends BaseAdminGameActionGuiUtility
 	}
 	else
 	{
-	    $output .= AdminGameActionLineEntity::getValidateActionButton($adminGameActionId);
+	    $output .= AdminGameActionLineEntity::getValidateActionButton($adminGameActionId, $gameId);
 	    $output .= "&nbsp;&nbsp;";
 	    $output .= ResultUpdateGuiUtility::getResultDisplay("Action Saved", "", true, true);
 	}

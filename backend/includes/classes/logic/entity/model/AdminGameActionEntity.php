@@ -25,6 +25,26 @@ class AdminGameActionEntity extends BaseAdminGameActionEntity
     {
 	return ($this->getActionStatus() == AdminGameActionLogicUtility::$STATUS_NOT_VALIDATED);
     }
+
+    public function isProcessStarted()
+    {
+	return ($this->getProcessStatus() == AdminGameActionLogicUtility::$PROCESS_STATUS_STARTED);
+    }
+
+    public function isProcessNotStarted()
+    {
+	return ($this->getProcessStatus() == AdminGameActionLogicUtility::$PROCESS_STATUS_NOT_STARTED);
+    }
+
+    public function isProcessFinished()
+    {
+	return ($this->getProcessStatus() == AdminGameActionLogicUtility::$PROCESS_STATUS_FINISHED);
+    }
+
+    public function isProcessError()
+    {
+	return ($this->getProcessStatus() == AdminGameActionLogicUtility::$PROCESS_STATUS_ERROR);
+    }
 }
 
 ?>

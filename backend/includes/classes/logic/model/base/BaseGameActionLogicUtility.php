@@ -102,7 +102,7 @@ class BaseGameActionLogicUtility
     {
 	$queryBuilder = new QueryBuilder();
 	$queryBuilder->addTable(BaseGameActionLogicUtility::$TABLE_NAME);
-	$queryBuilder->addField($field);
+	$queryBuilder->addFields($field);
 	$queryBuilder->addAndConditionWithValue(BaseGameActionLogicUtility::$GAME_ACTION_ID_FIELD, $gameActionId);
 
 	$result = $queryBuilder->executeQuery();
@@ -119,33 +119,33 @@ class BaseGameActionLogicUtility
 
     public static function getGameActionId($gameActionId)
     {
-	return BaseBannerLogicUtility::getSpecificDetails($gameActionId, BaseGameActionLogicUtility::$GAME_ACTION_ID_FIELD);
+	return BaseGameActionLogicUtility::getSpecificDetails($gameActionId, BaseGameActionLogicUtility::$GAME_ACTION_ID_FIELD);
     }
 
     public static function getFkGameId($gameActionId)
     {
-	return BaseBannerLogicUtility::getSpecificDetails($gameActionId, BaseGameActionLogicUtility::$FK_GAME_ID_FIELD);
+	return BaseGameActionLogicUtility::getSpecificDetails($gameActionId, BaseGameActionLogicUtility::$FK_GAME_ID_FIELD);
     }
 
     public static function getActionMinute($gameActionId)
     {
-	return BaseBannerLogicUtility::getSpecificDetails($gameActionId, BaseGameActionLogicUtility::$ACTION_MINUTE_FIELD);
+	return BaseGameActionLogicUtility::getSpecificDetails($gameActionId, BaseGameActionLogicUtility::$ACTION_MINUTE_FIELD);
     }
 
     public static function getActionDate($gameActionId)
     {
-	return BaseBannerLogicUtility::getSpecificDetails($gameActionId, BaseGameActionLogicUtility::$ACTION_DATE_FIELD);
+	return BaseGameActionLogicUtility::getSpecificDetails($gameActionId, BaseGameActionLogicUtility::$ACTION_DATE_FIELD);
     }
 
     public static function getActionAutomaticDate($gameActionId)
     {
-	return BaseBannerLogicUtility::getSpecificDetails($gameActionId,
+	return BaseGameActionLogicUtility::getSpecificDetails($gameActionId,
 			BaseGameActionLogicUtility::$ACTION_AUTOMATIC_DATE_FIELD);
     }
 
     public static function getActionType($gameActionId)
     {
-	return BaseBannerLogicUtility::getSpecificDetails($gameActionId, BaseGameActionLogicUtility::$ACTION_TYPE_FIELD);
+	return BaseGameActionLogicUtility::getSpecificDetails($gameActionId, BaseGameActionLogicUtility::$ACTION_TYPE_FIELD);
     }
 
     protected static function updateSpecificField($gameActionId, $field, $value)
