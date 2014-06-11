@@ -6,6 +6,7 @@ class Push extends CI_Controller {
     {
         parent::__construct();
         $this->load->library('pushlib');
+        $this->load->model('user_model','user');
     }
     
     public function finalPlayerList()
@@ -29,7 +30,7 @@ class Push extends CI_Controller {
     }
     
     
-    public function gameOver()
+    public function gameOver_test()
     {
         $uid = $this->input->POST('uid');
          
@@ -56,5 +57,35 @@ class Push extends CI_Controller {
          
          $payload = array('action' => 3, 'msg' => 'You, Murder and Kraft just won 50pts', 'score' => 1256);
          $this->pushlib->sendMessage($regisId, $payload);
+    }
+    
+    public function gameOver()
+    {
+        //test value
+        $gameId = 2;
+        $team1 = 'Brazil';
+        $team2 = 'Croatia';
+        
+        $finArr = array();
+        
+        // end test
+        
+        $msg = $team1." VS ".$team2." has ended";
+        
+        $regisIds = $this->user->getRegisIds();
+
+        $regisChunks = array_chunk($regisIds, 996);       
+       
+        foreach($regisChunks as $regisBatch)
+        {
+            foreach($regisBatch as $regisId)
+            {
+                //print_r($regisId['regisId']);
+               array_push($finArr, $regisId['regisId']); 
+            }
+            
+            $payload = array('action' => 2,  'Msg' => $msg, 'timestamp' => time(), 'gameId' => $gameId);
+            $this->pushlib->sendMessage($finArr, $payload);
+        }     
     }
 }

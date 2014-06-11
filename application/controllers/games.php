@@ -7,6 +7,16 @@ class Games extends CI_Controller {
         $this->load->model('game_model','game');
         //get userId from nonce
     }
+    
+    
+    public function country()
+    {
+        echo "here";
+        $this->load->model('user_model','user');
+        $stats = $this->user->getCountryStats();
+        
+        print_r($stats);      
+    }
 
     /*
     public function getGames()
@@ -27,10 +37,9 @@ class Games extends CI_Controller {
     }
     */
     public function getGame()
-    {
-        
+    {        
         $userId = $this->input->post('userId');
-        //$userId = 2;
+        //$userId = 65;
         $result = $this->game->activeGame($userId);   
         if(count($result) > 0)
         {

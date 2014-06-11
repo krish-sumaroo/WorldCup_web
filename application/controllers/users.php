@@ -10,7 +10,7 @@ class Users extends CI_Controller {
         $this->userConnected = 1; //test value
         $this->load->model('user_model','user');
     }
-
+    
     public function checkNick()
     {
         $uName = $this->input->post('nickname');
@@ -50,14 +50,12 @@ class Users extends CI_Controller {
         $uid = $this->input->post('uid');
         $country = $this->input->post('country');
         
-//        $username = 'test123';
+//        $username = 'test4';
 //        $password = 'elo';        
-//        $nickname = 'what';
-//        $favTeam = 5;
+//        $nickname = 'what4';
+//        $favTeam = 1;
 //        $uid = '34546346';
-//        $country = 'mau';
-        
-        
+//        $country = 'jupiter';          
      
         if($this->user->checkAvailability('username',$username) && $this->user->checkAvailability('nickname',$nickname))
         {
@@ -126,10 +124,16 @@ class Users extends CI_Controller {
          $result = $this->user->login($params);
          if($result)
          {
+             //update user uid and reset the rest with same uid
+             $this->user->resetUID($uid,$result->id);
+             
+             /*
              if($uid != $result->uid)
              {
                  $this->user->update(['uid' => $uid], $result->id);
              }
+              * 
+              */
              $response['status'] = true;
              $response['id'] = $result->id;
              $response['profile'] = $result->status;
@@ -184,6 +188,10 @@ class Users extends CI_Controller {
         
         $friends = $this->user->listFriends($userid);
         
+//        echo "<pre>";
+//        print_r($friends);
+//        echo "</pre>";
+        
         echo json_encode($friends);
     }
     
@@ -194,8 +202,7 @@ class Users extends CI_Controller {
         
         //$userid = 46;
         
-        $friends = $this->user->decline($userid, $friendId);
-        
+        $friends = $this->user->decline($userid, $friendId);        
         echo json_encode($friends);
     }
 
@@ -212,4 +219,23 @@ class Users extends CI_Controller {
         
         echo json_encode(array('status' => $status));
     }
+    
+    public function purchase()
+    {
+        $uid = $this->input->post('uid');
+        $transac = $this->input->post('transac');
+        
+        $this->user->savePurchase($uid, $transac);
+        
+        //using hardcoded values la
+        //$uid = '357157053190069';
+        $moves = 10;
+        
+        $this->user->addMoves($moves, $uid);
+        
+        $arr = array('status' => true);
+        echo json_encode($arr);
+    }
+    
+
 }

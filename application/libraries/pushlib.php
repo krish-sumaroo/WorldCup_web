@@ -7,6 +7,7 @@ class Pushlib {
             $this->CI =& get_instance();
 	}
     
+        //,            'delay_while_idle' => 1
     
     public function sendMessage($regisId, $message)
     {
@@ -16,6 +17,7 @@ class Pushlib {
         $fields = array(
             'registration_ids' => $regisId,
             'data' => $message,
+            'delay_while_idle' => TRUE
         );
  
         $headers = array(
@@ -46,6 +48,12 @@ class Pushlib {
         // Close connection
         curl_close($ch);
         echo $result;
+        
+    }
+    
+    
+    public function verifyPurchase()
+    {
         
     }
 }
