@@ -73,7 +73,7 @@ class game_model extends CI_Model {
                 ORDER BY matchDate LIMIT 1";
         $query = $this->db->query($sql);
         $result = $query->row();
-        
+
         log_message('error', 'gameInfo =>'.print_r($result, true));
         
         $gameInfo = array();
@@ -134,9 +134,11 @@ class game_model extends CI_Model {
         $gameInfo = array();
         //get userMoves for game
         $moves = $this->getGamesMovesForUser($userId, $activeGameId);
-        $sMoves = $this->getSMovesForUser($userId);
+        $sMovesInfo = $this->getSMovesForUser($userId);
         $gameInfo['nMoves'] = $moves['nMoves'];
-        $gameInfo['sMoves'] = $sMoves;        
+        $gameInfo['sMoves'] = $sMovesInfo->sMoves;
+        $gameInfo['score'] = $sMovesInfo->score;
+        $gameInfo['nickname'] = $sMovesInfo->nickname;
        
         $datetime = new DateTime($result->matchDate);
         $gameInfo['time'] = $datetime->format(DateTime::ISO8601);
@@ -165,12 +167,10 @@ class game_model extends CI_Model {
     
     public function getSMovesForUser($userId)
     {
-        $this->db->select('sMoves');
-        $this->db->where('id', $userId);
-        $this->db->from('users');
-        $result =  $this->db->get()->row();
-
-        return $result->sMoves;
+        $sql = "SELECT sMoves, score, nickname FROM users WHERE id = $userId";
+        $query = $this->db->query($sql);
+        $result =  $query->row();
+        return $result;
     }
     
     public function getGamesMovesForUser($userId, $gameId)

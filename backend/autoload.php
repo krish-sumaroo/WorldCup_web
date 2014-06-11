@@ -20,7 +20,7 @@ class Autoload
 	$s = DIRECTORY_SEPARATOR;
 
 	//enter your cache directory here
-	$mainDirectory = "/opt/lampp/htdocs/applications/git/WorldCup_web/backend";
+	$mainDirectory = "/var/www/wc/master/backend/";
 
 	Autoload::$CACHE_FILE = $mainDirectory.DIRECTORY_SEPARATOR."cache".DIRECTORY_SEPARATOR."file_include.txt";
 	Autoload::$CLASS_FOLDER = $mainDirectory.DIRECTORY_SEPARATOR."includes";

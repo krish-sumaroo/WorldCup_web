@@ -7,9 +7,29 @@ class User_model extends CI_Model
         parent::__construct();
         $this->table = 'users';
     }
+    
+    private function getCountry($country)
+    {
+        $sql = "SELECT id from country WHERE name = '".$country."'";
+        $query = $this->db->query($sql);
+
+        if($query->num_rows() > 0)
+        {
+            $rst =  $query->row();
+            return $rst->id;
+        }
+        else
+        {
+            $this->db->insert('country', ['name' => $country]);
+            return $this->db->insert_id();            
+        }
+    }
 
     public function addUser($data)
     {
+        $countryId = $this->getCountry($data['country']);
+        $data['country'] = $countryId;       
+        
         $this->db->insert($this->table, $data);
 
         if($this->db->affected_rows())
@@ -166,6 +186,15 @@ class User_model extends CI_Model
         $this->db->where('id', $userId);
         $this->db->update($this->table, $saveArray);
     }
+    
+    public function resetUID($uid, $userId)
+    {
+        $sql = "UPDATE users SET uid = null WHERE uid = '$uid'";
+        $this->db->query($sql);
+        
+        $sql2 = "UPDATE users SET uid = '$uid' WHERE id = $userId";
+        $this->db->query($sql2);
+    }
 
 
     public function getRegisId($uid)
@@ -176,6 +205,13 @@ class User_model extends CI_Model
         
         $data =  $this->db->get()->row();
         return $data;
+    }
+    
+    public function getRegisIds()
+    {
+        $sql = "SELECT DISTINCT(regisId) from users WHERE regisId is not null";
+        $query = $this->db->query($sql);
+        return $query->result_array();
     }
 
     public function activate($uid)
@@ -212,5 +248,86 @@ class User_model extends CI_Model
         {
             return FALSE;
         }
+    }
+    
+    public function getCountryForUser($uid)
+    {
+        $sql = "SELECT country FROM users WHERE uid = '".$uid."'";
+        $query = $this->db->query($sql);
+        return $query->row('country');
+    }
+    
+    public function getIdForUser($uid)
+    {
+        $sql = "SELECT id FROM users WHERE uid = '".$uid."'";
+        $query = $this->db->query($sql);
+        return $query->row('id');
+    }
+
+
+    public function getCountryStats_old($country)
+    {
+        $sql = "select u.country, sum(u.score) as score, c.name,
+                (case when (u.country = '$country') then 1 else 0 end) as status,
+                @curRank := @curRank + 1 AS rank     
+                from users u, , (SELECT @curRank := 0) r                
+                JOIN country c ON u.country = c.id
+                group by u.country
+                ORDER by score desc";
+        echo $sql;
+        $query = $this->db->query($sql);
+        return $query->result_array();
+    }
+    
+    public function getCountryStats($country)
+    {
+        $sql = "select name as nickname, score, (case when (id = '$country') then 1 else 0 end) as status, 
+                @curRank := @curRank + 1 AS rank 
+                from country, (SELECT @curRank := 0) r
+                ORDER by score desc";
+        $query = $this->db->query($sql);
+        return $query->result_array();
+    }
+    
+    public function getGeneralStats($uid)
+   {
+       $sql = "select nickname, score, (case when (uid = '$uid') then 1 else 0 end) as status,
+               @curRank := @curRank + 1 AS rank  
+                from users, (SELECT @curRank := 0) r
+                ORDER by score desc
+                limit 100";
+       
+       $query = $this->db->query($sql);
+       return $query->result_array();
+    }
+    
+    public function getFriendsStats($uid, $userId)
+    {
+        $sql = "select nickname, score, (case when (uid = '$uid') then 1 else 0 end) as status,
+                @curRank := @curRank + 1 AS rank
+                from users, (SELECT @curRank := 0) r
+                where uid = '$uid'
+                or id IN (
+                select user2 from connections 
+                where user1 = $userId
+                )
+                ORDER by score desc ";
+        $query = $this->db->query($sql);
+       return $query->result_array();       
+    }
+    
+    public function addMoves($moves, $uid)
+    {
+        $sql = "UPDATE users SET sMoves = sMoves + $moves, status = 1 WHERE uid = '$uid'";
+        //echo $sql;
+        log_message('error', 'sql =>'.$sql);
+        $query = $this->db->query($sql);
+        
+    }
+    
+    public function savePurchase($uid, $token)
+    {
+        $sql = "INSERT INTO purchases(string, uid) VALUES('$uid', '$token')";
+        $query = $this->db->query($sql);
     }
 }

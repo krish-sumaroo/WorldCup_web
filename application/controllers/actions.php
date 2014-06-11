@@ -37,7 +37,7 @@ class Actions extends CI_Controller {
         log_message('error', 'posts=>'.print_r($this->input->post(), true));
         
          //test save array //
-//            $gameId = 2;
+//            $gameId = 3;
 //            $team1Id = 1;
 //            $team2Id = 2;
 //            $team1Score = 3;
@@ -62,7 +62,7 @@ class Actions extends CI_Controller {
             $result = $this->game->registerScore($saveArray);
             
             $newNMove = $moves['nMoves']['nMoves'];
-            $newSMove = $moves['sMoves'];
+            $newSMove = $moves['sMoves']->sMoves;
             if($result)
             {
                $nMoveLeft = $moves['nMoves']['nMoves'];
@@ -128,7 +128,7 @@ class Actions extends CI_Controller {
             $result = $this->game->registerAction($saveArray); 
             
             $newNMove = $moves['nMoves']['nMoves'];
-            $newSMove = $moves['sMoves'];
+            $newSMove = $moves['sMoves']->sMoves;
 
             if($result)
             {
