@@ -46,11 +46,33 @@ class EmailUtility
 	return EmailUtility::$phpMailer;
     }
 
-    public function sendMail($to, $from, $subject, $text, $htmlText, $fromName = "", $priority = 10)
+    public static function sendMail($to, $from, $subject, $htmlText, $fromName = "")
     {
-	PlannedEmailLogicUtility::addPlannedEmail($to, $from, $subject, $text, $htmlText, $fromName, $priority);
+	$mail = EmailUtility::getPhpMailer();
 
-	return "";
+	$mail->From = $from;
+
+	if($fromName == "")
+	{
+	    $mail->FromName = Configuration::$APPLICATION_NAME;
+	}
+	else
+	{
+	    $mail->FromName = $fromName;
+	}
+
+	$mail->Subject = $subject;
+	$mail->Body = $htmlText;
+	$mail->AddAddress($to);
+
+	if(!$mail->Send())
+	{
+	    return "Error while sending message!";
+	}
+	else
+	{
+	    return "";
+	}
     }
 
     public function sendPlannedMail($to, $from, $subject, $text, $htmlText, $fromName, $plannedEmailId)

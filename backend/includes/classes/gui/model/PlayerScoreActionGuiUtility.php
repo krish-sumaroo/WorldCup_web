@@ -55,7 +55,7 @@ class PlayerScoreActionGuiUtility extends BasePlayerScoreActionGuiUtility
 	}
 	else
 	{
-	    $output .= ResultUpdateGuiUtility::getBootstrapSuccessDisplay("Yellow card saved for player");
+	    $output .= ResultUpdateGuiUtility::getBootstrapSuccessDisplay("Score action saved for player");
 
 	    $output .= "<script>";
 	    $output .= "$('#btn_action_button').hide();";

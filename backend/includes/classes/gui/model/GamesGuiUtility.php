@@ -105,7 +105,6 @@ class GamesGuiUtility extends BaseGamesGuiUtility
 	$output = "";
 
 	$teamActionEntity = TeamActionLogicUtility::getAdminGameActionProcessStatus($gamesId);
-	$gameActionId = $teamActionEntity->getFkGameActionId();
 
 	$output .= "<span class='glyphicon glyphicon-plus'></span> Game Actions List";
 	$output .= "&nbsp;&nbsp;";
@@ -116,19 +115,24 @@ class GamesGuiUtility extends BaseGamesGuiUtility
 
 	if($teamActionEntity)
 	{
-	    $adminGameActionEntity = $teamActionEntity->getAdminGameActionEntity();
+	    $gameActionId = $teamActionEntity->getFkGameActionId();
 
-	    if($adminGameActionEntity->isProcessNotStarted())
+	    if($teamActionEntity)
 	    {
-		$output .= "<a href='javascript:void(0);' onclick=\"triggerMatchAward('$gameActionId', '$gamesId')\" class='btn btn-warning'>Trigger Match Score Action Points</a>";
-	    }
-	    elseif($adminGameActionEntity->isProcessFinished())
-	    {
-		$output .= "Match score points have already been awarded to users";
-	    }
-	    elseif($adminGameActionEntity->isProcessStarted())
-	    {
-		$output .= "Match score points process has already started";
+		$adminGameActionEntity = $teamActionEntity->getAdminGameActionEntity();
+
+		if($adminGameActionEntity->isProcessNotStarted())
+		{
+		    $output .= "<a href='javascript:void(0);' onclick=\"triggerMatchAward('$gameActionId', '$gamesId')\" class='btn btn-warning'>Trigger Match Score Action Points</a>";
+		}
+		elseif($adminGameActionEntity->isProcessFinished())
+		{
+		    $output .= "Match score points have already been awarded to users";
+		}
+		elseif($adminGameActionEntity->isProcessStarted())
+		{
+		    $output .= "Match score points process has already started";
+		}
 	    }
 	}
 

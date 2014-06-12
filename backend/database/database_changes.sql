@@ -104,3 +104,6 @@ DROP COLUMN `team_action_type`,
 DROP COLUMN `fk_team_id`,
 ADD COLUMN `team1_score` VARCHAR(45) NULL AFTER `fk_game_action_id`,
 ADD COLUMN `team2_score` VARCHAR(45) NULL AFTER `team1_score`;
+
+ALTER TABLE `users`
+ADD COLUMN `resetPasswordCode` VARCHAR(250) NULL AFTER `password`;
