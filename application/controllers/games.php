@@ -50,7 +50,7 @@ class Games extends CI_Controller {
         {
             $response['status'] = 'ERROR';
         }
-        
+        log_message('error', 'gme =>'.print_r($response, true));
         echo json_encode($response);
     }
     
@@ -84,6 +84,15 @@ class Games extends CI_Controller {
         }
         
         echo json_encode($response);
+    }
+    
+     public function info()
+    {
+        $result = $this->game->getNextGame();
+        //print_r($result);
+        
+        $arr['gameId'] = $result->id;        
+        echo json_encode($arr);
     }
     
     

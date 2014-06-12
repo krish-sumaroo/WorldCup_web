@@ -13,7 +13,9 @@ class Actions extends CI_Controller {
         $nMoves = $this->game->getGamesMovesForUser($userId, $gameId);
         $sMoves = $this->game->getSMovesForUser($userId);
        
-        if($nMoves['nMoves'] == 0 && $sMoves == 0)
+        log_message('error', 'sMoves =>'.print_r($sMoves, true));
+        
+        if($nMoves['nMoves'] == 0 && $sMoves->sMoves == 0)
         {
             return false;
         }
@@ -116,7 +118,9 @@ class Actions extends CI_Controller {
 //        $userId = 2;
 //        $gameId = 2;
         
-        $moves = $this->_checkMoves($userId, $gameId);        
+        $moves = $this->_checkMoves($userId, $gameId);     
+        
+        log_message('error', 'moves =>'.print_r($moves));
         
         if($moves)
         {

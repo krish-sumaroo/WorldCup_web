@@ -84,8 +84,9 @@ class Push extends CI_Controller {
                array_push($finArr, $regisId['regisId']); 
             }
             
-            $payload = array('action' => 2,  'Msg' => $msg, 'timestamp' => time(), 'gameId' => $gameId);
+            $payload = array('action' => 2,  'msg' => $msg, 'timestamp' => time(), 'gameId' => $gameId);
             $this->pushlib->sendMessage($finArr, $payload);
         }     
-    }
+    }  
+   
 }

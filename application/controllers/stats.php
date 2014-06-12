@@ -17,7 +17,8 @@ class Stats extends CI_Controller {
         //$uid = '357157053190069';
         $country = $this->user->getCountryForUser($uid);
         log_message('error', 'country');
-        $data = $this->user->getCountryStats($country);        
+        $data = $this->user->getCountryStats($country);  
+        log_message('error', 'data =>'.print_r($data, true));
         //print_r($data);
         echo json_encode($data);    
     }

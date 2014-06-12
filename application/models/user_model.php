@@ -94,13 +94,14 @@ class User_model extends CI_Model
     
     public function findMatch($search, $userId)
     {
-       $sql = "select u.id, u.username, u.nickname,  IFNULL(c.status, 0) as friend"
-              ." FROM connections c"
-              ." RIGHT JOIN users u ON c.user2 = u.id"
-              ." WHERE c.user1 = $userId"
-              ." AND u.username LIKE '%$search%' OR u.nickname LIKE '%$search%'"
-              ." AND u.id <> $userId";
-        
+       $sql = "select u.id, u.nickname, IFNULL(c.status, 0) as friend from users u
+                LEFT JOIN (
+                select status, user2 from connections
+                where user1 = $userId ) c
+                ON c.user2 = u.id
+                WHERE (u.nickname like '%$search%' OR u.nickname LIKE '%$search%') 
+                AND u.id <> $userId"; 
+       
         //echo $sql."<br />";
         log_message('error', 'findmatch => '.$sql);
         $query = $this->db->query($sql);
@@ -130,6 +131,7 @@ class User_model extends CI_Model
                 FROM connections c
                 JOIN users u ON c.user2 = u.id
                 WHERE c.user1 = $userId AND c.status <> 3";
+        log_message('error', 'sql =>'.$sql);
         $query = $this->db->query($sql);
         return $query->result_array();
     }
@@ -324,10 +326,11 @@ class User_model extends CI_Model
         $query = $this->db->query($sql);
         
     }
-    
-    public function savePurchase($uid, $token)
+
+    public function savePurchase($uid, $productId, $purchaseToken,$orderId, $purchaseTime)
     {
-        $sql = "INSERT INTO purchases(string, uid) VALUES('$uid', '$token')";
+        $sql = "INSERT INTO purchases(uid, productId, token, orderId, purchaseTime) 
+            VALUES('$uid', '$productId', '$purchaseToken','$orderId', '$purchaseTime')";
         $query = $this->db->query($sql);
     }
 }

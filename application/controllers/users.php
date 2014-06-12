@@ -9,6 +9,12 @@ class Users extends CI_Controller {
         //get userId from nonce
         $this->userConnected = 1; //test value
         $this->load->model('user_model','user');
+        $this->product = array(
+            '10SKU' => 10,
+            '25SKU' => 25,
+            '50SKU' => 50,
+            'android.test.purchased' => 10
+        );
     }
     
     public function checkNick()
@@ -144,6 +150,8 @@ class Users extends CI_Controller {
              $response['status'] = false;
          }
          
+         
+         log_message('error', 'profile =>'.print_r($response, true));
          echo json_encode($response);
      }
 
@@ -188,6 +196,8 @@ class Users extends CI_Controller {
         
         $friends = $this->user->listFriends($userid);
         
+        log_message('error','friends =>'.print_r($friends, true));
+        
 //        echo "<pre>";
 //        print_r($friends);
 //        echo "</pre>";
@@ -224,17 +234,55 @@ class Users extends CI_Controller {
     {
         $uid = $this->input->post('uid');
         $transac = $this->input->post('transac');
+       
+        //$uid = '357157053190069';
+        //$transac = '{"packageName":"com.competition.worldcupv1","orderId":"transactionId.android.test.purchased","productId":"android.test.purchased","developerPayload":"","purchaseTime":0,"purchaseState":0,"purchaseToken":"inapp:com.competition.worldcupv1:android.test.purchased"}';
+        $strClean = explode("PurchaseInfo:", $transac)[1];
+        $arr = json_decode($strClean);
         
-        $this->user->savePurchase($uid, $transac);
+        //log_message('error', 'purchases =>'.print_r($arr, true));        
+        $productId = $arr->productId;
+        $purchaseToken = $arr->purchaseToken;
+        $orderId = $arr->orderId;
+        $purchaseTime = $arr->purchaseTime;
+        
+        $this->user->savePurchase($uid, $productId, $purchaseToken,$orderId, $purchaseTime);
+        
+        $moves = $this->product[$productId];
         
         //using hardcoded values la
         //$uid = '357157053190069';
-        $moves = 10;
+        //$moves = 10;
         
         $this->user->addMoves($moves, $uid);
         
         $arr = array('status' => true);
         echo json_encode($arr);
+    }
+    
+    public function testString()
+    {
+        
+        $string = 'PurchaseInfo:{"packageName":"com.competition.worldcupv1","orderId":"transactionId.android.test.purchased","productId":"android.test.purchased","developerPayload":"","purchaseTime":0,"purchaseState":0,"purchaseToken":"inapp:com.competition.worldcupv1:android.test.purchased"}';
+        //$string = '{"packageName":"com.competition.worldcupv1","orderId":"transactionId.android.test.purchased","productId":"android.test.purchased","developerPayload":"","purchaseTime":0,"purchaseState":0,"purchaseToken":"inapp:com.competition.worldcupv1:android.test.purchased"}';
+        
+        $strClean = explode("PurchaseInfo:", $string)[1];
+        log_message('error','string =>'.$strClean);
+        $arr = json_decode($strClean);
+        
+        log_message('error', 'transac =>'.print_r($arr, true));
+        $productId = $arr->productId;
+        $purchaseToken = $arr->purchaseToken;
+        $orderId = $arr->orderId;
+        $purchaseTime = $arr->purchaseTime;
+        
+        
+        $moves = $this->product[$productId];
+        echo $moves;
+        
+//        echo "<pre>";
+//        print_r($arr);
+//        echo "</pre";
     }
     
 
