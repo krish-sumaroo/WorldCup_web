@@ -431,6 +431,15 @@ if(SessionHelper::isLoggedIn())
 	    case "confirmTriggerRewards":
 		echo UserActionProcessGuiUtility::confirmTriggerAwards(RequestHelper::getRequestValue("id"));
 		break;
+
+	    case "reloadMatchActionButtonContainer":
+		echo GamesGuiUtility::reloadMatchActionsButtonDisplay(RequestHelper::getRequestValue("game_id"));
+		break;
+
+	    case "triggerMatchAward":
+		echo UserActionProcessGuiUtility::triggerMatchAwards(RequestHelper::getRequestValue("game_action_id"),
+			RequestHelper::getRequestValue("game_id"));
+		break;
 	    /////////////////////////end of Engage///////////////////////
 
 

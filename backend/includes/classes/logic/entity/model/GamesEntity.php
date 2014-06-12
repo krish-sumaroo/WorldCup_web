@@ -34,7 +34,8 @@ class GamesEntity extends BaseGamesEntity
     {
 	if($this->playersTeam1EntityList == "")
 	{
-	    $this->playersTeam1EntityList = GamesPlayersLogicUtility::getPlayersList($this->getId(), $this->getTeam1());
+//	    $this->playersTeam1EntityList = GamesPlayersLogicUtility::getPlayersList($this->getId(), $this->getTeam1());
+	    $this->playersTeam1EntityList = PlayersLogicUtility::getPlayersListByTeamId($this->getTeam1());
 	}
 
 	return $this->playersTeam1EntityList;
@@ -44,7 +45,8 @@ class GamesEntity extends BaseGamesEntity
     {
 	if($this->playersTeam2EntityList == "")
 	{
-	    $this->playersTeam2EntityList = GamesPlayersLogicUtility::getPlayersList($this->getId(), $this->getTeam2());
+	    $this->playersTeam2EntityList = PlayersLogicUtility::getPlayersListByTeamId($this->getTeam2());
+//	    $this->playersTeam2EntityList = GamesPlayersLogicUtility::getPlayersList($this->getId(), $this->getTeam2());
 	}
 
 	return $this->playersTeam2EntityList;

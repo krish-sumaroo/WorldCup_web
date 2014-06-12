@@ -85,20 +85,54 @@ class GamesGuiUtility extends BaseGamesGuiUtility
     private static function getMatchActionsListDisplay($gamesId)
     {
 	$output = "";
+	$title = "";
 
 	$output .= "<div id='con_match_actions_list'>";
 	$output .= GamesGuiUtility::reloadMatchActionListDisplay($gamesId);
 	$output .= "</div>";
 
-	$title = "<span class='glyphicon glyphicon-plus'></span> Game Actions List";
-	$title .= "&nbsp;&nbsp;";
-	$title .= "<a href='javascript:void(0);' onclick=\"reloadMatchEngageDisplay('$gamesId')\" class='btn btn-primary'>Reload</a>";
-	$title .= "&nbsp;&nbsp;";
-	$title .= BootstrapModalGuiUtility::getAction("End Match", "getEndGame('$gamesId');");
+	$title .= "<div id='game_action_general_action_con'>";
+	$title .= GamesGuiUtility::reloadMatchActionsButtonDisplay($gamesId);
+	$title .= "</div>";
 
 	$backendWidgetDisplayUtility = new BackendWidgetDisplayUtility(12, $title, $output);
 
 	return $backendWidgetDisplayUtility->getDisplay();
+    }
+
+    public static function reloadMatchActionsButtonDisplay($gamesId)
+    {
+	$output = "";
+
+	$teamActionEntity = TeamActionLogicUtility::getAdminGameActionProcessStatus($gamesId);
+	$gameActionId = $teamActionEntity->getFkGameActionId();
+
+	$output .= "<span class='glyphicon glyphicon-plus'></span> Game Actions List";
+	$output .= "&nbsp;&nbsp;";
+	$output .= "<a href='javascript:void(0);' onclick=\"reloadMatchEngageDisplay('$gamesId')\" class='btn btn-primary'>Reload</a>";
+	$output .= "&nbsp;&nbsp;";
+	$output .= BootstrapModalGuiUtility::getAction("End Match", "getEndGame('$gamesId');");
+	$output .= "&nbsp;&nbsp;";
+
+	if($teamActionEntity)
+	{
+	    $adminGameActionEntity = $teamActionEntity->getAdminGameActionEntity();
+
+	    if($adminGameActionEntity->isProcessNotStarted())
+	    {
+		$output .= "<a href='javascript:void(0);' onclick=\"triggerMatchAward('$gameActionId', '$gamesId')\" class='btn btn-warning'>Trigger Match Score Action Points</a>";
+	    }
+	    elseif($adminGameActionEntity->isProcessFinished())
+	    {
+		$output .= "Match score points have already been awarded to users";
+	    }
+	    elseif($adminGameActionEntity->isProcessStarted())
+	    {
+		$output .= "Match score points process has already started";
+	    }
+	}
+
+	return $output;
     }
 
     public static function reloadMatchActionListDisplay($gamesId)
@@ -161,7 +195,7 @@ class GamesGuiUtility extends BaseGamesGuiUtility
 
 	for($i = 0; $i < count($gamePlayersEntityList); $i++)
 	{
-	    $playerEntity = $gamePlayersEntityList[$i]->getPlayerEntity();
+	    $playerEntity = $gamePlayersEntityList[$i];
 	    $playerName = $playerEntity->getFormattedName();
 	    $playerId = $playerEntity->getId();
 
@@ -261,6 +295,7 @@ class GamesGuiUtility extends BaseGamesGuiUtility
 
 	    $output .= "<script>";
 	    $output .= "$('#btn_action_button').hide();";
+	    $output .= "reloadMatchActionButtonContainer('$gamesId');";
 	    $output .= "</script>";
 	}
 

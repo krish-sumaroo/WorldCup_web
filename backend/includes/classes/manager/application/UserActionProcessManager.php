@@ -81,7 +81,7 @@ class UserActionProcessManager
 
 	if($gameActionEntity)
 	{
-	    $actionAutomaticDate = $gameActionEntity->getActionAutomaticDate();
+	    $actionAutomaticDate = $gameActionEntity->getActionDate();
 
 	    $numberOfValidatedActionsBefore = GameActionLogicUtility::getNumberOfValidatedActionsBefore($actionAutomaticDate,
 			    $gameId);
@@ -97,6 +97,38 @@ class UserActionProcessManager
 	}
 
 	return $error;
+    }
+
+    public static function processSpecificMatchAction($gameActionId, $gameId)
+    {
+	$sortQuery = new SortQuery();
+	$sortQuery->addSort(GameActionLogicUtility::$ACTION_DATE_FIELD, SortQuery::$ASCENDING);
+
+	$adminGameActionEntityList = AdminGameActionLogicUtility::getValidatedTeamAction("",
+			AdminGameActionLogicUtility::$PROCESS_STATUS_NOT_STARTED, $sortQuery,
+			GameActionLogicUtility::$ACTION_TYPE_TEAM_ACTION, $gameActionId);
+
+	if(count($adminGameActionEntityList) > 0)
+	{
+	    $adminGameActionIdArray = UserActionProcessManager::getAdminGameIdArray($adminGameActionEntityList);
+
+	    AdminGameActionLogicUtility::updateIdArrayToStarted($adminGameActionIdArray);
+
+	    for($i = 0; $i < count($adminGameActionEntityList); $i++)
+	    {
+		$values = $adminGameActionEntityList[$i]->getValues();
+		$gameId = $adminGameActionEntityList[$i]->getGameActionEntity()->getFkGameId();
+		$actionType = $adminGameActionEntityList[$i]->getGameActionEntity()->getActionType();
+		$actionDate = $adminGameActionEntityList[$i]->getGameActionEntity()->getActionDate();
+		$team1Score = $adminGameActionEntityList[$i]->getTeamActionEntity()->getTeam1Score();
+		$team2Score = $adminGameActionEntityList[$i]->getTeamActionEntity()->getTeam2Score();
+
+		UserScoreActionLogicUtility::updateSuccess($actionDate, $gameId, $team1Score, $team2Score);
+		UserScoreActionLogicUtility::updateFailure($actionDate, $gameId, $team1Score, $team2Score);
+	    }
+
+	    AdminGameActionLogicUtility::updateIdArrayToFinished($adminGameActionIdArray);
+	}
     }
 }
 

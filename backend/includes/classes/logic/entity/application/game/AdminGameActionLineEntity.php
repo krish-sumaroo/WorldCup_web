@@ -289,9 +289,9 @@ class AdminGameActionLineEntity extends AdminGameActionEntity
 	$output .= "<button class='btn btn-danger btn-xs' onclick=\"invalidateAdminGameAction('$gameActionId', '$gameId');\">Invalidate</button>";
 	$output .= "&nbsp;&nbsp;";
 
-	if($adminGameActionEntity->isProcessStarted() || $adminGameActionEntity->isProcessNotStarted())
+	if($adminGameActionEntity->isProcessStarted())
 	{
-	    $output .= "Process is under way to give awards";
+	    $output .= "Process is under way to give points";
 	}
 	elseif($adminGameActionEntity->isProcessFinished())
 	{
@@ -303,7 +303,7 @@ class AdminGameActionLineEntity extends AdminGameActionEntity
 	}
 	else
 	{
-	    $output .= "<button class='btn btn-warning btn-xs' onclick=\"triggerRewards('$gameActionId', '$gameId');\">Trigger Rewards</button>";
+	    $output .= "<button class='btn btn-warning btn-xs' onclick=\"triggerRewards('$gameActionId', '$gameId');\">Trigger Points Reward to Users</button>";
 	}
 
 	$output .= "<div id='$triggerActionContainer'></div>";

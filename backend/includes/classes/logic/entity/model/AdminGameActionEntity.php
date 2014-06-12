@@ -5,6 +5,7 @@ class AdminGameActionEntity extends BaseAdminGameActionEntity
 {
 
     private $gameActionEntity = "";
+    private $teamActionEntity = "";
 
     public function getGameActionEntity()
     {
@@ -14,6 +15,16 @@ class AdminGameActionEntity extends BaseAdminGameActionEntity
 	}
 
 	return $this->gameActionEntity;
+    }
+
+    public function getTeamActionEntity()
+    {
+	if($this->teamActionEntity == "")
+	{
+	    $this->teamActionEntity = TeamActionLogicUtility::convertToObject($this->getValues());
+	}
+
+	return $this->teamActionEntity;
     }
 
     public function isValidated()

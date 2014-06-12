@@ -20,7 +20,7 @@ class TeamActionManager
 	if($teamActionEntity)
 	{
 	    $gameActionId = $teamActionEntity->getFkGameActionId();
-	    TeamActionLogicUtility::updateTeamAction($gameId, $team1Score, $team2Score);
+	    TeamActionLogicUtility::updateTeamAction($gameActionId, $team1Score, $team2Score);
 	    GamesLogicUtility::updateT1Score($gameId, $team1Score);
 	    GamesLogicUtility::updateT2Score($gameId, $team2Score);
 	}
@@ -28,7 +28,7 @@ class TeamActionManager
 	{
 	    $gameActionId = GameActionLogicUtility::addGameAction($gameId, "", $adjustedActionDate, $actionAutomaticDate,
 			    $actionType);
-	    TeamActionLogicUtility::addTeamAction($gameId, $team1Score, $team2Score);
+	    TeamActionLogicUtility::addTeamAction($gameActionId, $team1Score, $team2Score);
 	    GamesLogicUtility::updateT1Score($gameId, $team1Score);
 	    GamesLogicUtility::updateT2Score($gameId, $team2Score);
 
