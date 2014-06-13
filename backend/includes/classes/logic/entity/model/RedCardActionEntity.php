@@ -18,8 +18,6 @@ class RedCardActionEntity extends BaseRedCardActionEntity
 
     public function retrievePlayerEntity()
     {
-	echo "<p>playerId : ".$this->getFkPlayerId(); //debug
-
 	if($this->playerEntity == "")
 	{
 	    $this->playerEntity = PlayersLogicUtility::getPlayersDetails($this->getFkPlayerId());

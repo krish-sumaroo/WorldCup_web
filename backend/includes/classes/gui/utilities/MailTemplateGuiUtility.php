@@ -1,5 +1,6 @@
 <?php
 
+
 /**
  * Description of MailTemplateGuiUtility
  *
@@ -10,101 +11,99 @@ class MailTemplateGuiUtility
 
     private static function getHeader()
     {
-        $output = "";
+	$output = "";
 
-        $output .= "<div>";
-        $output .= "<img src='".UrlConfiguration::getImageSrc("logo.png")."' alt='".Configuration::$APPLICATION_NAME."' />";
-        $output .= "</div>";
+	$output .= "<div>";
+	$output .= "<img src='".UrlConfiguration::getImageSrc("logo.png")."' alt='".Configuration::$APPLICATION_NAME."' />";
+	$output .= "</div>";
 
-        $output .= "<div style='font-family: Verdana;padding: 20px;font-size: 14px;'>";
+	$output .= "<div style='font-family: Verdana;padding: 20px;font-size: 14px;'>";
 
-        return $output;
+	return $output;
     }
 
     private static function getFooter()
     {
-        $output = "";
+	$output = "";
 
-        $websiteAddress = Configuration::$WEBSITE_ADDRESS;
-        $applicationName = Configuration::$APPLICATION_NAME;
-        $contactPerson = Configuration::$CONTACT_PERSON;
+	$websiteAddress = Configuration::$WEBSITE_ADDRESS;
+	$applicationName = Configuration::$APPLICATION_NAME;
+	$contactPerson = Configuration::$CONTACT_PERSON;
 
-        $output .= "<p style='padding-top: 10px'>$contactPerson</p>";
-        $output .= "<p>$applicationName</p>";
-        $output .= "<p>$websiteAddress</p>";
+	$output .= "<p style='padding-top: 10px'>$contactPerson</p>";
+	$output .= "<p>$applicationName</p>";
+	$output .= "<p>$websiteAddress</p>";
 
-        $output .= "</div>";
+	$output .= "</div>";
 
-        return $output;
+	return $output;
     }
 
     private static function getMessageSubject($message)
     {
-        $output = "";
+	$output = "";
 
-        $applicationName = Configuration::$APPLICATION_NAME;
+	$applicationName = Configuration::$APPLICATION_NAME;
 
-        $output .= "$applicationName - $message";
+	$output .= "$applicationName - $message";
 
-        return $output;
+	return $output;
     }
 
     private static function getWebsiteDescription()
     {
-        $output = "";
+	$output = "";
 
-        $basicDescription = AboutGuiUtility::getBasicDescription();
-        $moreDescription = AboutGuiUtility::getMoreDescription();
+	$basicDescription = AboutGuiUtility::getBasicDescription();
+	$moreDescription = AboutGuiUtility::getMoreDescription();
 
-        $output .= "<p style='padding-top: 20px;'>$basicDescription</p>";
-        $output .= "<p>$moreDescription</p>";
+	$output .= "<p style='padding-top: 20px;'>$basicDescription</p>";
+	$output .= "<p>$moreDescription</p>";
 
-        return $output;
+	return $output;
     }
 
     private static function getEmailRegisterUnsubscribeText($email, $activationKey)
     {
-        $output = "";
+	$output = "";
 
-        $applicationName = Configuration::$APPLICATION_NAME;
-        $encryptedEmail = Encryptor::encrypt($email);
-        $encryptedActivationKey = Encryptor::encrypt($activationKey);
+	$applicationName = Configuration::$APPLICATION_NAME;
+	$encryptedEmail = Encryptor::encrypt($email);
+	$encryptedActivationKey = Encryptor::encrypt($activationKey);
 
-        $output .= "<p>You have chosen to receive these emails in $applicationName. If you do not want to receive these emails in the future, you can click <a href='".UrlConfiguration::getUrl("email",
-                        "unsubscribeRegisterEmail", "e=$encryptedEmail&k=$encryptedActivationKey")."'>here to unsubscribe</a>.</p>";
+	$output .= "<p>You have chosen to receive these emails in $applicationName. If you do not want to receive these emails in the future, you can click <a href='".UrlConfiguration::getUrl("email",
+			"unsubscribeRegisterEmail", "e=$encryptedEmail&k=$encryptedActivationKey")."'>here to unsubscribe</a>.</p>";
 
-        return $output;
+	return $output;
     }
 
     public static function generateRegistrationEmail($receiverDisplayName, $registeredEmail, $activationKey, $userId)
     {
-        $output = "";
+	$output = "";
 
-        $applicationName = Configuration::$APPLICATION_NAME;
-        $fromEmail = Configuration::$EMAIL_FROM;
-        $subject = MailTemplateGuiUtility::getMessageSubject("Registration in $applicationName");
+	$applicationName = Configuration::$APPLICATION_NAME;
+	$fromEmail = Configuration::$EMAIL_FROM;
+	$subject = MailTemplateGuiUtility::getMessageSubject("Registration in $applicationName");
 
-        $activationLink = UrlConfiguration::getUrl("email", "activateEmail", "k=$activationKey&u=$userId");
+	$activationLink = UrlConfiguration::getUrl("email", "activateEmail", "k=$activationKey&u=$userId");
 
-        $output .= MailTemplateGuiUtility::getHeader();
+	$output .= MailTemplateGuiUtility::getHeader();
 
-        $output .= "<p>Dear $receiverDisplayName,</p>";
-        $output .= "<p>You have registered this email ($registeredEmail) in $applicationName.</p>";
-        $output .= "<p>Please click on the following link to activate it:</p>";
-        $output .= "<p>";
-        $output .= "<a href='$activationLink' target='_blank'>$activationLink</a>";
-        $output .= "</p>";
+	$output .= "<p>Dear $receiverDisplayName,</p>";
+	$output .= "<p>You have registered this email ($registeredEmail) in $applicationName.</p>";
+	$output .= "<p>Please click on the following link to activate it:</p>";
+	$output .= "<p>";
+	$output .= "<a href='$activationLink' target='_blank'>$activationLink</a>";
+	$output .= "</p>";
 
-        $output .= MailTemplateGuiUtility::getWebsiteDescription();
+	$output .= MailTemplateGuiUtility::getWebsiteDescription();
 
-        $output .= "<p style='padding-top: 20px;'>If you have not registered this email in $applicationName, please do not respond to this email and do NOT click the above link.</p>";
+	$output .= "<p style='padding-top: 20px;'>If you have not registered this email in $applicationName, please do not respond to this email and do NOT click the above link.</p>";
 
-        $output .= MailTemplateGuiUtility::getFooter();
+	$output .= MailTemplateGuiUtility::getFooter();
 
-        EmailUtility::sendMail($registeredEmail, $fromEmail, $subject, $output);
+	EmailUtility::sendMail($registeredEmail, $fromEmail, $subject, $output);
     }
-
-
 
     public static function sendContactMessageHtmlMessage($message, $userName, $userEmail)
     {
@@ -127,9 +126,26 @@ class MailTemplateGuiUtility
 	EmailUtility::sendMail($adminEmail, $commentEmail, "contact", $messageHtml);
     }
 
+    public static function sendResetPasswordEmail($email, $verificationCode)
+    {
+	$messageHtml = "";
 
+	$websiteAddress = Configuration::$URL;
+	$adminEmail = Configuration::$ADMIN_EMAIL;
 
+	$resetPasswordUrl = UrlConfiguration::getUrl("contact", "resetPassword", "email=$email&code=$verificationCode");
 
+	$messageHtml .= "<div style='font-family: Verdana;padding: 20px;font-size: 12px;'>";
+	$messageHtml .= "<p>Dear User,</p>";
+	$messageHtml .= "<p>You have requested to change your password. Please click on <a href='$resetPasswordUrl'>this link to reset your password</a>.</p>";
+
+	$messageHtml .= "<p style='padding-top: 10px'>Regards,</p>";
+	$messageHtml .= "<p>".Configuration::$APPLICATION_NAME." team</p>";
+	$messageHtml .= "<p>http://$websiteAddress</p>";
+	$messageHtml .= "</div>";
+
+	EmailUtility::sendMail($email, $adminEmail, "Password Reset", $messageHtml);
+    }
 //    public static function generateMessageEmail($messageText, $emailFrom, $surnameSender, $otherNamesSender,
 //            $receiverDisplayName, $registeredEmail)
 //    {
@@ -296,7 +312,6 @@ class MailTemplateGuiUtility
 //
 //        EmailUtility::sendMail($userEmail, $fromEmail, $subject, $output);
 //    }
-
 }
 
 ?>

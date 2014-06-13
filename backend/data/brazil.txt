@@ -1,0 +1,8 @@
+Goalkeepers
+1 Jefferson 12 Julio César 22 Victor
+Defenders
+2 Dani Alves 3 Thiago Silva 4 David Luiz 6 Marcelo 13 Dante 14 Maxwell 15 Henrique 23 Maicon
+Midfielders
+5 Fernandinho 8 Paulinho 11 Oscar 16 Ramires 17 Luiz Gustavo 18 Hernanes 19 Willian 20 Bernard
+Forwards
+7 Hulk 9 Fred 10 Neymar 21 Jô

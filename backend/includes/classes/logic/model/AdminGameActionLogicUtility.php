@@ -109,6 +109,13 @@ class AdminGameActionLogicUtility extends BaseAdminGameActionLogicUtility
 	    $queryBuilder->addSortQuery($sortQuery);
 	}
 
+	$playerSortQuery = new SortQuery();
+	$playerSortQuery->addSort("fk_player_id_red_card");
+	$playerSortQuery->addSort("fk_player_id_yellow_card");
+	$playerSortQuery->addSort("fk_player_id_player_score");
+
+	$queryBuilder->addSortQuery($playerSortQuery);
+
 	$result = $queryBuilder->executeQuery();
 
 	return AdminGameActionLogicUtility::convertToAdminGameActionLineEntityArray($result);

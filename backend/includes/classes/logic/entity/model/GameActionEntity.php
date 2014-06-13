@@ -38,6 +38,27 @@ class GameActionEntity extends BaseGameActionEntity
 	return $this->playerScoreActionEntity;
     }
 
+    public function retrieveRedCardActionEntity()
+    {
+	$this->redCardActionEntity = RedCardActionLogicUtility::getRedCardActionDetails($this->getGameActionId());
+
+	return $this->redCardActionEntity;
+    }
+
+    public function retrieveYellowCardActionEntity()
+    {
+	$this->yellowCardActionEntity = YellowCardActionLogicUtility::getYellowCardActionDetails($this->getGameActionId());
+
+	return $this->yellowCardActionEntity;
+    }
+
+    public function retrievePlayerScoreCardActionEntity()
+    {
+	$this->playerScoreActionEntity = PlayerScoreActionLogicUtility::getPlayerScoreActionDetails($this->getGameActionId());
+
+	return $this->playerScoreActionEntity;
+    }
+
     public function isRedCardAction()
     {
 	return ($this->getActionType() == GameActionLogicUtility::$ACTION_TYPE_RED_CARD);

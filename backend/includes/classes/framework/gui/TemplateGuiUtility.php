@@ -184,6 +184,7 @@ class TemplateGuiUtility
 	$output = "";
 
 	$url = Configuration::$URL;
+	$urlMasterApplication = Configuration::$URL_MASTER_APPLICATION;
 
 //	$domain = $_SERVER['HTTP_HOST'];
 //	$domain = $domain.Configuration::$APPLICATION_DOMAIN_ADJUSTMENT;
@@ -191,6 +192,7 @@ class TemplateGuiUtility
 	$output .= "<script>";
 	$output .= "var imageFolder = '".UrlConfiguration::getImageSrc("")."';";
 	$output .= "var websiteUrl = '$url';";
+	$output .= "var websiteMasterUrl = '$urlMasterApplication';";
 	$output .= "</script>";
 
 	return $output;
