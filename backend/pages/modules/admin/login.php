@@ -15,8 +15,7 @@ if(SessionHelper::isLoggedIn())
 }
 else
 {
-    $data = LoginGuiUtility::getDisplay();
-
+	$data = LoginGuiUtility::getDisplay();
     echo $templateGuiUtility->getNormalDisplay("Login", $data);
 }
 

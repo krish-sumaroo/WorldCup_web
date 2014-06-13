@@ -1,0 +1,109 @@
+
+
+--------------------------------------------------------------------------------------------
+
+
+
+2014-06-13 19:28:51
+gameActionId : 10
+
+--------------------------------------------------------------------------------------------
+
+
+
+2014-06-13 19:28:51
+
+Array
+(
+    [0] => AdminGameActionEntity Object
+        (
+            [gameActionEntity:AdminGameActionEntity:private] => 
+            [teamActionEntity:AdminGameActionEntity:private] => 
+            [fkGameActionId:protected] => 10
+            [fkAdminId:protected] => 
+            [actionStatus:protected] => 
+            [processStatus:protected] => 
+            [values:protected] => Array
+                (
+                    [fk_game_action_id] => 10
+                    [action_type] => yellow_card
+                    [fk_game_id] => 10
+                    [action_date] => 2014-06-13 19:25:00
+                    [player_id_red_card] => 
+                    [player_id_yellow_card] => 290
+                    [player_id_player_score] => 
+                    [player_id_player_substitute] => 
+                )
+
+        )
+
+)
+
+
+--------------------------------------------------------------------------------------------
+
+
+
+2014-06-13 19:28:51
+playerId : 290
+
+--------------------------------------------------------------------------------------------
+
+
+
+2014-06-13 19:28:51
+actionId : 2
+
+--------------------------------------------------------------------------------------------
+
+
+
+2014-06-13 19:28:54
+gameActionId : 11
+
+--------------------------------------------------------------------------------------------
+
+
+
+2014-06-13 19:28:54
+
+Array
+(
+    [0] => AdminGameActionEntity Object
+        (
+            [gameActionEntity:AdminGameActionEntity:private] => 
+            [teamActionEntity:AdminGameActionEntity:private] => 
+            [fkGameActionId:protected] => 11
+            [fkAdminId:protected] => 
+            [actionStatus:protected] => 
+            [processStatus:protected] => 
+            [values:protected] => Array
+                (
+                    [fk_game_action_id] => 11
+                    [action_type] => player_score
+                    [fk_game_id] => 10
+                    [action_date] => 2014-06-13 19:27:00
+                    [player_id_red_card] => 
+                    [player_id_yellow_card] => 
+                    [player_id_player_score] => 342
+                    [player_id_player_substitute] => 
+                )
+
+        )
+
+)
+
+
+--------------------------------------------------------------------------------------------
+
+
+
+2014-06-13 19:28:54
+playerId : 342
+
+--------------------------------------------------------------------------------------------
+
+
+
+2014-06-13 19:28:54
+actionId : 1
