@@ -45,8 +45,14 @@ class UserPlayerActionLogicUtility extends BaseUserPlayerActionLogicUtility
 
 	$queryBuilder->addAndConditionWithValue(UserPlayerActionLogicUtility::$ACTIONID_FIELD, $actionId,
 		QueryBuilder::$OPERATOR_EQUAL, UserPlayerActionLogicUtility::$TABLE_NAME);
-	$queryBuilder->addAndConditionWithValue(UserPlayerActionLogicUtility::$TIMESTAMP_FIELD, $dateCheck,
-		QueryBuilder::$OPERATOR_LESS_THAN, UserPlayerActionLogicUtility::$TABLE_NAME);
+
+//	$queryBuilder->addAndConditionWithValue(UserPlayerActionLogicUtility::$TIMESTAMP_FIELD, $dateCheck,
+//		QueryBuilder::$OPERATOR_LESS_THAN, UserPlayerActionLogicUtility::$TABLE_NAME);
+
+	$userPlayerActionTableName = UserPlayerActionLogicUtility::$TABLE_NAME;
+	$timestampField = UserPlayerActionLogicUtility::$TIMESTAMP_FIELD;
+
+	$queryBuilder->addAndCondition("DATE($userPlayerActionTableName.$timestampField) < '$dateCheck'");
 
 	$queryBuilder->addAndConditionWithValue(UserPlayerActionLogicUtility::$STATUS_FIELD,
 		UserPlayerActionLogicUtility::$STATUS_INITIAL, QueryBuilder::$OPERATOR_EQUAL,
