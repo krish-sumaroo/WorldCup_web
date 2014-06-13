@@ -67,7 +67,7 @@ echo "fuck you";
     
     public function getMatches()
     {
-        
+        echo date('m/d/Y h:i:s a');
     }
 
 
