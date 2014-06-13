@@ -16,6 +16,9 @@ class UserActionProcessManager
 			GameProcessConfiguration::$GAME_PROCESS_LIMIT, AdminGameActionLogicUtility::$PROCESS_STATUS_NOT_STARTED, $sortQuery,
 			"", $gameActionId);
 
+	Log::debug("gameActionId : $gameActionId"); //debug
+	Log::debugArray($adminGameActionEntityList); //debug
+
 	if(count($adminGameActionEntityList) > 0)
 	{
 	    $adminGameActionIdArray = UserActionProcessManager::getAdminGameIdArray($adminGameActionEntityList);
@@ -53,6 +56,9 @@ class UserActionProcessManager
 		    $actionId = UserPlayerActionLogicUtility::$GETS_SUBSTITUTED_ACTION_ID;
 		}
 
+		Log::debug("playerId : $playerId"); //debug
+		Log::debug("actionId : $actionId"); //debug
+
 		UserPlayerActionLogicUtility::updateSuccess($playerId, $actionId, $actionDate, $gameId);
 		UserPlayerActionLogicUtility::updateFailure($playerId, $actionId, $actionDate, $gameId);
 	    }
@@ -77,7 +83,7 @@ class UserActionProcessManager
     {
 	$error = new Error();
 
-	$gameActionEntity = GameActionLogicUtility::getActionAutomaticDate($gameActionId);
+	$gameActionEntity = GameActionLogicUtility::getActionDate($gameActionId);
 
 	if($gameActionEntity)
 	{
