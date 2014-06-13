@@ -38,9 +38,11 @@ define('FOPEN_READ_WRITE_CREATE_STRICT',		'x+b');
 
 
 define('GOOGLE_API_KEY', 'AIzaSyDkkuln0CFnnJfJKLHxHrznnQnt-KF8Qjo');
-define('001', 10);
-define('002', 25);
-define('003', 50);
+
+/*** friends status *****/
+define('ACCEPT', 1);
+define('INVITE_SENT', 3);
+define('TO_ACCEPT', 2);
 
 /* End of file constants.php */
 /* Location: ./application/config/constants.php */
