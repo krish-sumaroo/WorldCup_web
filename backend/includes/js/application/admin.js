@@ -117,3 +117,10 @@ function reloadMatchActionButtonContainer(gameId)
     var params = {"game_id": gameId};
     getSSContent("reloadMatchActionButtonContainer", con, params);
 }
+
+function triggerNotifications(id, player, action)
+{
+    var con = "trigger_action_con_" + id;
+    var params = player + "/" + action;
+    getSSContentMaster("push", "action", con, params);
+}

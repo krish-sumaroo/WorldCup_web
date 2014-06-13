@@ -16,6 +16,18 @@ function getSSContent(action, container, params)
     $("#" + container).load(processUrl, params);
 }
 
+function getSSContentMaster(controller, action, container, params)
+{
+    var imageSrc = imageFolder + "spinner.gif";
+
+    $("#" + container).html("<div style='width: 100%;text-align: center;' id='loadingspin'><img src='" + imageSrc +
+	    "' title='loading' alt='loading' /></div>");
+
+    var processUrl = websiteMasterUrl + controller + "/" + action + "/" + params;
+
+    $("#" + container).load(processUrl, "");
+}
+
 
 function getSSContent2(element, action, params)
 {

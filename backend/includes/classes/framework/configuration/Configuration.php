@@ -6,7 +6,9 @@ class Configuration
 
     //url
 //    public static $URL = "http://54.85.111.97/wc/master/backend/";
+    public static $URL_MASTER_APPLICATION = "http://54.85.111.97/wc/master/application/";
     public static $URL = "http://localhost/applications/git/WorldCup_web/backend/";
+//    public static $URL_MASTER_APPLICATION = "http://localhost/applications/git/WorldCup_web/";
     //database connection parameters
 //    public static $CONNECTION_PARAMETERS = array("host" => "54.85.111.97", "username" => "krish", "password" => "nokia555",
 //	"database" => "wc");
