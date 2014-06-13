@@ -70,7 +70,7 @@ class Push extends CI_Controller {
         
         // end test
         
-        $msg = $team1." VS ".$team2." has ended";
+        $msg = $team1." VS ".$team2." has ended";        
         
         $regisIds = $this->user->getRegisIds();
 
@@ -86,7 +86,14 @@ class Push extends CI_Controller {
             
             $payload = array('action' => 2,  'msg' => $msg, 'timestamp' => time(), 'gameId' => $gameId);
             $this->pushlib->sendMessage($finArr, $payload);
-        }     
+        }       
     }  
+    
+     public function action()
+    {
+         sleep(3);
+         //$gameId = 
+         echo "test";
+    }
    
 }

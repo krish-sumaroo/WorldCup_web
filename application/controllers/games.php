@@ -5,16 +5,15 @@ class Games extends CI_Controller {
     function  __construct(){
         parent::__construct();
         $this->load->model('game_model','game');
-        //get userId from nonce
+        //get userId from nonce        
     }
     
     
     public function country()
     {
-        echo "here";
+        //echo "here";
         $this->load->model('user_model','user');
-        $stats = $this->user->getCountryStats();
-        
+        $stats = $this->user->getCountryStats();        
         print_r($stats);      
     }
 

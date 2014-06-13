@@ -49,7 +49,7 @@ class game_model extends CI_Model {
     
     public function getTeams()
     {
-       $sql = "SELECT * FROM teams";
+       $sql = "SELECT * FROM teams order by name asc";
        $query = $this->db->query($sql);
        return $query->result_array();
     }
@@ -165,9 +165,32 @@ class game_model extends CI_Model {
         return $gameInfo;
     }
     
+    
+    public function getTeamIdFromPlayer($playerId)
+    {
+        $sql = "SELECT teamId from players where is = $playerId";
+        $query = $this->db->query($sql);
+        $result =  $query->row();
+        return $result->teamId;
+    }
+    
+    public function getGameStatus($gameId)
+    {
+        $sql = "SELECT startedF, started1Time, started2Time FROM games WHERE id = $gameId";
+        $query = $this->db->query($sql);
+        $result =  $query->row();
+        if($query->num_rows() > 0)
+        {            
+            return $result;
+        }
+        else {
+            return false;
+        }
+    }
+
     public function getSMovesForUser($userId)
     {
-        $sql = "SELECT sMoves, score, nickname FROM users WHERE id = $userId";
+        $sql = "SELECT sMoves, score, nickname, teamId FROM users WHERE id = $userId";
         $query = $this->db->query($sql);
         $result =  $query->row();
         return $result;
