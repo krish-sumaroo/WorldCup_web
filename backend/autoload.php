@@ -1,5 +1,6 @@
 <?php
-ini_set("display_errors", 0);//debug
+
+ini_set("display_errors", 1); //debug
 
 function __autoload($className)
 {

@@ -247,23 +247,23 @@ class AdminGameActionLineEntity extends AdminGameActionEntity
 
 	if($this->isNotValidated())
 	{
-	    if(SessionHelper::isAdminValidator())
-	    {
-		$output .= "&nbsp;&nbsp;&nbsp;";
-		$output .= "<span id='$validateActionContainer'>";
-		$output .= AdminGameActionLineEntity::getValidateActionButton($gameActionId, $gamesId);
-		$output .= "</span>";
-	    }
+//	    if(SessionHelper::isAdminValidator())
+//	    {
+	    $output .= "&nbsp;&nbsp;&nbsp;";
+	    $output .= "<span id='$validateActionContainer'>";
+	    $output .= AdminGameActionLineEntity::getValidateActionButton($gameActionId, $gamesId);
+	    $output .= "</span>";
+//	    }
 	}
 	elseif($this->isValidated())
 	{
-	    if(SessionHelper::isAdminValidator())
-	    {
-		$output .= "&nbsp;&nbsp;&nbsp;";
-		$output .= "<span id='$validateActionContainer'>";
-		$output .= AdminGameActionLineEntity::getInvalidateActionButton($gameActionId, $gamesId);
-		$output .= "</span>";
-	    }
+//	    if(SessionHelper::isAdminValidator())
+//	    {
+	    $output .= "&nbsp;&nbsp;&nbsp;";
+	    $output .= "<span id='$validateActionContainer'>";
+	    $output .= AdminGameActionLineEntity::getInvalidateActionButton($gameActionId, $gamesId);
+	    $output .= "</span>";
+//	    }
 	}
 
 	return $output;

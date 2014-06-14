@@ -192,10 +192,10 @@ class GamesGuiUtility extends BaseGamesGuiUtility
 	$scoreCardImage = UrlConfiguration::getImageSrc("score.png", "application");
 	$substituteImage = UrlConfiguration::getImageSrc("substitute.png", "application");
 
-	$yellowCardImgTag = "<img src='$yellowCardImage' alt='Yellow Card' class='en4' />";
-	$redCardImgTag = "<img src='$redCardImage' alt='Red Card' class='en4' />";
-	$scoreImgTag = "<img src='$scoreCardImage' alt='Player Scores' class='en4' />";
-	$substituteImgTag = "<img src='$substituteImage' alt='Player Scores' class='en4' />";
+	$yellowCardImgTag = "<img src='$yellowCardImage' alt='Yellow Card' class='en4 img-responsive' />";
+	$redCardImgTag = "<img src='$redCardImage' alt='Red Card' class='en4 img-responsive' />";
+	$scoreImgTag = "<img src='$scoreCardImage' alt='Player Scores' class='en4 img-responsive' />";
+	$substituteImgTag = "<img src='$substituteImage' alt='Player Scores' class='en4 img-responsive' />";
 
 	for($i = 0; $i < count($gamePlayersEntityList); $i++)
 	{
@@ -206,20 +206,16 @@ class GamesGuiUtility extends BaseGamesGuiUtility
 	    $output .= "<tr>";
 	    $output .= "<td>$playerName</td>";
 	    $output .= "<td>";
+	    $output .= "<div class='btn-group'>";
 	    $output .= BootstrapModalGuiUtility::getAction($yellowCardImgTag, "getYellowCardAction('$playerId', '$gameId');",
-			    "en1", true, "Yellow Card");
-	    $output .= "</td>";
-	    $output .= "<td>";
-	    $output .= BootstrapModalGuiUtility::getAction($redCardImgTag, "getRedCardAction('$playerId', '$gameId');", "en1",
+			    "", true, "Yellow Card");
+	    $output .= BootstrapModalGuiUtility::getAction($redCardImgTag, "getRedCardAction('$playerId', '$gameId');", "",
 			    true, "Red Card");
-	    $output .= "</td>";
-	    $output .= "<td>";
-	    $output .= BootstrapModalGuiUtility::getAction($scoreImgTag, "getPlayerScoreAction('$playerId', '$gameId');",
-			    "en1", true, "Player Scores");
-	    $output .= "</td>";
-	    $output .= "<td>";
+	    $output .= BootstrapModalGuiUtility::getAction($scoreImgTag, "getPlayerScoreAction('$playerId', '$gameId');", "",
+			    true, "Player Scores");
 	    $output .= BootstrapModalGuiUtility::getAction($substituteImgTag,
-			    "getPlayerSubstituteAction('$playerId', '$gameId');", "en1", true, "Substitute Player");
+			    "getPlayerSubstituteAction('$playerId', '$gameId');", "", true, "Substitute Player");
+	    $output .= "</div>";
 	    $output .= "</td>";
 	    $output .= "</tr>";
 	}

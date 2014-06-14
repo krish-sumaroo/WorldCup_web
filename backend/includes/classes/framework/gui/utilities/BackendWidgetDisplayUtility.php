@@ -51,7 +51,7 @@ class BackendWidgetDisplayUtility
     {
 	$output = "";
 
-	$widthClass = "col-md-".$this->width;
+	$widthClass = "col-xs-".$this->width;
 
 	$output .= "<div class='$widthClass'>";
 	$output .= "<div class='widget $this->widgetAdditionalClass'>";
