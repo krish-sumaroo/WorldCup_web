@@ -52,7 +52,7 @@ class UserActionProcessManager
 		}
 		elseif($actionType == GameActionLogicUtility::$ACTION_TYPE_PLAYER_SUBSTITUTE)
 		{
-		    $playerId = $values[AdminGameActionLogicUtility::$PLAYER_ID_PLAYER_SCORE_ALIAS];
+		    $playerId = $values[AdminGameActionLogicUtility::$PLAYER_ID_PLAYER_SUBSTITUTE_ALIAS];
 		    $actionId = UserPlayerActionLogicUtility::$GETS_SUBSTITUTED_ACTION_ID;
 		}
 
