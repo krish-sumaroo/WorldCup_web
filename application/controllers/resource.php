@@ -4,16 +4,29 @@ class Resource extends CI_Controller {
 
     function  __construct(){
         parent::__construct();
+        
+        date_default_timezone_set("UTC");
 
         //get userId from nonce
 
         $this->userConnected = 1; //test value
 
     }
-public function test()
-{
-echo "fuck you";
-}
+        
+    
+    public function test()
+        {
+        
+
+echo date("Y-m-d H:i:s", time()); 
+        
+            $gameTime = '2014-06-14 09:05:00';
+
+                //echo strtotime($gameTime);
+                
+                echo date('Y/m/d H:i:s');
+        
+        }
 
 
     public function initialise()
@@ -65,9 +78,23 @@ echo "fuck you";
 
     
     
-    public function getMatches()
+    public function date()
     {
         echo date('m/d/Y h:i:s a');
+        
+        $date = new DateTime();
+        echo $date->getTimestamp();
+        
+        echo "<br />";
+        
+        echo "time =>".time();
+        
+        echo "<br />";
+        
+        $timestamp=1402678347;
+        echo gmdate("Y-m-d\TH:i:s\Z", $timestamp);
+        echo "<br />";
+        echo gmdate("Y-m-d H:i:s", $timestamp);
     }
 
 

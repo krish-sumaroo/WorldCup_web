@@ -40,5 +40,17 @@ class Admin extends CI_Controller {
             $this->user->initialisePointsForUsers($gameId);
         }
     }
+    
+    public function capture()
+    {
+        $actualGame = $this->game->getAdminList();
+        log_message('error', 'actual game'.print_r($actualGame, true));        
+        
+        $data['teams'] = $actualGame['name'];
+        $data['team1'] = $actualGame['team1']['players'];
+        $data['team2'] = $actualGame['team2']['players'];
+        $this->load->view('admin', $data);      
+        
+    }
 
 }

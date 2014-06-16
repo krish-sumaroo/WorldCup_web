@@ -2,11 +2,73 @@
 
 class Actions extends CI_Controller {
     function  __construct()
-    {
-        parent::__construct();
+    {       
+        parent::__construct();   
+        date_default_timezone_set("UTC");
         $this->load->model('game_model','game');
-        $this->_gameStatus = $this->config->gameStatus;
+        //$this->_gameStatus = $this->config->gameStatus;
+        $this->gameStatus = array(
+                           'not_started' => 0,
+                           'half1'    => 1,
+                           'half2'    => 2,  
+                           'gameOver'   => 3
+                    );
     }
+    
+    private function _calcScorePointsX($gameStatus, $timestamp)
+    {
+        $points = 0;
+        if($gameStatus == 0)
+        {
+            //not started yet -> full points
+            $points = 50;
+        }
+        elseif($gameStatus == 1 ) //1st half
+        {
+            $gameTime = $gameStatus->started1Time;
+            $gameTimeUNIX  = strtotime($gameTime);
+            $timeDiff = $timestamp - $gameTimeUNIX;
+            
+            switch($timeDiff)
+            {
+                case ($timeDiff > 0 && $timeDiff < 900) :
+                    $points = 40;
+                    break;
+                case ($timeDiff > 901 && $timeDiff < 1800):
+                    $points = 35;
+                    break;
+                case ($timeDiff > 1801 && $timeDiff < 3900):
+                    $points = 30;
+                    break;
+            }
+        }
+        elseif($gameStatus == 2)
+        {
+            $gameTime = $gameStatus->started2Time;
+            $gameTimeUNIX  = strtotime($gameTime);
+            $timeDiff = $timestamp - $gameTimeUNIX;
+            
+            switch($timeDiff)
+            {
+                case ($timeDiff > 0 && $timeDiff < 900) :
+                    $points = 25;
+                    break;
+                case ($timeDiff > 901 && $timeDiff < 1500):
+                    $points = 20;
+                    break;
+                case ($timeDiff > 1501 && $timeDiff < 2100):
+                    $points = 10;
+                    break;
+                case ($timeDiff > 2101 && $timeDiff < 2400):
+                    $points = 5;
+                    break;
+                case ($timeDiff > 2400):
+                    $points = 2;
+                    break;
+            }           
+        }
+        return $points;
+    }    
     
     private function _calcScorePoints($gameStatus, $timestamp)
     {
@@ -17,9 +79,17 @@ class Actions extends CI_Controller {
         }
         elseif($gameStatus->startedF == 1 ) //1st half
         {
+            
             $gameTime = $gameStatus->started1Time;
+            //log_message('error', '1st half =>'.$gameTime);
+            log_message('error', 'gameTime =>'.print_r($gameStatus, true));
+            
             $gameTimeUNIX  = strtotime($gameTime);
+            
+            log_message('error', 'timestamp : '.$timestamp. " <> ".$gameTimeUNIX);
             $timeDiff = $timestamp - $gameTimeUNIX;
+            
+            log_message('error', 'timediff'.$timeDiff);
             
             switch($timeDiff)
             {
@@ -75,6 +145,8 @@ class Actions extends CI_Controller {
         }
     }
     
+  
+    
     private function _checkGameValidX($gameId)
     {
         $gameStatus = $this->game->getGameStatus($gameId);
@@ -127,8 +199,7 @@ class Actions extends CI_Controller {
     
     public function score()
     {  
-        $timestampAction = time();
-        
+        $timestampAction = time();        
         $gameId = $this->input->post('gameId');
         $team1Id = $this->input->post('team1Id');
         $team2Id = $this->input->post('team2Id');
@@ -148,7 +219,7 @@ class Actions extends CI_Controller {
         
         $points = $this->_calcScorePoints($gameValid,$timestampAction);
         
-        log_message('error', 'posts=>'.print_r($this->input->post(), true));
+       // log_message('error', 'posts=>'.$points);
         
          //test save array //
 //            $gameId = 3;
@@ -172,6 +243,7 @@ class Actions extends CI_Controller {
             $saveArray['team1Score'] = $team1Score;
             $saveArray['team2Score'] = $team2Score;
             $saveArray['userId'] = $userId; 
+            $saveArray['points'] = $points;
             
             $result = $this->game->registerScore($saveArray);
             
@@ -218,6 +290,33 @@ class Actions extends CI_Controller {
         echo json_encode($response);
     }
     
+    
+    public function testFav()
+    {
+        $playerId = 347;
+        $gameId = 10;
+        $userId = 2;
+        
+        $playerTeamId = $this->game->getTeamIdFromPlayer($playerId);
+        
+        log_message('error', 'playerInfo=>'.print_r($playerTeamId, true));
+        $moves = $this->_checkMoves($userId, $gameId); 
+        log_message('error', 'moves=>'.print_r($moves, true));
+    }
+    
+    public function testScore()
+    {
+        $gameId = 10;
+        $userId = 2;
+        
+        //$game = new stdClass();
+        //$game->startedF = 2;
+        $points = $this->_calcScorePointsX(2, now());
+        
+        log_message('error', 'points =>'.$points);
+    }
+
+
     public function action()
     {
         
@@ -226,16 +325,21 @@ class Actions extends CI_Controller {
         $userId = $this->input->post('userId');
         $gameId = $this->input->post('gameId');
         
-        $playerTeamId = $this->game->getTeamIdFromPlayer($playerId);
+        log_message('error', 'action posts =>'.print_r($_POST, TRUE));
+        
+        //test
+        
+        
+        //$playerTeamId = $this->game->getTeamIdFromPlayer($playerId);
         
 //        $actionId = 1;
-//        $playerId = 2;
-//        $userId = 2;
-//        $gameId = 2;
+//        $playerId = 353;
+//        $userId = 1;
+//        $gameId = 3;
         
         $moves = $this->_checkMoves($userId, $gameId);     
         
-        //log_message('error', 'moves =>'.print_r($moves));
+        //log_message('error', 'moves =>'.print_r($moves, true));
         
         if($moves)
         {               
@@ -246,15 +350,19 @@ class Actions extends CI_Controller {
             
             $saveArray = array();
             
+            
+            /*
             if($teamId == $result)
             {
                 $saveArray['score'] = 20;
-            }            
+            }      */      
             // register score and update points
             
             $saveArray['actionId'] = $actionId;
             $saveArray['playerId'] = $playerId;
             $saveArray['userId'] = $userId;
+            $saveArray['gameId'] = $gameId;
+            //$saveArray['points'] = 20;
             $result = $this->game->registerAction($saveArray); 
          
 

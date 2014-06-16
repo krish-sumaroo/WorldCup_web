@@ -10,9 +10,9 @@ class Users extends CI_Controller {
         $this->userConnected = 1; //test value
         $this->load->model('user_model','user');
         $this->product = array(
-            '10SKU' => 10,
-            '25SKU' => 25,
-            '50SKU' => 50,
+            'sku10' => 10,
+            'sku25' => 25,
+            'sku50' => 50,
             'android.test.purchased' => 10
         );
     }
@@ -245,6 +245,9 @@ class Users extends CI_Controller {
         $purchaseToken = $arr->purchaseToken;
         $orderId = $arr->orderId;
         $purchaseTime = $arr->purchaseTime;
+        $moves = $this->product[$productId];
+        
+        log_message('error', 'moves =>'.$moves);
         
         $this->user->savePurchase($uid, $productId, $purchaseToken,$orderId, $purchaseTime);
         
