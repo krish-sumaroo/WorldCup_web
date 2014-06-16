@@ -64,6 +64,31 @@ class game_model extends CI_Model {
         $query = $this->db->query($teamSql);
         return $query->result_array();
     }
+    
+    
+    private function _getTeamNameById($t1,$t2)
+    {
+        $sql = "SELECT flag FROM teams WHERE id IN ($t1,$t2) 
+                ORDER BY FIELD(id,$t1,$t2)";
+        $query = $this->db->query($sql);
+        return $query->result_array();
+    }
+    
+    public function getAdminList()
+    {
+        $sql = "SELECT id, team1, team2, matchDate, playerInfo FROM games 
+                WHERE startedF = 0
+                ORDER BY matchDate LIMIT 1";
+        $query = $this->db->query($sql);
+        $result = $query->row();
+        
+        $gameInfo = array();
+        $gameInfo['name'] = $this->_getTeamNameById($result->team1, $result->team2);
+        //$gameInfo['team2']['name'] = $this->_getTeamNameById($result->team2);        
+        $gameInfo['team1']['players'] = $this->getFullPlayers($result->team1);
+        $gameInfo['team2']['players'] = $this->getFullPlayers($result->team2);
+        return $gameInfo;
+    }
 
 
     public function getActivePlayers()
@@ -105,7 +130,7 @@ class game_model extends CI_Model {
     public function getNextGame()
     {
         $sql = "SELECT id, team1, team2, matchDate, playerInfo FROM games 
-                WHERE startedF = 0
+                WHERE startedF  <> 3
                 ORDER BY matchDate LIMIT 1";
         $query = $this->db->query($sql);
         return $query->row();
@@ -168,7 +193,7 @@ class game_model extends CI_Model {
     
     public function getTeamIdFromPlayer($playerId)
     {
-        $sql = "SELECT teamId from players where is = $playerId";
+        $sql = "SELECT teamId from players where id = $playerId";
         $query = $this->db->query($sql);
         $result =  $query->row();
         return $result->teamId;
@@ -241,6 +266,8 @@ class game_model extends CI_Model {
     public function registerAction($data)
     {
         $this->db->insert('userPlayerAction', $data);
+        
+        log_message('error', 'query =>'.$this->db->last_query());
 
         if($this->db->affected_rows())
         {
